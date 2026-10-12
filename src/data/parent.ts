@@ -48,7 +48,7 @@ export const fasStatus = {
   scheme: "MOE Financial Assistance Scheme (MOEFAS)",
   status: "Under review" as "Under review" | "Approved" | "Not approved",
   submittedOn: "2026-09-18",
-  note: "Household income was synced from IRAS on 18 Sep. A school bursar is reviewing your family application.",
+  note: "Household income band was synced via SingPass on 18 Sep. A school bursar is reviewing your family application.",
 };
 
 export type Fas = typeof fasStatus;
