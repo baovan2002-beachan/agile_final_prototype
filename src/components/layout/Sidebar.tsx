@@ -44,7 +44,7 @@ export default function Sidebar({ pinned, onTogglePin }: { pinned: boolean; onTo
 
         <ul className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto overflow-x-hidden">
           {items.map(({ to, label, icon: Icon, badge }) => (
-            <li key={to} className="shrink-0">
+            <li key={label} className="shrink-0">
               <NavLink
                 to={to}
                 end={to === "/admin" || to === "/parent"}

@@ -11,6 +11,7 @@ import { formatSGD } from "../../../lib/format";
 import { useMockQuery } from "../../../lib/useMockQuery";
 import { useSession } from "../../../session";
 import { FEE_TYPES, cycleLabel, exceedsCeiling, per, type FeeType } from "../../../data/fees";
+import HqPermissionNote from "../HqPermissionNote";
 import { CeilingWarning } from "./CeilingWarning";
 import { EDIT_FORM_ID, EditRateForm, NewFeeForm } from "./RateForms";
 
@@ -55,6 +56,7 @@ export default function FeeTypes() {
 
   return (
     <div className="grid gap-6">
+      <HqPermissionNote />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="max-w-xl text-sm text-on-surface-variant">
           {hq ? "Review school fee rates against the locked national ceilings." : "Set the fee rates your school charges per billing cycle."}
@@ -115,11 +117,11 @@ export default function FeeTypes() {
       {hq && fees.length > 0 && (
         <Card
           title="National ceilings"
-          action={<Badge tone="neutral">Locked</Badge>}
+          action={<Badge tone="neutral">National</Badge>}
         >
           <p className="mb-3 flex items-center gap-1.5 text-[13px] text-on-surface-variant">
             <Lock size={14} weight="bold" aria-hidden="true" />
-            Set nationally and not editable here. Ceiling rule is an <AssumptionTag />
+            Set nationally by MOE HQ; schools cannot charge above them. <AssumptionTag>ceiling rule</AssumptionTag>
           </p>
           <DataTable
             columns={ceilingCols}
