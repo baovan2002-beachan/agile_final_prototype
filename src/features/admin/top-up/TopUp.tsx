@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useId, useMemo, useRef, useState } from "react";
 import { CheckCircle, Eye } from "@phosphor-icons/react";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
@@ -8,7 +8,8 @@ import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { ACCOUNTS, FUND_TAGS, PAST_EXECUTIONS, type Execution, type Schedule } from "../../../data/topup";
 import { formatSGD } from "../../../lib/format";
-import { eligibleAccounts } from "../../../lib/topup";
+import { parseAmount } from "../../../lib/amount";
+import { eligibleAccounts, nextExecutionId, totalFunds, type TopUpRule } from "../../../lib/topup";
 import { PreviewModal, SCHEDULE_LABEL, type Draft } from "./PreviewModal";
 
 type Form = {
@@ -23,20 +24,25 @@ const INITIAL: Form = {
   balanceMin: "0", balanceMax: "5000", amount: "", fundTag: FUND_TAGS[0], schedule: "now",
 };
 
+/** Today in Singapore (UTC+8), as YYYY-MM-DD, regardless of the browser time zone. */
+const sgToday = () => new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Singapore" });
+
 const num = (s: string) => (s.trim() === "" ? NaN : Number(s));
 
 /** Inline validation. Messages only; the caller decides which to show. */
 function validate(f: Form) {
   const e: Partial<Record<"title" | "age" | "balance" | "amount", string>> = {};
   if (!f.title.trim()) e.title = "Enter a title for this top-up.";
-  const [a0, a1, b0, b1, amt] = [num(f.ageMin), num(f.ageMax), num(f.balanceMin), num(f.balanceMax), num(f.amount)];
+  const [a0, a1, b0, b1] = [num(f.ageMin), num(f.ageMax), num(f.balanceMin), num(f.balanceMax)];
   if (Number.isNaN(a0) || Number.isNaN(a1)) e.age = "Enter both a minimum and a maximum age.";
-  else if (a0 < 0) e.age = "Age cannot be negative.";
+  else if (!Number.isInteger(a0) || !Number.isInteger(a1)) e.age = "Ages must be whole numbers.";
+  else if (a0 < 0 || a1 > 120) e.age = "Age must be between 0 and 120.";
   else if (a0 > a1) e.age = "Minimum age must be less than or equal to maximum age.";
   if (Number.isNaN(b0) || Number.isNaN(b1)) e.balance = "Enter both a minimum and a maximum balance.";
   else if (b0 < 0) e.balance = "Balance cannot be negative.";
   else if (b0 > b1) e.balance = "Minimum balance must be less than or equal to maximum balance.";
-  if (Number.isNaN(amt) || amt <= 0) e.amount = "Amount must be greater than S$0.";
+  const amt = parseAmount(f.amount);
+  if ("error" in amt) e.amount = amt.error;
   return e;
 }
 
@@ -54,11 +60,27 @@ const columns: Column<Execution>[] = [
 const flag = "flex min-h-11 cursor-pointer items-center gap-3 text-sm font-semibold text-on-surface";
 const box = "size-5 shrink-0 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
+type RangeProps = { legend: string; error?: string; step: number; mode: "numeric" | "decimal"; from: string; to: string; onFrom: (v: string) => void; onTo: (v: string) => void };
+
+/** Two number inputs under one legend; the shared error is wired to both via aria-invalid + aria-describedby. */
+function RangePair({ legend, error, step, mode, from, to, onFrom, onTo }: RangeProps) {
+  const errId = useId();
+  const props = { className: inputClass, type: "number", inputMode: mode, min: 0, step, "aria-invalid": error ? true : undefined, "aria-describedby": error ? errId : undefined } as const;
+  return (
+    <fieldset className="grid grid-cols-2 gap-3">
+      <legend className="mb-1.5 text-[13px] font-semibold text-on-surface">{legend}</legend>
+      <Field label="From"><input {...props} value={from} onChange={(e) => onFrom(e.target.value)} /></Field>
+      <Field label="To"><input {...props} value={to} onChange={(e) => onTo(e.target.value)} /></Field>
+      {error && <p id={errId} role="alert" className="col-span-2 text-[13px] font-medium text-alert">{error}</p>}
+    </fieldset>
+  );
+}
+
 export default function TopUp() {
   const [form, setForm] = useState<Form>(INITIAL);
   const [attempted, setAttempted] = useState(false);
   const [draft, setDraft] = useState<Draft | null>(null);
-  const [history, setHistory] = useState<Execution[]>(PAST_EXECUTIONS);
+  const [history, setHistory] = useState<Execution[]>([...PAST_EXECUTIONS].reverse()) // newest first;
   const [message, setMessage] = useState("");
   const msgRef = useRef<HTMLDivElement>(null);
 
@@ -68,26 +90,25 @@ export default function TopUp() {
   const show = { ...errors, title: attempted ? errors.title : undefined, amount: attempted || form.amount !== "" ? errors.amount : undefined };
   const valid = Object.keys(errors).length === 0;
 
-  const rule = useMemo(
-    () => ({
-      ageMin: num(form.ageMin), ageMax: num(form.ageMax), citizenOnly: form.citizenOnly, enrolledOnly: form.enrolledOnly,
-      balanceMin: num(form.balanceMin), balanceMax: num(form.balanceMax),
-    }),
-    [form],
-  );
-  const eligible = useMemo(() => (draft && valid ? eligibleAccounts(rule, ACCOUNTS) : []), [draft, valid, rule]);
+  // Eligibility comes from the snapshot taken at Preview, never from the live form.
+  const eligible = useMemo(() => (draft ? eligibleAccounts(draft.spec, ACCOUNTS) : []), [draft]);
 
   const preview = () => {
     setAttempted(true);
     setMessage("");
-    if (!valid) return;
+    const amt = parseAmount(form.amount);
+    if (!valid || "error" in amt) return;
+    const spec: TopUpRule = {
+      ageMin: num(form.ageMin), ageMax: num(form.ageMax), citizenOnly: form.citizenOnly, enrolledOnly: form.enrolledOnly,
+      balanceMin: num(form.balanceMin), balanceMax: num(form.balanceMax),
+    };
     setDraft({
-      title: form.title.trim(), fundTag: form.fundTag, schedule: form.schedule, amount: num(form.amount),
+      title: form.title.trim(), fundTag: form.fundTag, schedule: form.schedule, amount: amt.value, spec,
       rule: [
         `Age ${form.ageMin} to ${form.ageMax} (inclusive)`,
         form.citizenOnly ? "Singapore Citizens only" : "Citizens and non-citizens",
         form.enrolledOnly ? "Currently enrolled in school only" : "Enrolled and not enrolled",
-        `Balance ${formatSGD(rule.balanceMin)} to ${formatSGD(rule.balanceMax)} (inclusive)`,
+        `Balance ${formatSGD(spec.balanceMin)} to ${formatSGD(spec.balanceMax)} (inclusive)`,
       ],
     });
   };
@@ -95,9 +116,9 @@ export default function TopUp() {
   const execute = () => {
     if (!draft) return;
     const x: Execution = {
-      id: `TU-${String(history.length + 5).padStart(4, "0")}`, title: draft.title, fundTag: draft.fundTag, schedule: draft.schedule,
-      eligible: eligible.length, amount: draft.amount, total: eligible.length * draft.amount,
-      date: new Date().toISOString().slice(0, 10), by: "HQ Officer",
+      id: nextExecutionId(history), title: draft.title, fundTag: draft.fundTag, schedule: draft.schedule,
+      eligible: eligible.length, amount: draft.amount, total: totalFunds(eligible.length, draft.amount),
+      date: sgToday(), by: "HQ Officer",
     };
     setHistory((h) => [x, ...h]);
     setDraft(null);
@@ -126,19 +147,8 @@ export default function TopUp() {
             <input className={inputClass} value={form.title} onChange={(e) => set("title", e.target.value)} placeholder="e.g. 2026 Primary cohort top-up" />
           </Field>
 
-          <fieldset className="grid grid-cols-2 gap-3">
-            <legend className="mb-1.5 text-[13px] font-semibold text-on-surface">Age range (years, inclusive)</legend>
-            <Field label="From"><input className={inputClass} type="number" inputMode="numeric" min={0} value={form.ageMin} onChange={(e) => set("ageMin", e.target.value)} /></Field>
-            <Field label="To"><input className={inputClass} type="number" inputMode="numeric" min={0} value={form.ageMax} onChange={(e) => set("ageMax", e.target.value)} /></Field>
-            {show.age && <p role="alert" className="col-span-2 text-[13px] font-medium text-alert">{show.age}</p>}
-          </fieldset>
-
-          <fieldset className="grid grid-cols-2 gap-3">
-            <legend className="mb-1.5 text-[13px] font-semibold text-on-surface">Account balance (S$, inclusive)</legend>
-            <Field label="From"><input className={inputClass} type="number" inputMode="decimal" min={0} step="0.01" value={form.balanceMin} onChange={(e) => set("balanceMin", e.target.value)} /></Field>
-            <Field label="To"><input className={inputClass} type="number" inputMode="decimal" min={0} step="0.01" value={form.balanceMax} onChange={(e) => set("balanceMax", e.target.value)} /></Field>
-            {show.balance && <p role="alert" className="col-span-2 text-[13px] font-medium text-alert">{show.balance}</p>}
-          </fieldset>
+          <RangePair legend="Age range (years, inclusive)" error={show.age} step={1} mode="numeric" from={form.ageMin} to={form.ageMax} onFrom={(v) => set("ageMin", v)} onTo={(v) => set("ageMax", v)} />
+          <RangePair legend="Account balance (S$, inclusive)" error={show.balance} step={0.01} mode="decimal" from={form.balanceMin} to={form.balanceMax} onFrom={(v) => set("balanceMin", v)} onTo={(v) => set("balanceMax", v)} />
 
           <div>
             <label className={flag}>
@@ -156,7 +166,7 @@ export default function TopUp() {
           </div>
 
           <Field label="Amount per account (S$)" error={show.amount}>
-            <input className={inputClass} type="number" inputMode="decimal" min={0} step="0.01" value={form.amount} onChange={(e) => set("amount", e.target.value)} placeholder="e.g. 200" />
+            <input className={inputClass} type="text" inputMode="decimal" value={form.amount} onChange={(e) => set("amount", e.target.value)} placeholder="e.g. 200" />
           </Field>
 
           <Field label="Fund tag (reason)">

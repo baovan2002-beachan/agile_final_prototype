@@ -18,9 +18,9 @@ export const ACCOUNTS: Account[] = Array.from({ length: 60 }, (_, i) => ({
 }));
 
 export const PAST_EXECUTIONS: Execution[] = [
-  { id: "TU-0007", title: "Primary cohort annual top-up", fundTag: "Annual Education Top-Up", schedule: "yearly", eligible: 21, amount: 200, total: 4200, date: "2026-01-05", by: "HQ Officer" },
+  { id: "TU-0005", title: "Primary cohort annual top-up", fundTag: "Annual Education Top-Up", schedule: "yearly", eligible: 21, amount: 200, total: 4200, date: "2026-01-05", by: "HQ Officer" },
   { id: "TU-0006", title: "Edusave Contribution Q3", fundTag: "Edusave Contribution", schedule: "quarterly", eligible: 34, amount: 150, total: 5100, date: "2026-07-01", by: "HQ Officer" },
-  { id: "TU-0005", title: "Pioneer cohort ad-hoc grant", fundTag: "Ad-hoc Grant", schedule: "now", eligible: 12, amount: 500, total: 6000, date: "2026-08-14", by: "HQ Officer" },
+  { id: "TU-0007", title: "Pioneer cohort ad-hoc grant", fundTag: "Ad-hoc Grant", schedule: "now", eligible: 12, amount: 500, total: 6000, date: "2026-08-14", by: "HQ Officer" },
 ];
 
 export const FUND_TAGS = ["Annual Education Top-Up", "Edusave Contribution", "Ad-hoc Grant", "Bursary Supplement"];

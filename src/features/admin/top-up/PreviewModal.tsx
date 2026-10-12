@@ -5,10 +5,12 @@ import { Button } from "../../../components/ui/Button";
 import { Modal } from "../../../components/ui/Modal";
 import type { Account, Schedule } from "../../../data/topup";
 import { formatSGD } from "../../../lib/format";
+import { totalFunds, type TopUpRule } from "../../../lib/topup";
 
 export const SCHEDULE_LABEL: Record<Schedule, string> = { now: "Run now (ad-hoc)", monthly: "Monthly", quarterly: "Quarterly", yearly: "Yearly" };
 
-export type Draft = { title: string; fundTag: string; schedule: Schedule; amount: number; rule: string[] };
+/** Snapshot taken at Preview time: `spec` is the numeric rule, so later form edits cannot change what gets executed. */
+export type Draft = { title: string; fundTag: string; schedule: Schedule; amount: number; spec: TopUpRule; rule: string[] };
 
 type Props = { draft: Draft | null; eligible: Account[]; onClose: () => void; onExecute: () => void };
 
@@ -24,7 +26,7 @@ function Dt({ label, children }: { label: string; children: React.ReactNode }) {
 export function PreviewModal({ draft, eligible, onClose, onExecute }: Props) {
   const [signed, setSigned] = useState(false);
   const count = eligible.length;
-  const total = draft ? count * draft.amount : 0;
+  const total = draft ? totalFunds(count, draft.amount) : 0;
   const blocked = count === 0;
 
   const close = () => {
