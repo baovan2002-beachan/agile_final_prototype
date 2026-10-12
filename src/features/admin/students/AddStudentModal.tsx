@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
@@ -13,20 +14,28 @@ type Props = { open: boolean; onClose: () => void; onAdd: (s: { name: string; le
 export default function AddStudentModal({ open, onClose, onAdd }: Props) {
   const [v, setV] = useState(EMPTY);
   const [submitted, setSubmitted] = useState(false);
+  const [failedTick, setFailedTick] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
   // Errors are shown only after the first submit attempt, then update live.
   const errors = submitted ? validateNewStudent(v) : {};
   const set = (k: keyof NewStudentInput) => (e: { target: { value: string } }) =>
     setV((p) => ({ ...p, [k]: e.target.value, ...(k === "level" ? { class: "" } : {}) }));
 
+  // After a failed submit, move focus to the first invalid field (runs once errors have rendered).
+  useEffect(() => {
+    if (failedTick) formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+  }, [failedTick]);
+
   const close = () => {
     setV(EMPTY);
     setSubmitted(false);
+    setFailedTick(0);
     onClose();
   };
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    if (Object.keys(validateNewStudent(v)).length) return;
+    if (Object.keys(validateNewStudent(v)).length) return setFailedTick((t) => t + 1);
     onAdd({ name: v.name, level: v.level as Level, class: v.class });
     close();
   };
@@ -44,13 +53,19 @@ export default function AddStudentModal({ open, onClose, onAdd }: Props) {
         </>
       }
     >
-      <form id={FORM_ID} onSubmit={submit} noValidate className="grid gap-4">
+      <form ref={formRef} id={FORM_ID} onSubmit={submit} noValidate className="grid gap-4">
         <Field label="Full name" error={errors.name}>
           <input className={inputClass} value={v.name} onChange={set("name")} autoComplete="off" />
         </Field>
-        <Field label="Date of birth" error={errors.dob} hint="Student age must be 6 to 16.">
-          <input type="date" className={inputClass} value={v.dob} max={new Date().toISOString().slice(0, 10)} onChange={set("dob")} />
-        </Field>
+        <div>
+          <Field label="Date of birth" error={errors.dob}>
+            <input type="date" className={inputClass} value={v.dob} max={new Date().toLocaleDateString("en-CA")} onChange={set("dob")} />
+          </Field>
+          <p className="mt-1.5 flex flex-wrap items-center gap-2 text-[13px]">
+            <Badge tone="primary">Assumption</Badge>
+            Student age must be 6 to 16.
+          </p>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Level" error={errors.level}>
             <select className={inputClass} value={v.level} onChange={set("level")}>
@@ -65,6 +80,10 @@ export default function AddStudentModal({ open, onClose, onAdd }: Props) {
             </select>
           </Field>
         </div>
+        <p className="flex flex-wrap items-center gap-2 text-[13px]">
+          <Badge tone="primary">Assumption</Badge>
+          New students start as Active with a S$0.00 balance and SBFAS "Not applied".
+        </p>
       </form>
     </Modal>
   );

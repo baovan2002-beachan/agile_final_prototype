@@ -11,7 +11,7 @@ import { CLASSES, LEVELS, STATUSES, STUDENTS, type SbfasStatus, type Student } f
 import { formatSGD } from "../../../lib/format";
 import AddStudentModal from "./AddStudentModal";
 import ImportCsvModal from "./ImportCsvModal";
-import { filterStudents, newStudent, NO_FILTERS, statusTone, type Filters } from "./logic";
+import { filterStudents, newStudent, NO_FILTERS, plural, statusTone, type Filters } from "./logic";
 
 const sbfasTone: Record<SbfasStatus, BadgeTone> = { Approved: "success", Pending: "warning", Rejected: "alert", "Not applied": "neutral" };
 const ALL_CLASSES = LEVELS.flatMap((l) => CLASSES[l]);
@@ -53,7 +53,7 @@ export default function Students() {
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-on-surface-variant">
-          {students.length} students enrolled. Education Account balances and SBFAS status are shown per student.
+          {plural(students.length, "student")} enrolled. Education Account balances and SBFAS status are shown per student.
         </p>
         <div className="flex flex-wrap gap-3">
           <Button variant="secondary" icon={<FileCsv size={18} aria-hidden />} onClick={() => setImporting(true)}>Import CSV</Button>
@@ -61,11 +61,14 @@ export default function Students() {
         </div>
       </div>
 
-      {notice && (
-        <p role="status" className="rounded-control border border-line bg-surface-container-lowest px-4 py-3 text-sm font-medium text-on-surface">
-          {notice}
-        </p>
-      )}
+      {/* Always mounted (empty first) so screen readers announce the text when it appears; -mt-6 cancels the grid gap while empty. */}
+      <div role="status" className={notice ? undefined : "-mt-6"}>
+        {notice && (
+          <p className="rounded-control border border-line bg-surface-container-lowest px-4 py-3 text-sm font-medium text-on-surface">
+            {notice}
+          </p>
+        )}
+      </div>
 
       <Card title="Student list">
         <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
@@ -90,7 +93,7 @@ export default function Students() {
           <Button variant="secondary" disabled={!filtered} onClick={reset}>Reset filters</Button>
         </div>
         <p aria-live="polite" className="mt-4 text-[13px] text-on-surface-variant">
-          Showing {rows.length} of {students.length} students
+          Showing {rows.length} of {plural(students.length, "student")}
         </p>
         <div className="mt-2">
           <DataTable
@@ -125,7 +128,7 @@ export default function Students() {
             for (const r of imported) added.push(newStudent([...all, ...added], r));
             return [...added.reverse(), ...all];
           });
-          setNotice(`Imported ${imported.length} students from CSV.`);
+          setNotice(`Imported ${plural(imported.length, "student")} from CSV.`);
         }}
       />
       <Modal
