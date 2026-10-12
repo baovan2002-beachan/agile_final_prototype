@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" style=""><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_blank" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"background":"#F8F6F6","tertiary-container":"#E4575C","on-tertiary-fixed-variant":"#A8151C","surface":"#F8F6F6","surface-container":"#F0ECEC","surface-dim":"#DDD7D7","outline":"#8A8082","error":"#BA1A1A","on-secondary-container":"#5C1520","on-secondary-fixed":"#5C1520","on-surface":"#1A1512","inverse-surface":"#2E2628","on-tertiary":"#FFFFFF","tertiary-fixed":"#FDE3E3","secondary":"#A8343F","on-primary-container":"#FBE3E5","on-surface-variant":"#5E5658","surface-container-highest":"#E4DEDE","on-primary-fixed-variant":"#8A2538","tertiary":"#D61F26","on-background":"#1A1512","surface-tint":"#8A2538","surface-container-high":"#EAE5E5","surface-container-low":"#F6F3F3","error-container":"#FFDAD6","surface-variant":"#E4DEDE","secondary-fixed-dim":"#E8BFC3","inverse-on-surface":"#F7F2F2","on-error-container":"#93000A","surface-container-lowest":"#FFFFFF","on-tertiary-fixed":"#410004","on-primary-fixed":"#3A0A12","secondary-container":"#F3D2D5","on-secondary-fixed-variant":"#7A1F2B","inverse-primary":"#E8BFC3","surface-bright":"#F8F6F6","secondary-fixed":"#F9E3E5","outline-variant":"#E0D8D9","tertiary-fixed-dim":"#F5B1B3","on-primary":"#FFFFFF","on-tertiary-container":"#FFFFFF","primary-fixed-dim":"#E8BFC3","on-error":"#FFFFFF","primary":"#8A2538","on-secondary":"#FFFFFF","primary-fixed":"#F3D2D5","primary-container":"#A8343F"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"margin-tablet":"1.5rem","margin":"1rem","space-xl":"1.5rem","margin-desktop":"2rem","space-lg":"1rem","space-xs":"0.25rem","space-md":"0.75rem","space-sm":"0.5rem","space-2xl":"2rem","gutter":"1rem","gutter-desktop":"1.5rem"},fontFamily:{"headline-xl-mobile":["Inter"],"title-md":["Inter"],"label-md":["Inter"],"caption":["Inter"],"headline-lg-mobile":["Inter"],"headline-lg":["Inter"],"headline-xl":["Inter"],"body-md":["Inter"],"label-sm":["Inter"],"body-lg":["Inter"],"body-sm":["Inter"],"headline-md":["Inter"]},fontSize:{"headline-xl-mobile":["26px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"700"}],"title-md":["16px",{lineHeight:"22px",fontWeight:"600"}],"label-md":["13px",{lineHeight:"16px",fontWeight:"500"}],"caption":["12px",{lineHeight:"16px",fontWeight:"400"}],"headline-lg-mobile":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"headline-xl":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}],"body-lg":["15px",{lineHeight:"22px",fontWeight:"400"}],"body-sm":["13px",{lineHeight:"18px",fontWeight:"400"}],"headline-md":["18px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen flex"><main class="w-full mx-auto min-h-screen"><div class="flex flex-col w-full">
+<!-- Parent Wrapper (Responsive Split Screen Simulation within container) -->
+<div class="w-full min-h-screen flex flex-col lg:flex-row relative bg-surface-container-lowest overflow-x-hidden">
+<!-- LEFT HERO PANEL (approx 45-48% width, min-h-screen, enriched branding & value props) -->
+<div class="w-full lg:w-5/12 xl:w-5/12 bg-surface-container-low p-space-xl md:p-space-2xl xl:p-margin-desktop flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-surface-container relative transition-colors duration-300">
+<div class="flex flex-col gap-space-xl max-w-xl mx-auto lg:mx-0 w-full">
+<!-- Logo Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<img alt="EduFund Brand Logo" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wl81QwcCmrVZNb_9iMONA0bD0vccoey0IOkl5InDkX_ZjtfS3rOFuKJ_5V0s120cMe5auMa4db0-z8SJwnJKCiHJ83BfV10YonGogY64H4DcPH2EhHWzCgs5YZOIa3feJZhiywLRAGRPZRJc5MbVEFqtNE-dR2H2wTb4qa6GrltsBuaCnbyDrgOIyAG88ccHA5T2yIWVD3OJzk0mcUW1GKeAwFUE6nOPi0GjH0WDFkdW-RAS583sHVHgLN"/>
+</div>
+
+</div>
+<!-- Dynamic Eyebrow & Hero Headline based on Active Tab -->
+<div class="space-y-space-md pt-space-md">
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-primary px-space-sm py-1 bg-primary-fixed/50 rounded-lg inline-block transition-all duration-300 font-semibold" id="left-eyebrow">STUDENT FINANCE PORTAL</span>
+<h1 class="font-headline-xl text-[32px] md:text-[36px] text-on-surface tracking-tight leading-tight font-bold transition-all duration-300" id="left-headline">Smarter student finances, made simple.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed" id="left-subtext" style="display:none">Empowering families and government stewards with transparent grants, seamless tuition deductions, and synchronized accounts across all education tiers.</p>
+</div>
+<!-- 3 Feature Cards with Crisp Visual Hierarchy -->
+<div class="flex flex-col gap-space-md pt-space-sm">
+<!-- Prop 1 -->
+<div class="flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest/80 border border-surface-container hover:border-outline-variant transition-all duration-200 group shadow-sm">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Centralized Education Accounts</span>
+
+</div>
+</div>
+<!-- Prop 2 -->
+<div class="flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest/80 border border-surface-container hover:border-outline-variant transition-all duration-200 group shadow-sm">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[22px]">volunteer_activism</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Financial Assistance Stream</span>
+
+</div>
+</div>
+<!-- Prop 3 -->
+<div class="flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest/80 border border-surface-container hover:border-outline-variant transition-all duration-200 group shadow-sm">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Real-Time Fee Audits</span>
+
+</div>
+</div>
+</div>
+</div>
+<!-- Left Panel Bottom Trust & Security Banner -->
+<div class="pt-space-xl mt-space-lg max-w-xl mx-auto lg:mx-0 w-full">
+
+</div>
+</div>
+<!-- RIGHT AUTHENTICATION WORKBENCH (approx 52-55% width, min-h-screen, centered spacious card) -->
+<div class="w-full lg:w-7/12 xl:w-7/12 p-space-lg md:p-space-2xl xl:p-margin-desktop flex flex-col justify-between bg-surface-container-lowest">
+<!-- Top Action Bar -->
+<div class="flex items-center justify-end gap-space-md pb-space-lg">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary flex items-center gap-1.5 transition-colors px-3 py-1.5 rounded-lg hover:bg-surface-container" href="#help" onclick="alert('EduFund Support Desk: Reach us at help@edufund.gov.sg or hotline 1800-246-8000')">
+<span class="material-symbols-outlined text-[18px]">help</span> Help &amp; support
+      </a>
+<button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-all shadow-sm" id="theme-btn" onclick="toggleSimulatedTheme()" title="Toggle Interface Contrast Mode">
+<span class="material-symbols-outlined text-[18px]" id="theme-icon">dark_mode</span>
+</button>
+</div>
+<!-- Centered Form Container (Generous 480px width) -->
+<div class="w-full max-w-[480px] mx-auto flex flex-col justify-center py-space-md my-auto"><div class="mb-space-lg flex items-center"><img alt="Singpass Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBspLPh4qQENewRBW3Y-C4_N-CykhpnbV39HZ4Shk8nfCEcX5C0bXWUDALeppvTOeAUYB8-fIjNoICS-0MEIJttlEVSTgYzDaxK8TVLVkmtLW4b57T5NcLLJKIAXRL1zCbah-JqXfOY7nK6WFZUqt_-plILtoarg9T6LDy1g-JPoMYq7KGViB1ZpYv_cfJpUCBoWhlQJP4wviKxNf9zCtUkgdhaOgfqQzABXuvMcvjiOidYoRKEtO2oFY7R6GEnOkzkUc0"/></div>
+<!-- Tab Switcher Segment -->
+<div class="w-full p-1 bg-surface-container rounded-xl flex items-center justify-between mb-space-lg shadow-inner">
+<button class="w-1/2 py-2.5 font-label-md text-label-md rounded-lg text-center transition-all bg-surface-container-lowest text-primary shadow-sm font-semibold" id="tab-parent" onclick="switchPortal('parent')">
+          Parent or guardian
+        </button>
+<button class="w-1/2 py-2.5 font-label-md text-label-md rounded-lg text-center text-on-surface-variant hover:text-on-surface transition-all font-medium" id="tab-staff" onclick="switchPortal('staff')">
+          School or MOE staff
+        </button>
+</div>
+<!-- Global Inline Alert Area -->
+<div class="hidden mb-space-md p-space-sm rounded-lg flex items-center gap-space-sm transition-all text-body-sm font-body-sm" id="status-banner">
+<span class="material-symbols-outlined text-[18px]" id="banner-icon">info</span>
+<span class="flex-1" id="banner-text">Alert Message</span>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="dismissBanner()">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- VIEW A: PARENT OR GUARDIAN SIGN-IN -->
+<div class="space-y-space-lg" id="parent-view">
+<div class="space-y-1">
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Sign in to EduFund</h2>
+
+</div>
+<!-- Singpass Callout Card -->
+<div class="bg-surface-container-low p-space-lg rounded-2xl border border-surface-container space-y-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-tertiary font-bold tracking-wide"><span class="font-bold text-tertiary tracking-wider">SINGPASS NATIONAL ID</span></span>
+
+</div>
+<!-- Primary Crimson CTA -->
+<button class="w-full h-12 bg-tertiary hover:bg-on-tertiary-fixed-variant text-on-tertiary rounded-xl font-label-md text-label-md flex items-center justify-center gap-space-sm transition-all duration-200 shadow-md" id="btn-singpass-login" onclick="openSingpassModal()"><span class="">Log in with Singpass</span></button>
+
+</div>
+<!-- Assurance Trust Badge -->
+
+<!-- Quick Jump / Demo Helper -->
+<div class="pt-space-md border-t border-surface-container flex flex-col gap-space-xs">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider text-center font-semibold">Quick Demo Bypass</span>
+<button class="w-full py-2 px-space-md bg-surface-container hover:bg-surface-container-high rounded-xl text-on-surface font-body-sm text-body-sm flex items-center justify-between transition-colors shadow-sm" onclick="bypassDirect('parent')">
+<span class="">Parent Portal Direct Jump (Siti Farhana)</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- VIEW B: SCHOOL OR MOE STAFF SIGN-IN -->
+<div class="space-y-space-md hidden" id="staff-view">
+<div class="space-y-1">
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Staff Administration Sign In</h2>
+
+</div>
+<form class="space-y-space-md pt-space-xs" onsubmit="handleStaffSubmit(event)">
+<!-- Email Input -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-on-surface font-medium" for="staff-email">Email address</label>
+<input class="w-full h-11 px-space-sm rounded-lg bg-surface-container-low border border-surface-container text-on-surface font-body-md text-body-md placeholder-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-secondary transition-all" id="staff-email" placeholder="name@school.edu.sg or name@moe.gov.sg" required="" type="email"/>
+</div>
+<!-- Password Input -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface font-medium" for="staff-password">Password</label>
+<button class="font-caption text-caption text-secondary hover:underline font-semibold" onclick="openForgotModal()" type="button">Forgot password?</button>
+</div>
+<div class="relative">
+<input class="w-full h-11 pl-space-sm pr-10 rounded-lg bg-surface-container-low border border-surface-container text-on-surface font-body-md text-body-md placeholder-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-secondary transition-all" id="staff-password" placeholder="Enter institutional passphrase" required="" type="password"/>
+<button class="absolute right-3 top-3 text-on-surface-variant hover:text-on-surface flex items-center" onclick="togglePasswordVisibility()" type="button">
+<span class="material-symbols-outlined text-[18px]" id="eye-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember me checkbox -->
+<div class="flex items-center gap-space-sm pt-1">
+<input class="w-4 h-4 rounded text-secondary focus:ring-secondary cursor-pointer" id="remember-me" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface cursor-pointer select-none" for="remember-me">Remember my session on this device</label>
+</div>
+<!-- Crimson Sign In CTA -->
+<button class="w-full h-11 bg-tertiary hover:bg-on-tertiary-fixed-variant text-on-tertiary rounded-xl font-label-md text-label-md flex items-center justify-center gap-2 transition-all shadow-md" type="submit">
+<span class="">Sign in to Institution Portal</span>
+<span class="material-symbols-outlined text-[18px]">login</span>
+</button>
+</form>
+<!-- Quick-demo Role Jump Buttons -->
+<div class="pt-space-sm space-y-space-xs">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider block text-center font-semibold">Fast-Fill Role Demo</span>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="py-2 px-space-xs bg-surface-container hover:bg-surface-container-high rounded-xl text-on-surface font-caption text-caption flex flex-col items-center justify-center text-center transition-colors shadow-sm" onclick="fillRole('school')">
+<strong class="font-label-md">Alicia Tan</strong>
+<span class="text-[11px] text-on-surface-variant">School Admin</span>
+</button>
+<button class="py-2 px-space-xs bg-surface-container hover:bg-surface-container-high rounded-xl text-on-surface font-caption text-caption flex flex-col items-center justify-center text-center transition-colors shadow-sm" onclick="fillRole('moe')">
+<strong class="font-label-md">Daniel Lim</strong>
+<span class="text-[11px] text-on-surface-variant">MOE HQ Officer</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom System Footer -->
+<div class="pt-space-lg text-center">
+<p class="font-caption text-caption text-on-surface-variant">
+        © 2026 EduFund Singapore · <a class="hover:underline" href="#privacy" onclick="alert('EduFund Data Governance adheres to Public Sector (Data Protection) Act.')">Privacy policy</a> · <a class="hover:underline" href="#terms" onclick="alert('Terms of Service: Authorized personnel only.')">Terms of Service</a>
+</p>
+</div>
+</div>
+</div>
+<!-- MODAL 1: INTERACTIVE SINGPASS AUTHENTICATION SIMULATION -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/50 backdrop-blur-sm p-margin hidden" id="singpass-modal">
+<div class="bg-surface-container-lowest rounded-xl max-w-sm w-full p-space-lg shadow-2xl relative transition-all">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container">
+<div class="flex items-center gap-space-xs"><img alt="Singpass" class="h-5 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgXz1f9oc6j4Oet6SW9OgOwm-6yIq1BgWZiG-ef9cqFGwOlU6LHPRJ8ae6Rs9FHoQJZq8lZxFOYmYJmghjgLCL55LIxFPmLyb6EAdwT2wF1qOBognTfHr8VChopsHmXU0sFgYY5kVQzV-G2DgFEJ4llVTEOeaM8LFH9Db-9ovt8Y14Z00xcWXLfvNqy-cLuEK4_jZCFxVfP7dt5ZN4GEavpV-dP3XpDn6ojp_tgdcYpdhLsdi2iclj_fbyN25PYOZ0Fpc"/></div>
+<button class="text-on-surface-variant hover:text-on-surface p-1" onclick="closeSingpassModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- State: Standby / Mock QR Identity -->
+<div class="pt-space-md text-center space-y-space-md" id="sp-stage-ready">
+<div class="space-y-1">
+<h3 class="font-headline-md text-headline-md text-on-surface">Continue with Singpass</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">EduFund Finance Portal is requesting identity authentication.</p>
+</div>
+<!-- QR Placeholder Box -->
+<div class="w-48 h-48 mx-auto bg-surface-container-low rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center p-space-sm relative">
+<span class="material-symbols-outlined text-[64px] text-on-surface-variant/40">qr_code_2</span>
+<span class="font-caption text-caption text-on-surface-variant text-center font-medium mt-1">
+            Prototype stand-in - GovTech Mock QR / Identity
+          </span>
+<span class="font-label-sm text-[10px] text-tertiary mt-1 bg-surface-container-lowest px-2 py-0.5 rounded shadow-sm">
+            ID: EDU-SINGPASS-DEMO
+          </span>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs"><img alt="Singpass" class="h-5 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgXz1f9oc6j4Oet6SW9OgOwm-6yIq1BgWZiG-ef9cqFGwOlU6LHPRJ8ae6Rs9FHoQJZq8lZxFOYmYJmghjgLCL55LIxFPmLyb6EAdwT2wF1qOBognTfHr8VChopsHmXU0sFgYY5kVQzV-G2DgFEJ4llVTEOeaM8LFH9Db-9ovt8Y14Z00xcWXLfvNqy-cLuEK4_jZCFxVfP7dt5ZN4GEavpV-dP3XpDn6ojp_tgdcYpdhLsdi2iclj_fbyN25PYOZ0Fpc"/></div>
+</div>
+<!-- State: Verifying Spinner -->
+<div class="py-space-2xl text-center space-y-space-md hidden" id="sp-stage-verifying">
+<div class="w-12 h-12 mx-auto rounded-full border-4 border-surface-container border-t-tertiary animate-spin"></div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Verifying credentials...</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Exchanging session tokens with Singpass directory.</p>
+</div>
+</div>
+<!-- State: Success Checkmark -->
+<div class="py-space-xl text-center space-y-space-md hidden" id="sp-stage-success">
+<div class="w-14 h-14 mx-auto rounded-full bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[36px]">check_circle</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Authenticated!</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Redirecting to Parent Overview dashboard...</p>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL 2: FORGOT PASSWORD RECOVERY INTERACTION -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/50 backdrop-blur-sm hidden p-margin" id="forgot-modal">
+<div class="bg-surface-container-lowest rounded-xl max-w-sm w-full p-space-lg shadow-2xl relative">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container">
+<h3 class="font-title-md text-title-md text-on-surface">Reset Staff Password</h3>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="closeForgotModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="pt-space-md space-y-space-md" id="forgot-form-view">
+
+<div>
+<label class="font-label-md text-label-md text-on-surface block mb-1" for="recovery-email">Institutional Email</label>
+<input class="w-full h-9 px-space-sm rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-secondary" id="recovery-email" placeholder="officer@moe.gov.sg" type="email"/>
+</div>
+<button class="w-full h-9 bg-secondary hover:bg-on-secondary-fixed-variant text-on-secondary rounded-lg font-label-md text-label-md transition-all" onclick="submitPasswordReset()">
+          Dispatch recovery link
+        </button>
+</div>
+<div class="pt-space-md text-center space-y-space-sm hidden" id="forgot-success-view">
+<div class="w-12 h-12 mx-auto rounded-full bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[28px]">mark_email_read</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Check your email</h4>
+<p class="font-caption text-caption text-on-surface-variant">We have sent security reset instructions to the specified mailbox.</p>
+<button class="mt-space-md w-full h-9 bg-surface-container hover:bg-surface-container-high rounded-lg text-on-surface font-label-md text-label-md" onclick="closeForgotModal()">
+          Return to sign in
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Tab Portal Switcher
+  function switchPortal(portal) {
+    const parentTab = document.getElementById('tab-parent');
+    const staffTab = document.getElementById('tab-staff');
+    const parentView = document.getElementById('parent-view');
+    const staffView = document.getElementById('staff-view');
+    const leftEyebrow = document.getElementById('left-eyebrow');
+    const leftHeadline = document.getElementById('left-headline');
+    const leftSubtext = document.getElementById('left-subtext');
+
+    dismissBanner();
+
+    if (portal === 'parent') {
+      // Toggle Tabs
+      parentTab.className = "w-1/2 py-space-xs font-label-md text-label-md rounded-lg text-center transition-all bg-surface-container-lowest text-primary shadow-sm font-semibold";
+      staffTab.className = "w-1/2 py-space-xs font-label-md text-label-md rounded-lg text-center text-on-surface-variant hover:text-on-surface transition-all";
+      
+      // Toggle Views
+      parentView.classList.remove('hidden');
+      staffView.classList.add('hidden');
+
+      // Update Left Hero Copy
+      leftEyebrow.textContent = "STUDENT FINANCE PORTAL";
+      leftHeadline.textContent = "Smarter student finances, made simple.";
+      leftSubtext.textContent = "Empowering families and government stewards with transparent grants, seamless tuition deductions, and synchronized accounts.";
+    } else {
+      // Toggle Tabs
+      staffTab.className = "w-1/2 py-space-xs font-label-md text-label-md rounded-lg text-center transition-all bg-surface-container-lowest text-secondary shadow-sm font-semibold";
+      parentTab.className = "w-1/2 py-space-xs font-label-md text-label-md rounded-lg text-center text-on-surface-variant hover:text-on-surface transition-all";
+      
+      // Toggle Views
+      parentView.classList.add('hidden');
+      staffView.classList.remove('hidden');
+
+      // Update Left Hero Copy
+      leftEyebrow.textContent = "SCHOOL AND HQ ADMINISTRATION";
+      leftHeadline.textContent = "Student finance records, kept in order.";
+      leftSubtext.textContent = "Authoritative fiscal ledger access for school finance administrators and Ministry of Education auditing officers.";
+    }
+  }
+
+  // Password Visibility Toggle
+  function togglePasswordVisibility() {
+    const passInput = document.getElementById('staff-password');
+    const eyeIcon = document.getElementById('eye-icon');
+    if (passInput.type === 'password') {
+      passInput.type = 'text';
+      eyeIcon.textContent = 'visibility_off';
+    } else {
+      passInput.type = 'password';
+      eyeIcon.textContent = 'visibility';
+    }
+  }
+
+  // Quick Role Auto-Fill
+  function fillRole(role) {
+    const emailField = document.getElementById('staff-email');
+    const passField = document.getElementById('staff-password');
+    if (role === 'school') {
+      emailField.value = 'alicia.tan@riverside.edu.sg';
+      passField.value = '••••••••••••';
+      showBanner("Pre-filled credentials for Alicia Tan (School Admin)", "info");
+    } else if (role === 'moe') {
+      emailField.value = 'daniel.lim@moe.gov.sg';
+      passField.value = '••••••••••••';
+      showBanner("Pre-filled credentials for Daniel Lim (MOE HQ)", "info");
+    }
+  }
+
+  // Staff Sign-in Form Submit Handler
+  function handleStaffSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById('staff-email').value;
+    const password = document.getElementById('staff-password').value;
+
+    if (password === 'wrong' || password === '1234') {
+      showBanner("The email or password is incorrect. Please verify institutional credentials.", "error");
+    } else {
+      showBanner("Authenticating institutional session...", "info");
+      setTimeout(() => {
+        if (email.includes('moe.gov.sg')) {
+          alert('Welcome Officer Daniel Lim. Redirecting to MOE HQ Treasury Dashboard.');
+        } else {
+          alert('Welcome Alicia Tan. Redirecting to School Administration Portal.');
+        }
+      }, 700);
+    }
+  }
+
+  // Singpass Modal Management
+  function openSingpassModal() {
+    document.getElementById('singpass-modal').classList.remove('hidden');
+    document.getElementById('sp-stage-ready').classList.remove('hidden');
+    document.getElementById('sp-stage-verifying').classList.add('hidden');
+    document.getElementById('sp-stage-success').classList.add('hidden');
+  }
+
+  function closeSingpassModal() {
+    document.getElementById('singpass-modal').classList.add('hidden');
+  }
+
+  function simulateSingpassVerification() {
+    document.getElementById('sp-stage-ready').classList.add('hidden');
+    document.getElementById('sp-stage-verifying').classList.remove('hidden');
+
+    setTimeout(() => {
+      document.getElementById('sp-stage-verifying').classList.add('hidden');
+      document.getElementById('sp-stage-success').classList.remove('hidden');
+
+      setTimeout(() => {
+        closeSingpassModal();
+        alert('Singpass verified! Redirecting to Parent Overview (Siti Farhana).');
+      }, 1200);
+    }, 1500);
+  }
+
+  function declineSingpass() {
+    closeSingpassModal();
+    showBanner("Singpass sign-in was cancelled by user. Please try again.", "error");
+  }
+
+  // Direct Bypass Jump
+  function bypassDirect(portal) {
+    if (portal === 'parent') {
+      alert('Demo bypass: Instant session granted for Parent Portal.');
+    }
+  }
+
+  // Alert Banner Helpers
+  function showBanner(text, type) {
+    const banner = document.getElementById('status-banner');
+    const icon = document.getElementById('banner-icon');
+    const label = document.getElementById('banner-text');
+
+    label.textContent = text;
+    banner.classList.remove('hidden');
+
+    if (type === 'error') {
+      banner.className = "mb-space-md p-space-sm rounded-lg flex items-center gap-space-sm transition-all text-body-sm font-body-sm bg-error-container text-on-error-container";
+      icon.textContent = "error";
+    } else {
+      banner.className = "mb-space-md p-space-sm rounded-lg flex items-center gap-space-sm transition-all text-body-sm font-body-sm bg-surface-container text-on-surface";
+      icon.textContent = "info";
+    }
+  }
+
+  function dismissBanner() {
+    const banner = document.getElementById('status-banner');
+    banner.classList.add('hidden');
+  }
+
+  // Forgot Password Modal
+  function openForgotModal() {
+    document.getElementById('forgot-modal').classList.remove('hidden');
+    document.getElementById('forgot-form-view').classList.remove('hidden');
+    document.getElementById('forgot-success-view').classList.add('hidden');
+  }
+
+  function closeForgotModal() {
+    document.getElementById('forgot-modal').classList.add('hidden');
+  }
+
+  function submitPasswordReset() {
+    const mail = document.getElementById('recovery-email').value;
+    if (!mail) {
+      alert('Please input your email address first.');
+      return;
+    }
+    document.getElementById('forgot-form-view').classList.add('hidden');
+    document.getElementById('forgot-success-view').classList.remove('hidden');
+  }
+
+  // Contrast Mode Toggle simulation
+  function toggleSimulatedTheme() {
+    const icon = document.getElementById('theme-icon');
+    if (icon.textContent === 'dark_mode') {
+      icon.textContent = 'light_mode';
+      document.body.classList.add('brightness-95');
+    } else {
+      icon.textContent = 'dark_mode';
+      document.body.classList.remove('brightness-95');
+    }
+  }
+</script></main>
+</body></html>

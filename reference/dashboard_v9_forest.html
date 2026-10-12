@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MOE Admin Portal - Dashboard (base UI, red + white)</title>
+<style>
+  :root{
+    --red:#2D5A3D;
+    --brick:#A62B2B;
+    --red-t1:#4A7C59;
+    --red-t2:#7FA88A;
+    --red-t3:#D9E6DC;
+    --ink:#1A1512;
+    --slate:#5E6366;
+    --line:#ECE6E6;
+    --track:#F1EFEF;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1600px;height:1000px}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--white);overflow:hidden;position:relative}
+  .app{position:absolute;inset:24px;display:flex;gap:20px}
+
+  /* ---------- sidebar ---------- */
+  .rail{width:84px;border-radius:28px;flex:none;background:var(--white);border:1px solid var(--line);
+        display:flex;flex-direction:column;align-items:center;padding:22px 0;
+        box-shadow:0 10px 30px -18px rgba(26,21,18,.28)}
+  .logo{width:46px;height:46px;border-radius:50%;background:var(--white);border:1.5px solid var(--red-t3);display:grid;place-items:center;color:var(--red)}
+  .nav{margin-top:34px;display:flex;flex-direction:column;gap:14px;align-items:center}
+  .nav .ni{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:var(--slate)}
+  .nav .ni.active{background:var(--red);color:#fff}
+  .rail .spacer{flex:1}
+  .out{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--red)}
+
+  /* ---------- main ---------- */
+  .main{flex:1;display:flex;flex-direction:column;gap:18px;min-width:0}
+  header{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6px}
+  header h1{font-size:30px;font-weight:700;letter-spacing:-.02em}
+  header .sub{font-size:13px;color:var(--slate);margin-top:3px;font-weight:500}
+  .tools{display:flex;align-items:center;gap:12px}
+  .pill{height:46px;border-radius:23px;background:var(--white);border:1px solid var(--line);
+        display:flex;align-items:center;gap:9px;padding:0 18px;font-size:14px;font-weight:600}
+  .pill svg{color:var(--red)}
+  .iconbtn{width:46px;height:46px;border-radius:50%;background:var(--white);border:1px solid var(--line);
+           display:grid;place-items:center;position:relative;color:var(--ink)}
+  .iconbtn .dot{position:absolute;top:10px;right:11px;width:10px;height:10px;border-radius:50%;background:var(--brick);border:2px solid #fff}
+  .avatar{width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px}
+
+  .panel{background:var(--white);border:1px solid var(--line);border-radius:26px;
+         box-shadow:0 10px 30px -22px rgba(26,21,18,.35)}
+
+  /* ---------- stats ---------- */
+  .stats{height:112px;display:grid;grid-template-columns:repeat(4,1fr);padding:0 14px;align-items:center}
+  .stat{display:flex;align-items:center;gap:16px;padding:0 14px}
+  .stat .c{width:60px;height:60px;border-radius:50%;flex:none;display:grid;place-items:center;
+           background:var(--white);border:1.5px solid var(--red-t3);color:var(--red)}
+  .stat .v{display:flex;align-items:center;gap:9px;font-size:27px;font-weight:700;letter-spacing:-.02em}
+  .chip{font-size:11px;font-weight:700;border-radius:8px;padding:3px 7px;background:var(--red);color:#fff}
+  .chip.flat{background:var(--track);color:var(--slate)}
+  .stat .l{font-size:12.5px;color:var(--slate);font-weight:500;margin-top:2px}
+
+  /* ---------- grid ---------- */
+  .grid{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr .7fr;grid-template-rows:1fr 1fr;gap:18px}
+  .card{padding:22px 24px;display:flex;flex-direction:column;min-height:0}
+  .card h3{font-size:15px;font-weight:650;display:flex;align-items:center;gap:10px}
+  .card h3 .gi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--white);border:1px solid var(--red-t3);color:var(--red)}
+  .head{display:flex;align-items:center;justify-content:space-between}
+  .arrow{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--white);border:1px solid var(--line);color:var(--red)}
+  .foot{margin-top:auto;font-size:12px;color:var(--slate);font-weight:500}
+
+  .c1{grid-row:1;grid-column:1}
+  .c1 .body{display:flex;align-items:center;justify-content:space-between;margin-top:14px;flex:1}
+  .big{font-size:56px;font-weight:700;letter-spacing:-.03em;line-height:1}
+  .big small{font-size:28px;font-weight:600;color:var(--slate);letter-spacing:-.01em}
+  .c1 .cap{font-size:13.5px;color:var(--slate);margin-top:10px;font-weight:500}
+  .legend{display:flex;gap:10px;margin-top:20px}
+  .lg{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:12.5px;font-weight:600}
+  .lg i{width:9px;height:9px;border-radius:50%;display:block}
+  .lg b{font-weight:700}
+  .ring{position:relative;width:168px;height:168px;flex:none}
+  .ring .t{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+  .ring .t b{font-size:30px;font-weight:700;letter-spacing:-.02em;display:block;line-height:1}
+  .ring .t span{font-size:11.5px;color:var(--slate);font-weight:500}
+
+  .c2{grid-row:1;grid-column:2}
+  .tiers{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:end;margin-top:14px;padding-top:8px}
+  .tier{display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+  .tier .n{font-size:15px;font-weight:700}
+  .tier .bar{width:100%;border-radius:16px 16px 10px 10px}
+  .tier .nm{font-size:12px;font-weight:600;color:var(--slate)}
+  .tier .pc{font-size:11.5px;color:var(--slate);margin-top:-5px;font-weight:500}
+
+  .c3{grid-row:2;grid-column:1}
+  table{width:100%;border-collapse:collapse;margin-top:12px}
+  th{font-size:12px;color:var(--slate);font-weight:600;text-align:left;padding:4px 0 8px;white-space:nowrap}
+  td{font-size:13.5px;font-weight:550;padding:14px 0;border-top:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+  td.dt{color:var(--slate);font-weight:500}
+  .st{display:inline-block;font-size:11.5px;font-weight:700;border-radius:20px;padding:5px 12px}
+  .st.paid{background:var(--track);color:var(--ink)}
+  .st.up{background:var(--white);color:var(--red);border:1px solid var(--red)}
+  .st.od{background:var(--brick);color:#fff;border:1px solid var(--brick)}
+  td.doc{text-align:right;color:var(--red)} td.doc svg{vertical-align:middle}
+
+  .c4{grid-row:2;grid-column:2}
+  .buds{flex:1;display:flex;flex-direction:column;justify-content:center;gap:34px;padding:6px 0 10px}
+  .bud .row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;margin-bottom:9px}
+  .bud .row span{color:var(--slate);font-weight:500;font-size:12.5px}
+  .track{height:14px;border-radius:8px;background:var(--track);overflow:hidden}
+  .track i{display:block;height:100%;border-radius:8px}
+  .bud .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--slate);margin-top:8px;font-weight:500}
+  .bud .row span.alert{color:#fff;font-weight:700;font-size:11px}
+  .alert{display:inline-flex;align-items:center;font-size:11px;font-weight:700;background:var(--brick);color:#fff;border-radius:8px;padding:3px 8px;margin-left:8px}
+
+  .c5{grid-row:1;grid-column:3}
+  .school-img{height:150px;border-radius:18px;margin:14px 0 14px;overflow:hidden;border:1px solid var(--line)}
+  .sname{font-size:15.5px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+  .tag{display:inline-block;font-size:11px;font-weight:700;background:var(--red);color:#fff;border-radius:7px;padding:3px 9px;margin-top:7px}
+  .info{margin-top:14px;display:flex;flex-direction:column;gap:9px;font-size:12.5px;color:#3a332e;font-weight:500}
+  .info div{display:flex;gap:9px;align-items:flex-start;line-height:1.35}
+  .info svg{flex:none;margin-top:1px;color:var(--red)}
+
+  .c6{grid-row:2;grid-column:3}
+  .tot{font-size:30px;font-weight:700;letter-spacing:-.02em;margin-top:12px}
+  .tot-s{font-size:12px;color:var(--slate);font-weight:500;margin-top:2px}
+  .months{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;margin-top:10px;padding-bottom:2px}
+  .mo{display:grid;grid-template-columns:38px 1fr 62px;align-items:center;gap:10px;font-size:13px;font-weight:650}
+  .mo .bt{height:16px;border-radius:8px;background:var(--track);overflow:hidden}
+  .mo .bt i{display:block;height:100%;border-radius:8px}
+  .mo span{text-align:right;font-weight:700;font-size:13px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== sidebar ===== -->
+  <aside class="rail">
+    <div class="logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M7 11v5c0 1.2 2.2 3 5 3s5-1.8 5-3v-5"/></svg>
+    </div>
+    <div class="nav">
+      <div class="ni active" title="Home">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg>
+      </div>
+      <div class="ni" title="Students &amp; Schools">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.2 2.7-5.2 6-5.2s6 2 6 5.2"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M18.5 14.3c1.7.7 2.8 2.2 2.8 4.7"/></svg>
+      </div>
+      <div class="ni" title="Education Accounts">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10.5h18"/><circle cx="16.5" cy="14.8" r="1.2"/></svg>
+      </div>
+      <div class="ni" title="FAS">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.4-7.5-10A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7.5 3c0 5.6-7.5 10-7.5 10Z"/></svg>
+      </div>
+      <div class="ni" title="Reports">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="out">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4"/><path d="M15 8l4 4-4 4M19 12H9"/></svg>
+    </div>
+  </aside>
+
+  <!-- ===== main ===== -->
+  <section class="main">
+    <header>
+      <div>
+        <h1>Dashboard</h1>
+        <div class="sub">Admin Portal &nbsp;·&nbsp; Education Account &amp; FAS</div>
+      </div>
+      <div class="tools">
+        <div class="pill">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V20l-4-2v-4.5L3 5Z"/></svg>
+          Filter A – Z
+        </div>
+        <div class="iconbtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15L6 16.5Z"/><path d="M10 21h4"/></svg>
+          <span class="dot"></span>
+        </div>
+        <div class="avatar">AD</div>
+      </div>
+    </header>
+
+    <!-- stats -->
+    <div class="panel stats">
+      <div class="stat">
+        <div class="c"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 2.5 9 12 14 21.5 9 12 4Z"/><path d="M6.5 11.5V16c0 1.4 2.4 3 5.5 3s5.5-1.6 5.5-3v-4.5"/></svg></div>
+        <div><div class="v">12,480 <span class="chip">▲ 2.4%</span></div><div class="l">Total Student</div></div>
+      </div>
+      <div class="stat">
+        <div class="c"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10.5h18"/><path d="m9 15 2 2 4-4"/></svg></div>
+        <div><div class="v">9,236 <span class="chip">▲ 1.1%</span></div><div class="l">Active Account</div></div>
+      </div>
+      <div class="stat">
+        <div class="c"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V9l7-5 7 5v11"/><path d="M9.5 20v-5h5v5M9.5 11h.01M14.5 11h.01"/></svg></div>
+        <div><div class="v">186 <span class="chip flat">▬ 0%</span></div><div class="l">Total School</div></div>
+      </div>
+      <div class="stat">
+        <div class="c"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h8l4 4v14H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M15 3v4h4M9.5 12h6M9.5 16h4"/></svg></div>
+        <div><div class="v">342 <span class="chip">▲ 8%</span></div><div class="l">Pending FAS Application</div></div>
+      </div>
+    </div>
+
+    <!-- grid -->
+    <div class="grid">
+
+      <!-- 1 · Received FAS -->
+      <div class="card panel c1">
+        <div class="head">
+          <h3><span class="gi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.4-7.5-10A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7.5 3c0 5.6-7.5 10-7.5 10Z"/></svg></span>Received FAS</h3>
+          <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+        </div>
+        <div class="body">
+          <div>
+            <div class="big">1,284<small> / 3,420</small></div>
+            <div class="cap">students received FAS this academic year</div>
+            <div class="legend">
+              <div class="lg"><i style="background:#2D5A3D"></i>MOEFAS <b>962</b></div>
+              <div class="lg"><i style="background:#7FA88A"></i>SBFAS <b>322</b></div>
+            </div>
+          </div>
+          <div class="ring">
+            <svg width="168" height="168" viewBox="0 0 168 168">
+              <circle cx="84" cy="84" r="68" fill="none" stroke="#F1EFEF" stroke-width="16"/>
+              <circle cx="84" cy="84" r="68" fill="none" stroke="#2D5A3D" stroke-width="16" stroke-linecap="round"
+                      stroke-dasharray="160.2 427.3" transform="rotate(-90 84 84)"/>
+            </svg>
+            <div class="t"><div><b>37.5%</b><span>of applicants</span></div></div>
+          </div>
+        </div>
+        <div class="foot">Updated 1 hour ago</div>
+      </div>
+
+      <!-- 2 · FAS by tier -->
+      <div class="card panel c2">
+        <div class="head">
+          <h3><span class="gi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V11M12 20V4M19 20v-6"/></svg></span>FAS by Tier</h3>
+          <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+        </div>
+        <div class="tiers">
+          <div class="tier"><div class="n">612</div><div class="bar" style="height:140px;background:#2D5A3D"></div><div class="nm">Tier 1</div><div class="pc">47.7%</div></div>
+          <div class="tier"><div class="n">388</div><div class="bar" style="height:89px;background:#4A7C59"></div><div class="nm">Tier 2</div><div class="pc">30.2%</div></div>
+          <div class="tier"><div class="n">191</div><div class="bar" style="height:44px;background:#7FA88A"></div><div class="nm">Tier 3</div><div class="pc">14.9%</div></div>
+          <div class="tier"><div class="n">93</div><div class="bar" style="height:22px;background:#B9D0BF"></div><div class="nm">Tier 4</div><div class="pc">7.2%</div></div>
+        </div>
+        <div class="foot" style="margin-top:10px">MOEFAS + SBFAS recipients · 1,284 total</div>
+      </div>
+
+      <!-- 3 · Payment history -->
+      <div class="card panel c3">
+        <div class="head">
+          <h3><span class="gi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10.5h18"/></svg></span>Payment History</h3>
+          <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+        </div>
+        <table>
+          <thead><tr><th>Invoice No.</th><th>Payment Date</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>INV-260931</td><td class="dt">12 Oct 2026</td><td>S$25.00</td><td><span class="st up">Upcoming</span></td><td class="doc"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/></svg></td></tr>
+            <tr><td>INV-260927</td><td class="dt">08 Oct 2026</td><td>S$35.00</td><td><span class="st paid">Paid</span></td><td class="doc"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/></svg></td></tr>
+            <tr><td>INV-260915</td><td class="dt">01 Oct 2026</td><td>S$120.00</td><td><span class="st paid">Paid</span></td><td class="doc"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/></svg></td></tr>
+            <tr><td>INV-260902</td><td class="dt">24 Sep 2026</td><td>S$65.50</td><td><span class="st od">Overdue</span></td><td class="doc"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/></svg></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 4 · Budget -->
+      <div class="card panel c4">
+        <div class="head">
+          <h3><span class="gi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M9.6 14.2c0 1 1 1.6 2.4 1.6s2.4-.6 2.4-1.6-1-1.4-2.4-1.7-2.4-.7-2.4-1.7 1-1.6 2.4-1.6 2.4.6 2.4 1.6"/></svg></span>Budget Usage</h3>
+          <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+        </div>
+        <div class="buds">
+          <div class="bud">
+            <div class="row"><div>MOEFAS · MOE HQ <span class="alert">80% alert</span></div><span>S$2.40M / S$3.00M</span></div>
+            <div class="track"><i style="width:80%;background:#2D5A3D"></i></div>
+            <div class="meta"><span>80% used</span><span>S$0.60M left</span></div>
+          </div>
+          <div class="bud">
+            <div class="row"><div>SBFAS · School</div><span>S$310K / S$500K</span></div>
+            <div class="track"><i style="width:62%;background:#4A7C59"></i></div>
+            <div class="meta"><span>62% used</span><span>S$190K left</span></div>
+          </div>
+        </div>
+        <div class="foot">Updated 1 hour ago</div>
+      </div>
+
+      <!-- 5 · School info -->
+      <div class="card panel c5">
+        <div class="head">
+          <h3><span class="gi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V9l7-5 7 5v11"/></svg></span>School Info</h3>
+          <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+        </div>
+        <div class="school-img">
+          <svg width="100%" height="100%" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice">
+            <rect width="320" height="150" fill="#FFFFFF"/>
+            <circle cx="250" cy="38" r="20" fill="#CFE0D4"/>
+            <rect x="38" y="52" width="170" height="78" rx="6" fill="#2D5A3D"/>
+            <rect x="150" y="34" width="92" height="96" rx="6" fill="#FFFFFF" stroke="#2D5A3D" stroke-width="3"/>
+            <g fill="#FFFFFF">
+              <rect x="52" y="66" width="22" height="14" rx="2"/><rect x="84" y="66" width="22" height="14" rx="2"/><rect x="116" y="66" width="22" height="14" rx="2"/>
+              <rect x="52" y="92" width="22" height="14" rx="2"/><rect x="84" y="92" width="22" height="14" rx="2"/><rect x="116" y="92" width="22" height="14" rx="2"/>
+            </g>
+            <g fill="#2D5A3D">
+              <rect x="164" y="48" width="16" height="12" rx="2"/><rect x="190" y="48" width="16" height="12" rx="2"/><rect x="216" y="48" width="16" height="12" rx="2"/>
+              <rect x="164" y="70" width="16" height="12" rx="2"/><rect x="190" y="70" width="16" height="12" rx="2"/><rect x="216" y="70" width="16" height="12" rx="2"/>
+              <rect x="164" y="92" width="16" height="12" rx="2"/><rect x="216" y="92" width="16" height="12" rx="2"/>
+              <rect x="191" y="108" width="14" height="22" rx="2"/>
+            </g>
+            <rect x="0" y="130" width="320" height="20" fill="#F1EFEF"/>
+            <rect x="0" y="130" width="320" height="3" fill="#2D5A3D"/>
+          </svg>
+        </div>
+        <div class="sname">Greenfield Secondary School</div>
+        <div><span class="tag">Selected school</span></div>
+        <div class="info">
+          <div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>12 Example Road, Singapore 000000</div>
+          <div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A15 15 0 0 1 4 5a1 1 0 0 1 1-1Z"/></svg>+65 6000 0000</div>
+          <div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.2 2.7-5.2 6-5.2s6 2 6 5.2"/></svg>1,120 students · 38 classes</div>
+        </div>
+      </div>
+
+      <!-- 6 · Total top-up -->
+      <div class="card panel c6">
+        <div class="head">
+          <h3><span class="gi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span>Total Top-Up</h3>
+          <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+        </div>
+        <div class="tot">S$4.43M</div>
+        <div class="tot-s">Jan – Apr 2026</div>
+        <div class="months">
+          <div class="mo">JAN<div class="bt"><i style="width:82%;background:#4A7C59"></i></div><span>1.20M</span></div>
+          <div class="mo">FEB<div class="bt"><i style="width:58%;background:#4A7C59"></i></div><span>0.85M</span></div>
+          <div class="mo">MAR<div class="bt"><i style="width:100%;background:#2D5A3D"></i></div><span>1.46M</span></div>
+          <div class="mo">APR<div class="bt"><i style="width:63%;background:#4A7C59"></i></div><span>0.92M</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+</body>
+</html>

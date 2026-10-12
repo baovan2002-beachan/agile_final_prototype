@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en" style="width: 1280px; height: 848px; overflow: hidden; position: relative;"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"background":"#F8F6F6","tertiary-container":"#E4575C","on-tertiary-fixed-variant":"#A8151C","surface":"#F8F6F6","surface-container":"#F0ECEC","surface-dim":"#DDD7D7","outline":"#8A8082","error":"#BA1A1A","on-secondary-container":"#5C1520","on-secondary-fixed":"#5C1520","on-surface":"#1A1512","inverse-surface":"#2E2628","on-tertiary":"#FFFFFF","tertiary-fixed":"#FDE3E3","secondary":"#A8343F","on-primary-container":"#FBE3E5","on-surface-variant":"#5E5658","surface-container-highest":"#E4DEDE","on-primary-fixed-variant":"#8A2538","tertiary":"#D61F26","on-background":"#1A1512","surface-tint":"#8A2538","surface-container-high":"#EAE5E5","surface-container-low":"#F6F3F3","error-container":"#FFDAD6","surface-variant":"#E4DEDE","secondary-fixed-dim":"#E8BFC3","inverse-on-surface":"#F7F2F2","on-error-container":"#93000A","surface-container-lowest":"#FFFFFF","on-tertiary-fixed":"#410004","on-primary-fixed":"#3A0A12","secondary-container":"#F3D2D5","on-secondary-fixed-variant":"#7A1F2B","inverse-primary":"#E8BFC3","surface-bright":"#F8F6F6","secondary-fixed":"#F9E3E5","outline-variant":"#E0D8D9","tertiary-fixed-dim":"#F5B1B3","on-primary":"#FFFFFF","on-tertiary-container":"#FFFFFF","primary-fixed-dim":"#E8BFC3","on-error":"#FFFFFF","primary":"#8A2538","on-secondary":"#FFFFFF","primary-fixed":"#F3D2D5","primary-container":"#A8343F"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"margin-tablet":"1.5rem","margin":"1rem","space-xl":"1.5rem","margin-desktop":"2rem","space-lg":"1rem","space-xs":"0.25rem","space-md":"0.75rem","space-sm":"0.5rem","space-2xl":"2rem","gutter":"1rem","gutter-desktop":"1.5rem"},fontFamily:{"headline-xl-mobile":["Inter"],"title-md":["Inter"],"label-md":["Inter"],"caption":["Inter"],"headline-lg-mobile":["Inter"],"headline-lg":["Inter"],"headline-xl":["Inter"],"body-md":["Inter"],"label-sm":["Inter"],"body-lg":["Inter"],"body-sm":["Inter"],"headline-md":["Inter"]},fontSize:{"headline-xl-mobile":["26px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"700"}],"title-md":["16px",{lineHeight:"22px",fontWeight:"600"}],"label-md":["13px",{lineHeight:"16px",fontWeight:"500"}],"caption":["12px",{lineHeight:"16px",fontWeight:"400"}],"headline-lg-mobile":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"headline-xl":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}],"body-lg":["15px",{lineHeight:"22px",fontWeight:"400"}],"body-sm":["13px",{lineHeight:"18px",fontWeight:"400"}],"headline-md":["18px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest"><div class="h-14 w-full px-margin md:px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><button class="lg:hidden p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded" id="mobile-drawer-toggle" type="button"><span class="material-symbols-outlined text-title-md">menu</span></button><div class="flex items-center gap-space-sm"><img alt="EduFund Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wl81QwcCmrVZNb_9iMONA0bD0vccoey0IOkl5InDkX_ZjtfS3rOFuKJ_5V0s120cMe5auMa4db0-z8SJwnJKCiHJ83BfV10YonGogY64H4DcPH2EhHWzCgs5YZOIa3feJZhiywLRAGRPZRJc5MbVEFqtNE-dR2H2wTb4qa6GrltsBuaCnbyDrgOIyAG88ccHA5T2yIWVD3OJzk0mcUW1GKeAwFUE6nOPi0GjH0WDFkdW-RAS583sHVHgLN"/></div><div class="h-4 w-px bg-surface-container-highest hidden sm:block"></div><div class="hidden sm:flex items-center gap-space-xs"><span class="px-2 py-0.5 rounded text-label-sm font-label-sm uppercase tracking-wider bg-secondary-fixed text-on-secondary-fixed" id="portal-badge">School Admin</span><span class="font-caption text-caption text-on-surface-variant hidden md:inline" id="portal-entity">Riverside Primary School</span></div></div><div class="flex items-center gap-space-sm"><button class="hidden sm:flex items-center gap-space-xs px-space-md py-1.5 rounded text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-title-md">help_outline</span><span class="">Help</span></button><div class="relative"><button aria-label="Notifications" class="p-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface relative transition-colors" type="button"><span class="material-symbols-outlined text-headline-md">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-tertiary ring-2 ring-surface-container-lowest"></span></button></div><div class="h-5 w-px bg-surface-container-highest hidden sm:block"></div><div class="relative flex items-center gap-space-sm pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUwoWOGhm86R7tUm3yHA_MP_UQ3B8mjx5sUPbDeXNiiUne5jB9Xpxnl6PEPijPbQ-ZeSect4heHhbV4SfXMSKr3iC4RZjo5ILT1wLXgxaOtsQn0gnNFqcUTMmnA0YZyt2_usqK1yx-me06uEEY3E_zLlYZFOTXXfIc4K06kJM7qAfj8UKAgjFVrvGOB5WMrKD-5l1y_g8sUGRQmBy3oGckU4fMPmPD9t9tXAy1uRY7MikkEyZ3Bckwpw"/><div class="hidden md:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight">Alicia Tan</span><span class="font-caption text-caption text-on-surface-variant leading-tight">School Bursar</span></div><span class="material-symbols-outlined text-title-md text-on-surface-variant hidden md:inline">expand_more</span></div></div></div></header><aside class="fixed left-0 top-0 h-full w-[232px] bg-surface-container-lowest z-40 flex flex-col justify-between pt-[88px] pb-space-lg transition-transform duration-200 ease-in-out -translate-x-full lg:translate-x-0" id="sidebar-drawer"><div class="flex flex-col flex-1 overflow-y-auto px-space-sm"><div class="px-space-md py-space-xs mb-space-sm"><span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">PORTAL CONTEXT</span><div class="mt-space-xs flex items-center justify-between rounded p-space-xs bg-surface-container-low"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-title-md text-secondary">domain</span><span class="font-label-md text-label-md text-on-surface">School HQ</span></div><span class="font-caption text-caption text-secondary font-semibold">ACTIVE</span></div></div><nav class="flex-1 flex flex-col gap-0.5" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded"><a aria-current="page" class="sidebar-nav-item flex items-center gap-space-md px-space-md py-2 transition-colors bg-secondary-container text-on-secondary-container font-semibold rounded" data-nav="overview" href="javascript:void(0)" onclick="navigateToSection('overview')"><span class="material-symbols-outlined text-title-md">dashboard</span><span class="">Overview</span></a>
+<a class="sidebar-nav-item flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-nav="education-levels" href="javascript:void(0)" onclick="navigateToSection('education-levels')"><span class="material-symbols-outlined text-title-md">stairs</span><span class="">Education Levels</span></a>
+<a class="sidebar-nav-item flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-nav="classes" href="javascript:void(0)" onclick="navigateToSection('classes')"><span class="material-symbols-outlined text-title-md">meeting_room</span><span class="">Classes</span></a>
+<a class="sidebar-nav-item flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-nav="students" href="javascript:void(0)" onclick="navigateToSection('students')"><span class="material-symbols-outlined text-title-md">school</span><span class="">Students</span></a>
+<a class="sidebar-nav-item flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-nav="fee-types" href="javascript:void(0)" onclick="navigateToSection('fee-types')"><span class="material-symbols-outlined text-title-md">price_change</span><span class="">Fee Types</span></a>
+<a class="sidebar-nav-item flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-nav="sbfas" href="javascript:void(0)" onclick="navigateToSection('sbfas')"><span class="material-symbols-outlined text-title-md">rate_review</span><span class="flex-1">FAS Applications</span><span class="px-1.5 py-0.2 rounded text-label-sm font-label-sm bg-tertiary text-on-tertiary font-bold">14</span></a>
+<a class="sidebar-nav-item flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-nav="budgets" href="javascript:void(0)" onclick="navigateToSection('budgets')"><span class="material-symbols-outlined text-title-md">account_balance_wallet</span><span class="">Budgets &amp; Stats</span></a>
+<a class="sidebar-nav-item flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-nav="audit-log" href="javascript:void(0)" onclick="navigateToSection('audit-log')"><span class="material-symbols-outlined text-title-md">fact_check</span><span class="">Audit Log</span></a>
+<a class="sidebar-nav-item flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-nav="settings" href="javascript:void(0)" onclick="navigateToSection('settings')"><span class="material-symbols-outlined text-title-md">settings</span><span class="">Settings</span></a></nav></div><div class="px-space-md pt-space-md flex flex-col gap-space-sm"><div class="h-px w-full bg-surface-container-highest"></div><a class="flex items-center gap-space-md px-space-md py-2 rounded text-tertiary hover:bg-surface-container-high hover:text-tertiary transition-colors font-body-sm text-body-sm" data-path="logout" href="#"><span class="material-symbols-outlined text-title-md">logout</span><span class="">Sign out</span></a></div></aside><div class="lg:pl-[232px] flex flex-col min-h-screen"><main class="flex-1 pt-24 bg-background w-full px-margin md:px-margin-desktop"><div class="flex flex-col w-full pb-12"><!-- Dynamic Notification Toast -->
+<div class="fixed top-20 right-6 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-space-sm px-space-md py-space-sm bg-inverse-surface text-inverse-on-surface rounded shadow-md" id="toast-notification">
+<span class="material-symbols-outlined text-title-md text-secondary-fixed">check_circle</span>
+<span class="font-body-sm text-body-sm" id="toast-message">Operation completed successfully.</span>
+</div>
+<!-- Scope Banner (Institutional Authority Top Persistent) -->
+<section class="w-full bg-surface-container-high rounded p-space-md mb-space-lg">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-headline-md">verified_user</span>
+<div class="flex flex-col">
+<div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+
+
+<span class="font-title-md text-title-md text-on-surface tracking-tight">Riverside Primary School (BPS001)</span>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-lowest text-on-surface-variant font-medium">Academic Year 2026</span>
+</div>
+
+</div>
+</div>
+
+</div>
+</section>
+<!-- Quick Stat Tiles with navigation shortcuts -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-xl">
+<div class="bg-surface-container-lowest rounded p-space-md transition-all hover:bg-surface-container-low cursor-pointer shadow-sm" onclick="navigateToSection('students')">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Enrollment</span>
+<span class="material-symbols-outlined text-headline-md text-secondary">groups</span>
+</div>
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tight">1,200</div>
+<div class="font-caption text-caption text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="text-secondary font-medium">1,182 active</span>
+<span class="">•</span>
+<span class="text-tertiary font-medium">18 pending activation</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded p-space-md transition-all hover:bg-surface-container-low cursor-pointer shadow-sm" onclick="navigateToSection('classes')">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Classes</span>
+<span class="material-symbols-outlined text-headline-md text-secondary">meeting_room</span>
+</div>
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tight">30</div>
+
+</div>
+<div class="bg-surface-container-lowest rounded p-space-md transition-all hover:bg-surface-container-low cursor-pointer shadow-sm" onclick="navigateToSection('education-levels')">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Education Levels</span>
+<span class="material-symbols-outlined text-headline-md text-secondary">stairs</span>
+</div>
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tight">6</div>
+
+</div>
+<div class="bg-surface-container-lowest rounded p-space-md transition-all hover:bg-surface-container-low cursor-pointer shadow-sm" onclick="navigateToSection('fee-types')">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Active Fee Types</span>
+<span class="material-symbols-outlined text-headline-md text-secondary">price_change</span>
+</div>
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tight">4</div>
+
+</div>
+</section>
+<!-- VIEW 1: OVERVIEW -->
+<div class="view-section flex flex-col gap-space-xl" id="view-overview">
+<!-- Quick Link Strip -->
+<div class="w-full flex items-center justify-between bg-surface-container-low p-2 rounded">
+
+<div class="flex items-center gap-2">
+<button class="px-space-md py-1.5 rounded font-label-md text-label-md bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors flex items-center gap-1" onclick="navigateToSection('sbfas')">
+<span class="material-symbols-outlined text-title-md">rate_review</span>
+<span class="">Review FAS Applications (14)</span>
+</button>
+<button class="px-space-md py-1.5 rounded font-label-md text-label-md bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-1" onclick="navigateToSection('budgets')">
+<span class="material-symbols-outlined text-title-md">account_balance</span>
+<span class="">Budgets &amp; Stats</span>
+</button>
+</div>
+</div>
+<!-- Regulated Fee Schedules Summary -->
+<div class="bg-surface-container-lowest rounded p-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-sm mb-space-sm">
+<div>
+<h2 class="font-title-md text-title-md text-on-surface">Institutional Regulated Fee Schedules</h2>
+
+</div>
+<button class="mt-2 sm:mt-0 px-space-md py-1 rounded text-label-sm font-label-sm bg-surface-container text-secondary hover:bg-surface-container-high font-semibold flex items-center gap-1" onclick="navigateToSection('fee-types')">
+<span class="">Manage Fee Schedules</span>
+<span class="material-symbols-outlined text-caption">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<div class="p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between mb-1">
+<span class="font-caption text-caption text-on-surface-variant font-medium">Miscellaneous Fee</span>
+<span class="material-symbols-outlined text-title-md text-secondary">receipt</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface tabular-nums">S$13.00</div>
+<div class="font-caption text-caption text-on-surface-variant">Billed Monthly</div>
+</div>
+<div class="p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between mb-1">
+<span class="font-caption text-caption text-on-surface-variant font-medium">Learning Materials</span>
+<span class="material-symbols-outlined text-title-md text-secondary">menu_book</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface tabular-nums">S$55.00</div>
+<div class="font-caption text-caption text-on-surface-variant">Per Term</div>
+</div>
+<div class="p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between mb-1">
+<span class="font-caption text-caption text-on-surface-variant font-medium">Enrichment Programme</span>
+<span class="material-symbols-outlined text-title-md text-secondary">sports_volleyball</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface tabular-nums">S$65.00</div>
+<div class="font-caption text-caption text-on-surface-variant">Per Term</div>
+</div>
+<div class="p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between mb-1">
+<span class="font-caption text-caption text-on-surface-variant font-medium">Student Insurance</span>
+<span class="material-symbols-outlined text-title-md text-secondary">health_and_safety</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface tabular-nums">S$8.00</div>
+<div class="font-caption text-caption text-on-surface-variant">Annually</div>
+</div>
+</div>
+</div>
+<!-- Quick Snapshot of Student Directory with View More -->
+<div class="bg-surface-container-lowest rounded p-space-md">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div>
+<h2 class="font-title-md text-title-md text-on-surface">Student Directory &amp; Status Sample</h2>
+
+</div>
+<button class="px-space-md py-1.5 rounded font-label-md text-label-md bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-1" onclick="navigateToSection('students')">
+<span class="">Open Full Student Directory</span>
+<span class="material-symbols-outlined text-caption">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<div class="p-space-sm rounded bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-label-sm text-label-sm font-bold">ET</span>
+<div>
+<div class="font-body-sm font-semibold text-on-surface">Ethan Tan</div>
+<div class="font-caption text-caption text-on-surface-variant">Primary 4 • P4-Compassion</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-secondary-fixed text-on-secondary-fixed">Tier 1 Approved</span>
+</div>
+<div class="p-space-sm rounded bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-label-sm text-label-sm font-bold">LL</span>
+<div>
+<div class="font-body-sm font-semibold text-on-surface">Lucas Lim</div>
+<div class="font-caption text-caption text-on-surface-variant">Primary 6 • P6-Integrity</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#FDF1D6] text-[#8F5F00]">SBFAS Pending</span>
+</div>
+<div class="p-space-sm rounded bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-label-sm text-label-sm font-bold">MD</span>
+<div>
+<div class="font-body-sm font-semibold text-on-surface">Muhammad Danish</div>
+<div class="font-caption text-caption text-on-surface-variant">Primary 5 • P5-Honesty</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#FDE3E3] text-[#D61F26]">High Risk Flagged</span>
+</div>
+</div>
+</div>
+</div>
+<!-- VIEW 2: EDUCATION LEVELS -->
+<div class="view-section hidden flex-col gap-space-xl" id="view-education-levels">
+<div class="bg-surface-container-lowest rounded p-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm mb-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Education Levels &amp; Cohort Structure</h2>
+
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold">Total Cohorts: 6</span>
+<span class="px-2.5 py-1 rounded bg-surface-container text-on-surface font-label-sm text-label-sm font-medium">1,200 Total Students</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
+<!-- P1 -->
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded font-label-md text-label-md font-bold bg-secondary text-on-secondary">Primary 1 (P1)</span>
+<span class="text-caption font-caption text-on-surface-variant">Academic Year 2026</span>
+</div>
+<div class="flex flex-col gap-1 mb-3">
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Cohort Size:</span><span class="font-semibold text-on-surface">200 Students</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Classes Count:</span><span class="font-semibold text-on-surface">5 Classes (P1-A to P1-E)</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Curriculum Head:</span><span class="font-medium text-secondary">Mrs. Grace Wong (HOD Lower Pri)</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Assistance Rate:</span><span class="font-medium text-[#18794A]">11.5% Subsidized</span></div>
+</div>
+<button class="w-full h-8 rounded bg-surface-container-high text-on-surface hover:bg-surface-container-highest font-label-md text-label-md" onclick="navigateToSection('classes')">View P1 Classes</button>
+</div>
+<!-- P2 -->
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded font-label-md text-label-md font-bold bg-secondary text-on-secondary">Primary 2 (P2)</span>
+<span class="text-caption font-caption text-on-surface-variant">Academic Year 2026</span>
+</div>
+<div class="flex flex-col gap-1 mb-3">
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Cohort Size:</span><span class="font-semibold text-on-surface">200 Students</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Classes Count:</span><span class="font-semibold text-on-surface">5 Classes (P2-A to P2-E)</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Curriculum Head:</span><span class="font-medium text-secondary">Mr. Raymond Chen</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Assistance Rate:</span><span class="font-medium text-[#18794A]">12.0% Subsidized</span></div>
+</div>
+<button class="w-full h-8 rounded bg-surface-container-high text-on-surface hover:bg-surface-container-highest font-label-md text-label-md" onclick="navigateToSection('classes')">View P2 Classes</button>
+</div>
+<!-- P3 -->
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded font-label-md text-label-md font-bold bg-secondary text-on-secondary">Primary 3 (P3)</span>
+<span class="text-caption font-caption text-on-surface-variant">Academic Year 2026</span>
+</div>
+<div class="flex flex-col gap-1 mb-3">
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Cohort Size:</span><span class="font-semibold text-on-surface">200 Students</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Classes Count:</span><span class="font-semibold text-on-surface">5 Classes (P3-A to P3-E)</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Curriculum Head:</span><span class="font-medium text-secondary">Mdm. Faridah Binte Osman</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Assistance Rate:</span><span class="font-medium text-[#18794A]">13.2% Subsidized</span></div>
+</div>
+<button class="w-full h-8 rounded bg-surface-container-high text-on-surface hover:bg-surface-container-highest font-label-md text-label-md" onclick="navigateToSection('classes')">View P3 Classes</button>
+</div>
+<!-- P4 -->
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded font-label-md text-label-md font-bold bg-secondary text-on-secondary">Primary 4 (P4)</span>
+<span class="text-caption font-caption text-on-surface-variant">Academic Year 2026</span>
+</div>
+<div class="flex flex-col gap-1 mb-3">
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Cohort Size:</span><span class="font-semibold text-on-surface">200 Students</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Classes Count:</span><span class="font-semibold text-on-surface">5 Classes (P4-A to P4-E)</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Curriculum Head:</span><span class="font-medium text-secondary">Mr. David Teo</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Assistance Rate:</span><span class="font-medium text-[#18794A]">12.8% Subsidized</span></div>
+</div>
+<button class="w-full h-8 rounded bg-surface-container-high text-on-surface hover:bg-surface-container-highest font-label-md text-label-md" onclick="navigateToSection('classes')">View P4 Classes</button>
+</div>
+<!-- P5 -->
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded font-label-md text-label-md font-bold bg-secondary text-on-secondary">Primary 5 (P5)</span>
+<span class="text-caption font-caption text-on-surface-variant">Academic Year 2026</span>
+</div>
+<div class="flex flex-col gap-1 mb-3">
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Cohort Size:</span><span class="font-semibold text-on-surface">200 Students</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Classes Count:</span><span class="font-semibold text-on-surface">5 Classes (P5-A to P5-E)</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Curriculum Head:</span><span class="font-medium text-secondary">Mrs. Stella Koh</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Assistance Rate:</span><span class="font-medium text-[#18794A]">14.0% Subsidized</span></div>
+</div>
+<button class="w-full h-8 rounded bg-surface-container-high text-on-surface hover:bg-surface-container-highest font-label-md text-label-md" onclick="navigateToSection('classes')">View P5 Classes</button>
+</div>
+<!-- P6 -->
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded font-label-md text-label-md font-bold bg-secondary text-on-secondary">Primary 6 (P6)</span>
+<span class="text-caption font-caption text-on-surface-variant">Academic Year 2026</span>
+</div>
+<div class="flex flex-col gap-1 mb-3">
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Cohort Size:</span><span class="font-semibold text-on-surface">200 Students</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Classes Count:</span><span class="font-semibold text-on-surface">5 Classes (P6-A to P6-E)</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Curriculum Head:</span><span class="font-medium text-secondary">Mr. Jeffrey Lim (PSLE Lead)</span></div>
+<div class="flex justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant">Assistance Rate:</span><span class="font-medium text-[#18794A]">13.5% Subsidized</span></div>
+</div>
+<button class="w-full h-8 rounded bg-surface-container-high text-on-surface hover:bg-surface-container-highest font-label-md text-label-md" onclick="navigateToSection('classes')">View P6 Classes</button>
+</div>
+</div>
+</div>
+</div>
+<!-- VIEW 3: CLASSES (All 30 classes across P1-P6) -->
+<div class="view-section hidden flex-col gap-space-xl" id="view-classes">
+<div class="bg-surface-container-lowest rounded p-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm mb-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">All 30 Classes (Primary 1 to 6)</h2>
+
+</div>
+<div class="flex items-center gap-2">
+<input class="h-8 rounded px-3 font-body-sm text-body-sm bg-surface-container-low text-on-surface" id="classes-search-input" onkeyup="filterClassesGrid()" placeholder="Search class or teacher..." type="text"/>
+<span class="px-2 py-1 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold">30 Classes Active</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-md" id="classes-grid-container">
+<!-- Sample representative set covering values across all cohorts -->
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P1-Care</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Ms. Evelyn Chua</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #02-01 • Primary 1</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P1-Joy</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mr. Benjamin Lee</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #02-02 • Primary 1</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P2-Joy</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mdm. Siti Rahmah</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #03-01 • Primary 2</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P2-Respect</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mr. Nathan Kumar</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #03-02 • Primary 2</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P3-Respect</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mrs. Denise Goh</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #04-01 • Primary 3</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P3-Compassion</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Ms. Rachel Tan</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #04-02 • Primary 3</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P4-Compassion</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mr. Kelvin Low</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #05-01 • Primary 4</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P4-Honesty</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mrs. Irene Wang</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #05-02 • Primary 4</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P5-Honesty</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mdm. Halimah Bee</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #06-01 • Primary 5</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P5-Integrity</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mr. Jason Yeo</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #06-02 • Primary 5</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P6-Integrity</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mr. Marcus Lim</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #06-05 • Primary 6</div>
+</div>
+<div class="class-card p-space-sm rounded bg-surface-container-low flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1"><span class="font-title-md text-title-md font-semibold text-secondary">P6-Excellence</span><span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-[#E4F4EC] text-[#18794A] font-semibold">40/40 Full</span></div>
+<div class="font-body-sm text-on-surface">Form Teacher: <strong>Mrs. Brenda Tay</strong></div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Classroom #06-06 • Primary 6</div>
+</div>
+</div>
+</div>
+</div>
+<!-- VIEW 4: STUDENTS DIRECTORY (Full student directory with controls) -->
+<div class="view-section hidden flex-col gap-space-xl" id="view-students">
+<div class="bg-surface-container-lowest rounded p-space-md">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md pb-space-md">
+<div class="flex flex-wrap items-center gap-space-sm flex-1">
+<div class="relative min-w-[240px] flex-1 sm:flex-initial">
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-title-md text-outline">search</span>
+<input class="h-9 w-full rounded pl-9 pr-3 font-body-md text-body-md bg-surface-container-low text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-secondary" id="student-search-input" onkeyup="filterStudentsTable()" placeholder="Search by name, ID or class..." type="text"/>
+</div>
+<div class="flex items-center">
+<select class="h-9 rounded px-3 font-body-sm text-body-sm bg-surface-container-low text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="filter-level" onchange="filterStudentsTable()">
+<option value="ALL">All Levels (P1–P6)</option>
+<option value="Primary 1">Primary 1</option>
+<option value="Primary 2">Primary 2</option>
+<option value="Primary 3">Primary 3</option>
+<option value="Primary 4">Primary 4</option>
+<option value="Primary 5">Primary 5</option>
+<option value="Primary 6">Primary 6</option>
+</select>
+</div>
+<div class="flex items-center">
+<select class="h-9 rounded px-3 font-body-sm text-body-sm bg-surface-container-low text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="filter-class" onchange="filterStudentsTable()">
+<option value="ALL">All Classes</option>
+<option value="P1-Care">P1-Care</option>
+<option value="P2-Joy">P2-Joy</option>
+<option value="P3-Respect">P3-Respect</option>
+<option value="P4-Compassion">P4-Compassion</option>
+<option value="P5-Honesty">P5-Honesty</option>
+<option value="P6-Integrity">P6-Integrity</option>
+</select>
+</div>
+<div class="flex items-center">
+<select class="h-9 rounded px-3 font-body-sm text-body-sm bg-surface-container-low text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="filter-status" onchange="filterStudentsTable()">
+<option value="ALL">All Account Status</option>
+<option value="Active">Active</option>
+<option value="Pending">Pending Activation</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end lg:self-auto">
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-1.5" onclick="openCsvModal()" type="button">
+<span class="material-symbols-outlined text-title-md">file_upload</span>
+<span class="">Import CSV</span>
+</button>
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors flex items-center gap-1.5" onclick="openAddStudentModal()" type="button">
+<span class="material-symbols-outlined text-title-md">person_add</span>
+<span class="">+ Add Student</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-sm text-body-sm whitespace-nowrap">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-2.5 px-space-md">Student ID</th>
+<th class="py-2.5 px-space-md">Name</th>
+<th class="py-2.5 px-space-md">Level</th>
+<th class="py-2.5 px-space-md">Class</th>
+<th class="py-2.5 px-space-md">Account Status</th>
+<th class="py-2.5 px-space-md text-right">Account Balance</th>
+<th class="py-2.5 px-space-md">SBFAS Status</th>
+<th class="py-2.5 px-space-md text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent" id="students-tbody">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-space-md font-medium text-secondary">BPS-26011</td>
+<td class="py-3 px-space-md font-medium text-on-surface flex items-center gap-2">
+<span class="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-label-sm text-label-sm">ET</span>
+<span class="">Ethan Tan</span>
+</td>
+<td class="py-3 px-space-md text-on-surface-variant">Primary 4</td>
+<td class="py-3 px-space-md text-on-surface-variant">P4-Compassion</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-[#E4F4EC] text-[#18794A]">Active</span>
+</td>
+<td class="py-3 px-space-md text-right font-medium text-on-surface tabular-nums">S$380.00</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-secondary-fixed text-on-secondary-fixed">Tier 1 Approved</span>
+</td>
+<td class="py-3 px-space-md text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="text-secondary hover:underline font-label-md text-label-md" onclick="viewStudentProfile('BPS-26011', 'Ethan Tan', 'Primary 4', 'P4-Compassion', 'S$380.00', 'Tier 1 Approved')">View</button>
+<span class="text-outline-variant">•</span>
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md" onclick="showQuickToast('Edit dialog loaded for Ethan Tan')">Edit</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-space-md font-medium text-secondary">BPS-26012</td>
+<td class="py-3 px-space-md font-medium text-on-surface flex items-center gap-2">
+<span class="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-label-sm text-label-sm">MP</span>
+<span class="">Maya Patel</span>
+</td>
+<td class="py-3 px-space-md text-on-surface-variant">Primary 2</td>
+<td class="py-3 px-space-md text-on-surface-variant">P2-Joy</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-[#E4F4EC] text-[#18794A]">Active</span>
+</td>
+<td class="py-3 px-space-md text-right font-medium text-on-surface tabular-nums">S$510.00</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-surface-container text-on-surface-variant">Standard</span>
+</td>
+<td class="py-3 px-space-md text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="text-secondary hover:underline font-label-md text-label-md" onclick="viewStudentProfile('BPS-26012', 'Maya Patel', 'Primary 2', 'P2-Joy', 'S$510.00', 'Standard')">View</button>
+<span class="text-outline-variant">•</span>
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md" onclick="showQuickToast('Edit dialog loaded for Maya Patel')">Edit</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-space-md font-medium text-secondary">BPS-26013</td>
+<td class="py-3 px-space-md font-medium text-on-surface flex items-center gap-2">
+<span class="w-7 h-7 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-label-sm text-label-sm">LL</span>
+<span class="">Lucas Lim</span>
+</td>
+<td class="py-3 px-space-md text-on-surface-variant">Primary 6</td>
+<td class="py-3 px-space-md text-on-surface-variant">P6-Integrity</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-[#E4F4EC] text-[#18794A]">Active</span>
+</td>
+<td class="py-3 px-space-md text-right font-medium text-on-surface tabular-nums">S$120.00</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-[#FDF1D6] text-[#8F5F00]">SBFAS Pending Review</span>
+</td>
+<td class="py-3 px-space-md text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="text-tertiary font-semibold hover:underline font-label-md text-label-md" onclick="openReviewModal('Lucas Lim', 'P6-Integrity', 'BPS-26013', 'S$580', 'High Risk', 'Tier 1 Full Subsidy (100% misc + materials)', '89% probability of structural arrears without prompt institutional intervention.', 'critical')">Review SBFAS</button>
+<span class="text-outline-variant">•</span>
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md" onclick="showQuickToast('Edit dialog loaded for Lucas Lim')">Edit</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-space-md font-medium text-secondary">BPS-26014</td>
+<td class="py-3 px-space-md font-medium text-on-surface flex items-center gap-2">
+<span class="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-label-sm text-label-sm">CN</span>
+<span class="">Chloe Ng</span>
+</td>
+<td class="py-3 px-space-md text-on-surface-variant">Primary 3</td>
+<td class="py-3 px-space-md text-on-surface-variant">P3-Respect</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-[#E4F4EC] text-[#18794A]">Active</span>
+</td>
+<td class="py-3 px-space-md text-right font-medium text-on-surface tabular-nums">S$440.00</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-surface-container text-on-surface-variant">Standard</span>
+</td>
+<td class="py-3 px-space-md text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="text-secondary hover:underline font-label-md text-label-md" onclick="viewStudentProfile('BPS-26014', 'Chloe Ng', 'Primary 3', 'P3-Respect', 'S$440.00', 'Standard')">View</button>
+<span class="text-outline-variant">•</span>
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md" onclick="showQuickToast('Edit dialog loaded for Chloe Ng')">Edit</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-space-md font-medium text-secondary">BPS-26015</td>
+<td class="py-3 px-space-md font-medium text-on-surface flex items-center gap-2">
+<span class="w-7 h-7 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-label-sm text-label-sm">MD</span>
+<span class="">Muhammad Danish</span>
+</td>
+<td class="py-3 px-space-md text-on-surface-variant">Primary 5</td>
+<td class="py-3 px-space-md text-on-surface-variant">P5-Honesty</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-[#E4F4EC] text-[#18794A]">Active</span>
+</td>
+<td class="py-3 px-space-md text-right font-medium text-on-surface tabular-nums">S$290.00</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-[#FDE3E3] text-[#D61F26]">High Risk Flagged</span>
+</td>
+<td class="py-3 px-space-md text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="text-secondary hover:underline font-label-md text-label-md" onclick="openReviewModal('Muhammad Danish', 'P5-Honesty', 'BPS-26015', 'S$790', 'Medium Risk', 'Tier 2 Partial Subsidy (70%)', 'Per-capita income threshold closely matches secondary tier safety matrix.', 'warning')">Review SBFAS</button>
+<span class="text-outline-variant">•</span>
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md" onclick="showQuickToast('Edit dialog loaded for Muhammad Danish')">Edit</button>
+</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-space-md font-medium text-secondary">BPS-26016</td>
+<td class="py-3 px-space-md font-medium text-on-surface flex items-center gap-2">
+<span class="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-label-sm text-label-sm">SL</span>
+<span class="">Sophia Lee</span>
+</td>
+<td class="py-3 px-space-md text-on-surface-variant">Primary 1</td>
+<td class="py-3 px-space-md text-on-surface-variant">P1-Care</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-[#E4F4EC] text-[#18794A]">Active</span>
+</td>
+<td class="py-3 px-space-md text-right font-medium text-on-surface tabular-nums">S$600.00</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-surface-container text-on-surface-variant">Standard</span>
+</td>
+<td class="py-3 px-space-md text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="text-secondary hover:underline font-label-md text-label-md" onclick="viewStudentProfile('BPS-26016', 'Sophia Lee', 'Primary 1', 'P1-Care', 'S$600.00', 'Standard')">View</button>
+<span class="text-outline-variant">•</span>
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md" onclick="showQuickToast('Edit dialog loaded for Sophia Lee')">Edit</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-md mt-space-sm">
+<div class="font-caption text-caption text-on-surface-variant">
+        Showing <span class="font-semibold text-on-surface">1–6</span> of <span class="font-semibold text-on-surface">1,200</span> students • 6 per page
+      </div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold">1</button>
+<button class="w-8 h-8 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high font-label-sm text-label-sm" onclick="showQuickToast('Navigating to page 2')">2</button>
+<button class="w-8 h-8 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high font-label-sm text-label-sm" onclick="showQuickToast('Navigating to page 3')">3</button>
+<span class="px-1 text-outline font-caption text-caption">...</span>
+<button class="w-8 h-8 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high font-label-sm text-label-sm" onclick="showQuickToast('Navigating to page 200')">200</button>
+</div>
+</div>
+</div>
+</div>
+<!-- VIEW 5: FEE TYPES (Regulated fee schedule management) -->
+<div class="view-section hidden flex-col gap-space-xl" id="view-fee-types">
+<div class="bg-surface-container-lowest rounded p-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm mb-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Regulated Fee Schedules &amp; Levies</h2>
+
+</div>
+<button class="px-space-md py-1.5 rounded font-label-md text-label-md bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors flex items-center gap-1.5" onclick="showQuickToast('Fee schedule configuration dialog opened')">
+<span class="material-symbols-outlined text-title-md">add_circle</span>
+<span class="">Configure New Fee Type</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-headline-md">receipt</span>
+<span class="font-title-md font-semibold text-on-surface">Miscellaneous Fee</span>
+</div>
+
+</div>
+
+<div class="mt-space-md flex items-baseline gap-2">
+<span class="font-headline-xl font-bold text-on-surface">S$13.00</span>
+<span class="font-caption text-caption text-on-surface-variant">/ Month (Billed Monthly)</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center justify-between pt-space-xs border-t border-surface-container-highest">
+
+<button class="text-secondary font-label-md font-semibold hover:underline" onclick="showQuickToast('Editing Miscellaneous Fee rate')">Edit Rate</button>
+</div>
+</div>
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-headline-md">menu_book</span>
+<span class="font-title-md font-semibold text-on-surface">Learning Materials</span>
+</div>
+
+</div>
+
+<div class="mt-space-md flex items-baseline gap-2">
+<span class="font-headline-xl font-bold text-on-surface">S$55.00</span>
+<span class="font-caption text-caption text-on-surface-variant">/ Term (4 terms per AY)</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center justify-between pt-space-xs border-t border-surface-container-highest">
+
+<button class="text-secondary font-label-md font-semibold hover:underline" onclick="showQuickToast('Editing Learning Materials fee')">Edit Rate</button>
+</div>
+</div>
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-headline-md">sports_volleyball</span>
+<span class="font-title-md font-semibold text-on-surface">Enrichment Programme</span>
+</div>
+
+</div>
+
+<div class="mt-space-md flex items-baseline gap-2">
+<span class="font-headline-xl font-bold text-on-surface">S$65.00</span>
+<span class="font-caption text-caption text-on-surface-variant">/ Term</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center justify-between pt-space-xs border-t border-surface-container-highest">
+
+<button class="text-secondary font-label-md font-semibold hover:underline" onclick="showQuickToast('Editing Enrichment Programme rate')">Edit Rate</button>
+</div>
+</div>
+<div class="p-space-md rounded bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-headline-md">health_and_safety</span>
+<span class="font-title-md font-semibold text-on-surface">Student Insurance</span>
+</div>
+
+</div>
+
+<div class="mt-space-md flex items-baseline gap-2">
+<span class="font-headline-xl font-bold text-on-surface">S$8.00</span>
+<span class="font-caption text-caption text-on-surface-variant">/ Annually</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center justify-between pt-space-xs border-t border-surface-container-highest">
+
+<button class="text-secondary font-label-md font-semibold hover:underline" onclick="showQuickToast('Editing Student Insurance rate')">Edit Rate</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- VIEW 6: FAS APPLICATIONS (SBFAS Application Review Workbench) -->
+<div class="view-section hidden flex-col gap-space-xl" id="view-sbfas">
+<div class="bg-surface-container-lowest rounded p-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-sm mb-space-sm">
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<h2 class="font-headline-md text-headline-md text-on-surface">SBFAS Financial Assistance Review Queue</h2>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-tertiary-fixed text-on-tertiary-fixed font-bold">14 Pending Actions</span>
+</div>
+
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-caption text-caption text-on-surface-variant">Sort by:</span>
+<span class="px-2.5 py-1 rounded bg-surface-container-low text-on-surface font-label-sm text-label-sm font-medium">Highest Risk Urgency</span>
+</div>
+</div>
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-sm text-body-sm whitespace-nowrap">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-2.5 px-space-md">Applicant Student</th>
+<th class="py-2.5 px-space-md">Household PCI</th>
+<th class="py-2.5 px-space-md">AI Risk Rating</th>
+<th class="py-2.5 px-space-md">System Recommended Tier</th>
+<th class="py-2.5 px-space-md">Verification SLA</th>
+<th class="py-2.5 px-space-md text-center">Discretionary Review</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent">
+<!-- Row 1: High Risk -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Lucas Lim</span>
+<span class="font-caption text-caption text-on-surface-variant">BPS-26013 • P6-Integrity</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-medium text-on-surface tabular-nums">
+              S$580 / mo
+              <span class="block font-caption text-caption text-on-surface-variant">&lt; S$690 PCI ceiling</span>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="px-2.5 py-1 rounded text-label-sm font-label-sm font-semibold bg-[#FDE3E3] text-[#D61F26] inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-caption">warning</span>
+                High Risk (89% Arrears)
+              </span>
+</td>
+<td class="py-3.5 px-space-md font-medium text-on-surface">
+              Tier 1 Full Subsidy (100% misc + materials)
+            </td>
+<td class="py-3.5 px-space-md text-tertiary font-medium">
+              Due Today (2 hrs remaining)
+            </td>
+<td class="py-3.5 px-space-md text-center">
+<button class="h-8 px-space-md rounded bg-secondary text-on-secondary hover:bg-on-secondary-container font-label-md text-label-md inline-flex items-center gap-1" onclick="openReviewModal('Lucas Lim', 'P6-Integrity', 'BPS-26013', 'S$580', 'High Risk', 'Tier 1 Full Subsidy (100% misc + materials)', '89% probability of arrears without aid. Mother single wage earner with 4 dependent siblings.', 'critical')">
+<span class="">Open Review Modal</span>
+<span class="material-symbols-outlined text-caption">open_in_new</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Medium Risk -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Muhammad Danish</span>
+<span class="font-caption text-caption text-on-surface-variant">BPS-26015 • P5-Honesty</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-medium text-on-surface tabular-nums">
+              S$790 / mo
+              <span class="block font-caption text-caption text-on-surface-variant">Tier 2 bracket range</span>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="px-2.5 py-1 rounded text-label-sm font-label-sm font-semibold bg-[#FDF1D6] text-[#8F5F00] inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-caption">report</span>
+                Medium Risk (54% Arrears)
+              </span>
+</td>
+<td class="py-3.5 px-space-md font-medium text-on-surface">
+              Tier 2 Partial Subsidy (70%)
+            </td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+              1 day remaining
+            </td>
+<td class="py-3.5 px-space-md text-center">
+<button class="h-8 px-space-md rounded bg-secondary text-on-secondary hover:bg-on-secondary-container font-label-md text-label-md inline-flex items-center gap-1" onclick="openReviewModal('Muhammad Danish', 'P5-Honesty', 'BPS-26015', 'S$790', 'Medium Risk', 'Tier 2 Partial Subsidy (70%)', 'Per-capita income threshold qualifies for partial co-share.', 'warning')">
+<span class="">Open Review Modal</span>
+<span class="material-symbols-outlined text-caption">open_in_new</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Low Risk -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Nurul Aisyah</span>
+<span class="font-caption text-caption text-on-surface-variant">BPS-26018 • P3-Respect</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-medium text-on-surface tabular-nums">
+              S$1,100 / mo
+              <span class="block font-caption text-caption text-on-surface-variant">Borderline Discretionary</span>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="px-2.5 py-1 rounded text-label-sm font-label-sm font-semibold bg-[#E4F4EC] text-[#18794A] inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-caption">check_circle</span>
+                Low Risk (18% Arrears)
+              </span>
+</td>
+<td class="py-3.5 px-space-md font-medium text-on-surface">
+              Tier 3 Discretionary (30%)
+            </td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+              3 days remaining
+            </td>
+<td class="py-3.5 px-space-md text-center">
+<button class="h-8 px-space-md rounded bg-secondary text-on-secondary hover:bg-on-secondary-container font-label-md text-label-md inline-flex items-center gap-1" onclick="openReviewModal('Nurul Aisyah', 'P3-Respect', 'BPS-26018', 'S$1,100', 'Low Risk', 'Tier 3 Discretionary (30%)', 'Eligible under School Advisory Board discretionary buffer.', 'good')">
+<span class="">Open Review Modal</span>
+<span class="material-symbols-outlined text-caption">open_in_new</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- VIEW 7: BUDGETS & STATS -->
+<div class="view-section hidden flex-col gap-space-xl" id="view-budgets">
+<div class="w-full bg-[#E4F4EC] p-space-md rounded flex items-center justify-between gap-space-sm text-[#18794A]">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-headline-md">verified</span>
+<div>
+<span class="font-title-md text-title-md font-semibold">Budget Health On Track</span>
+
+</div>
+</div>
+<span class="px-2 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm font-bold uppercase tracking-wider text-[#18794A]">Healthy</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">School SBFAS Grant Budget</span>
+<span class="material-symbols-outlined text-title-md text-secondary">payments</span>
+</div>
+<div class="font-headline-xl text-headline-xl text-on-surface tabular-nums">S$120,000.00</div>
+
+</div>
+<div class="mt-space-lg">
+<div class="flex justify-between items-center text-body-sm font-body-sm mb-1">
+<span class="font-medium text-on-surface">Total Absorbed</span>
+<span class="text-secondary font-semibold">S$74,800.00 (62.3%)</span>
+</div>
+<div class="w-full bg-surface-container-high h-2.5 rounded overflow-hidden">
+<div class="bg-secondary h-full rounded" style="width: 62.3%"></div>
+</div>
+<div class="flex justify-between items-center font-caption text-caption text-on-surface-variant mt-2">
+<span class="">Remaining Reserve: <strong class="text-on-surface">S$45,200.00</strong></span>
+
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Subsidized Beneficiaries</span>
+<span class="material-symbols-outlined text-title-md text-secondary">pie_chart</span>
+</div>
+<div class="font-headline-xl text-headline-xl text-on-surface tabular-nums">148 Students</div>
+
+</div>
+<div class="flex items-center justify-center gap-space-md my-2">
+<svg class="transform -rotate-90" height="90" viewbox="0 0 36 36" width="90">
+<path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4.5"></path>
+<path class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="60, 100" stroke-width="4.5"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="25, 100" stroke-dashoffset="-60" stroke-width="4.5"></path>
+</svg>
+<div class="flex flex-col gap-1 font-caption text-caption">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="text-on-surface">Tier 1: 89 students (60%)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="text-on-surface">Tier 2: 37 students (25%)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-dim"></span>
+<span class="text-on-surface">Tier 3: 22 students (15%)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Treasury Governance</span>
+<span class="material-symbols-outlined text-title-md text-secondary">gavel</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface">Tier 1 Supervised</div>
+
+</div>
+<div class="p-space-sm rounded bg-surface-container-low mt-space-md">
+<div class="flex items-center gap-1 text-secondary font-label-sm text-label-sm font-semibold mb-1">
+<span class="material-symbols-outlined text-caption">shield</span>
+<span class="">Quarterly Audit Ready</span>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<!-- VIEW 8: AUDIT LOG -->
+<div class="view-section hidden flex-col gap-space-xl" id="view-audit-log">
+<div class="bg-surface-container-lowest rounded p-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm mb-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Immutable Administrative Audit Ledger</h2>
+
+</div>
+<div class="flex items-center gap-2">
+
+<button class="px-space-md py-1 rounded text-label-sm font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="showQuickToast('Exporting audit log to signed PDF')">Export Audit Trail</button>
+</div>
+</div>
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-sm text-body-sm whitespace-nowrap">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-2.5 px-space-md">Timestamp</th>
+<th class="py-2.5 px-space-md">Administrator</th>
+<th class="py-2.5 px-space-md">Action Type</th>
+<th class="py-2.5 px-space-md">Target Scope</th>
+<th class="py-2.5 px-space-md">Details &amp; Compliance Ref</th>
+<th class="py-2.5 px-space-md text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-space-md text-on-surface-variant font-mono text-caption">2026-10-12 11:42:15 SGT</td>
+<td class="py-3 px-space-md font-medium text-on-surface">Alicia Tan (Bursar)</td>
+<td class="py-3 px-space-md"><span class="px-2 py-0.5 rounded text-label-sm bg-secondary-fixed text-on-secondary-fixed font-semibold">SBFAS Decision</span></td>
+<td class="py-3 px-space-md text-on-surface">BPS-26011 (Ethan Tan)</td>
+<td class="py-3 px-space-md text-on-surface-variant">Approved Tier 1 Full Subsidy. Verified MOE registry sync.</td>
+<td class="py-3 px-space-md text-center"><span class="text-[#18794A] font-bold">Verified</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-space-md text-on-surface-variant font-mono text-caption">2026-10-12 10:15:02 SGT</td>
+<td class="py-3 px-space-md font-medium text-on-surface">System Automation</td>
+<td class="py-3 px-space-md"><span class="px-2 py-0.5 rounded text-label-sm bg-surface-container text-on-surface font-semibold">Monthly Invoicing</span></td>
+<td class="py-3 px-space-md text-on-surface">Cohort P1–P6 (1,200)</td>
+<td class="py-3 px-space-md text-on-surface-variant">Disbursed S$13.00 monthly miscellaneous fees across 1,182 active accounts.</td>
+<td class="py-3 px-space-md text-center"><span class="text-[#18794A] font-bold">Success</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-space-md text-on-surface-variant font-mono text-caption">2026-10-11 16:20:44 SGT</td>
+<td class="py-3 px-space-md font-medium text-on-surface">Alicia Tan (Bursar)</td>
+<td class="py-3 px-space-md"><span class="px-2 py-0.5 rounded text-label-sm bg-tertiary-fixed text-on-tertiary-fixed font-semibold">Risk Escalation</span></td>
+<td class="py-3 px-space-md text-on-surface">BPS-26013 (Lucas Lim)</td>
+<td class="py-3 px-space-md text-on-surface-variant">AI Decision engine assigned High Risk (89%). Routed to immediate bursar workbench.</td>
+<td class="py-3 px-space-md text-center"><span class="text-[#8F5F00] font-bold">Queued</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-space-md text-on-surface-variant font-mono text-caption">2026-10-10 09:04:19 SGT</td>
+<td class="py-3 px-space-md font-medium text-on-surface">Alicia Tan (Bursar)</td>
+<td class="py-3 px-space-md"><span class="px-2 py-0.5 rounded text-label-sm bg-surface-container text-on-surface font-semibold">Batch CSV Ingest</span></td>
+<td class="py-3 px-space-md text-on-surface">School Enrollment</td>
+<td class="py-3 px-space-md text-on-surface-variant">Imported 3 verified student records; 1 duplicate NRIC flagged.</td>
+<td class="py-3 px-space-md text-center"><span class="text-[#18794A] font-bold">Audited</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- VIEW 9: SETTINGS -->
+<div class="view-section hidden flex-col gap-space-xl" id="view-settings">
+<div class="bg-surface-container-lowest rounded p-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm mb-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">School Administration Settings</h2>
+
+</div>
+<button class="px-space-md py-1.5 rounded font-label-md text-label-md bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors" onclick="showQuickToast('Institutional settings saved successfully.')">Save Configuration</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="p-space-md rounded bg-surface-container-low flex flex-col gap-space-sm">
+<h3 class="font-title-md font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">calendar_today</span>
+<span class="">Academic Calendar &amp; Billing Cycles</span>
+</h3>
+<div>
+<label class="font-caption text-caption text-on-surface-variant">Active Academic Fiscal Year</label>
+<input class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-lowest text-on-surface mt-1" type="text" value="2026 (1 Jan 2026 – 31 Dec 2026)"/>
+</div>
+<div>
+<label class="font-caption text-caption text-on-surface-variant">Term Invoicing Schedule</label>
+<select class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-lowest text-on-surface mt-1">
+<option>4 Terms (Standard MOE Singapore Calendar)</option>
+<option>2 Semesters</option>
+</select>
+</div>
+<div>
+<label class="font-caption text-caption text-on-surface-variant">Arrears Grace Period</label>
+<input class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-lowest text-on-surface mt-1" type="text" value="30 Days Post Statement Date"/>
+</div>
+</div>
+<div class="p-space-md rounded bg-surface-container-low flex flex-col gap-space-sm">
+<h3 class="font-title-md font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">admin_panel_settings</span>
+<span class="">Bursar Access &amp; Delegation</span>
+</h3>
+<div>
+<label class="font-caption text-caption text-on-surface-variant">Primary Administrator</label>
+<input class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-lowest text-on-surface mt-1" readonly="" type="text" value="Alicia Tan (School Bursar) • License #SCH-8842"/>
+</div>
+<div>
+<label class="font-caption text-caption text-on-surface-variant">Discretionary FAS Approval Threshold</label>
+<input class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-lowest text-on-surface mt-1" type="text" value="S$5,000 per single batch approval"/>
+</div>
+<div>
+<label class="font-caption text-caption text-on-surface-variant">MOE Ledger Auto-Synchronization</label>
+<select class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-lowest text-on-surface mt-1">
+<option>Enabled (Real-time live audit API)</option>
+<option>Nightly Batch at 23:59 SGT</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL: SBFAS Review & Decision Workbench Modal -->
+<div class="fixed inset-0 z-50 bg-[#1A1512]/45 backdrop-blur-[2px] hidden items-center justify-center p-4" id="review-modal-scrim">
+<div class="bg-surface-container-lowest rounded-xl max-w-2xl w-full max-h-[92vh] overflow-y-auto flex flex-col shadow-2xl">
+<div class="p-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-title-md">fact_check</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">SBFAS Eligibility Review &amp; Tier Recommendation</h3>
+
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded" onclick="closeReviewModal()" type="button">
+<span class="material-symbols-outlined text-title-md">close</span>
+</button>
+</div>
+<div class="p-space-md flex flex-col gap-space-md">
+<div class="p-space-sm rounded bg-surface-container-low grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block">Student Name</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold" id="modal-student-name">Lucas Lim</span>
+</div>
+<div>
+<span class="font-caption text-caption text-on-surface-variant block">ID &amp; Class</span>
+<span class="font-label-md text-label-md text-on-surface" id="modal-student-meta">BPS-26013 (P6-Integrity)</span>
+</div>
+<div>
+<span class="font-caption text-caption text-on-surface-variant block">Household PCI</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold tabular-nums" id="modal-student-pci">S$580 / mo</span>
+</div>
+<div>
+<span class="font-caption text-caption text-on-surface-variant block">Assessed Risk</span>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FDE3E3] text-[#D61F26] inline-block" id="modal-risk-badge">High Risk</span>
+</div>
+</div>
+<div class="p-space-md rounded bg-surface-container-low flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-title-md">psychology</span>
+<span class="">AI Analytical Risk Evaluation (US-603 / EP-06)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface" id="modal-ai-explanation">
+          89% probability of arrears without aid. Mother single wage earner with 4 dependent siblings.
+        </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-caption font-caption text-on-surface-variant">System Recommended Grant:</span>
+<span class="font-label-md text-label-md font-semibold text-secondary" id="modal-recommended-tier">Tier 1 Full Subsidy (100% misc + materials)</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
+          Action: Confirm Recommendation or Exercise School Override
+        </label>
+<select class="h-9 rounded px-3 font-body-sm text-body-sm bg-surface-container-low text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="modal-tier-select">
+<option value="TIER1">Tier 1 Full Subsidy (100% Miscellaneous + 100% Materials)</option>
+<option value="TIER2">Tier 2 Partial Subsidy (70% Miscellaneous + 50% Materials)</option>
+<option value="TIER3">Tier 3 Discretionary Support (30% Assistance)</option>
+<option value="REJECT">Reject Application (Does Not Meet SBFAS Criteria)</option>
+</select>
+<div class="flex flex-col gap-1 mt-1">
+<label class="font-caption text-caption text-on-surface-variant flex justify-between">
+<span class="">Mandatory Administrator Justification &amp; Audit Log Reason:</span>
+
+</label>
+<textarea class="w-full rounded p-2.5 font-body-sm text-body-sm bg-surface-container-low text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-secondary" id="modal-justification-text" placeholder="Enter formal review rationale (e.g. Verified documentary evidence submitted by parent at general office...)" rows="3"></textarea>
+</div>
+</div>
+</div>
+<div class="p-space-md bg-surface-container-low flex flex-wrap items-center justify-between gap-space-sm">
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors" onclick="closeReviewModal()" type="button">
+        Cancel
+      </button>
+<div class="flex items-center gap-space-sm">
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-tertiary-container text-on-tertiary-container hover:bg-tertiary hover:text-on-tertiary transition-colors" onclick="submitDecision('Rejected with Reason')" type="button">
+          Reject with Reason
+        </button>
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-surface-container-highest text-on-surface hover:bg-surface-dim transition-colors" onclick="submitDecision('Approved with Custom Override')" type="button">
+          Override &amp; Approve
+        </button>
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors font-semibold shadow-sm" onclick="submitDecision('Approved Tier 1 Assistance')" type="button">
+          Approve Recommended Tier
+        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL: Import CSV Batch Validation Modal -->
+<div class="fixed inset-0 z-50 bg-[#1A1512]/45 backdrop-blur-[2px] hidden items-center justify-center p-4" id="csv-modal-scrim">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full flex flex-col shadow-2xl">
+<div class="p-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-title-md">upload_file</span>
+<h3 class="font-title-md text-title-md text-on-surface">Batch CSV Student Ingestion</h3>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded" onclick="closeCsvModal()" type="button">
+<span class="material-symbols-outlined text-title-md">close</span>
+</button>
+</div>
+<div class="p-space-md flex flex-col gap-space-md">
+<div class="p-space-lg rounded bg-surface-container-low flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-headline-xl text-secondary mb-2">cloud_upload</span>
+<span class="font-title-md text-title-md text-on-surface">riverside_students_batch_2026.csv</span>
+<span class="font-caption text-caption text-on-surface-variant mt-0.5">Parsed 4 student records</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Row Validation Status</span>
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-1 rounded text-label-sm font-label-sm font-bold bg-[#E4F4EC] text-[#18794A] flex items-center gap-1">
+<span class="material-symbols-outlined text-caption">check_circle</span>
+            3 ready for commit
+          </span>
+<span class="px-2.5 py-1 rounded text-label-sm font-label-sm font-bold bg-[#FDE3E3] text-[#D61F26] flex items-center gap-1">
+<span class="material-symbols-outlined text-caption">error</span>
+            1 error skipped (Row #4: Invalid NRIC syntax)
+          </span>
+</div>
+</div>
+
+</div>
+<div class="p-space-md bg-surface-container-low flex items-center justify-end gap-space-sm">
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors" onclick="closeCsvModal()" type="button">
+        Cancel
+      </button>
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors" onclick="commitCsvImport()" type="button">
+        Commit 3 Valid Students
+      </button>
+</div>
+</div>
+</div>
+<!-- MODAL: Add Single Student Modal -->
+<div class="fixed inset-0 z-50 bg-[#1A1512]/45 backdrop-blur-[2px] hidden items-center justify-center p-4" id="add-student-modal-scrim">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full flex flex-col shadow-2xl">
+<div class="p-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-title-md">person_add</span>
+<h3 class="font-title-md text-title-md text-on-surface">Enroll New Student Account</h3>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded" onclick="closeAddStudentModal()" type="button">
+<span class="material-symbols-outlined text-title-md">close</span>
+</button>
+</div>
+<div class="p-space-md flex flex-col gap-space-sm">
+<div>
+<label class="font-caption text-caption text-on-surface-variant">Full Legal Name</label>
+<input class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-low text-on-surface mt-1 focus:outline-none focus:ring-2 focus:ring-secondary" id="new-student-name" placeholder="e.g. Keith Low" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="font-caption text-caption text-on-surface-variant">Education Level</label>
+<select class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-low text-on-surface mt-1 focus:outline-none focus:ring-2 focus:ring-secondary" id="new-student-level">
+<option value="Primary 1">Primary 1</option>
+<option value="Primary 2">Primary 2</option>
+<option value="Primary 3">Primary 3</option>
+<option value="Primary 4">Primary 4</option>
+<option value="Primary 5">Primary 5</option>
+<option value="Primary 6">Primary 6</option>
+</select>
+</div>
+<div>
+<label class="font-caption text-caption text-on-surface-variant">Assigned Class</label>
+<input class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-low text-on-surface mt-1 focus:outline-none focus:ring-2 focus:ring-secondary" id="new-student-class" placeholder="e.g. P1-Care" type="text"/>
+</div>
+</div>
+<div>
+<label class="font-caption text-caption text-on-surface-variant">Initial Edusave / Balance (S$ SGD)</label>
+<input class="h-9 w-full rounded px-3 font-body-sm text-body-sm bg-surface-container-low text-on-surface mt-1 focus:outline-none focus:ring-2 focus:ring-secondary" id="new-student-balance" type="number" value="300"/>
+</div>
+</div>
+<div class="p-space-md bg-surface-container-low flex items-center justify-end gap-space-sm">
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors" onclick="closeAddStudentModal()" type="button">
+        Cancel
+      </button>
+<button class="h-9 px-space-md rounded font-label-md text-label-md bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors" onclick="submitAddStudent()" type="button">
+        Save Student Account
+      </button>
+</div>
+</div>
+</div>
+<script>
+  // Unified Section Routing & Sidebar State Controller
+  function navigateToSection(sectionId) {
+    const allViews = ['overview', 'education-levels', 'classes', 'students', 'fee-types', 'sbfas', 'budgets', 'audit-log', 'settings'];
+    allViews.forEach(v => {
+      const viewEl = document.getElementById('view-' + v);
+      if (viewEl) {
+        if (v === sectionId) {
+          viewEl.classList.remove('hidden');
+          viewEl.classList.add('flex');
+        } else {
+          viewEl.classList.add('hidden');
+          viewEl.classList.remove('flex');
+        }
+      }
+    });
+
+    // Update sidebar navigation links highlight
+    document.querySelectorAll('.sidebar-nav-item').forEach(link => {
+      const linkNav = link.getAttribute('data-nav');
+      if (linkNav === sectionId) {
+        link.className = 'sidebar-nav-item flex items-center gap-space-md px-space-md py-2 transition-colors bg-secondary-container text-on-secondary-container font-semibold rounded';
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.className = 'sidebar-nav-item flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm';
+        link.removeAttribute('aria-current');
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Filter for Classes Grid
+  function filterClassesGrid() {
+    const searchVal = document.getElementById('classes-search-input').value.toLowerCase();
+    const cards = document.querySelectorAll('#classes-grid-container .class-card');
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(searchVal) ? '' : 'none';
+    });
+  }
+
+  // Toast Notification Controller
+  function showQuickToast(msg) {
+    const toast = document.getElementById('toast-notification');
+    const msgEl = document.getElementById('toast-message');
+    if (!toast || !msgEl) return;
+    msgEl.textContent = msg;
+    toast.classList.remove('opacity-0', 'translate-y-[-100px]', 'pointer-events-none');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'translate-y-[-100px]', 'pointer-events-none');
+    }, 3200);
+  }
+
+  // Review Modal Logic
+  function openReviewModal(name, studentClass, id, pci, risk, recommendedTier, explanation, riskType) {
+    document.getElementById('modal-student-name').textContent = name;
+    document.getElementById('modal-student-meta').textContent = id + ' (' + studentClass + ')';
+    document.getElementById('modal-student-pci').textContent = pci + ' / mo';
+    document.getElementById('modal-recommended-tier').textContent = recommendedTier;
+    document.getElementById('modal-ai-explanation').textContent = explanation;
+
+    const riskBadge = document.getElementById('modal-risk-badge');
+    riskBadge.textContent = risk;
+    if (riskType === 'critical') {
+      riskBadge.className = 'px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FDE3E3] text-[#D61F26] inline-block';
+    } else if (riskType === 'warning') {
+      riskBadge.className = 'px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FDF1D6] text-[#8F5F00] inline-block';
+    } else {
+      riskBadge.className = 'px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#E4F4EC] text-[#18794A] inline-block';
+    }
+
+    const scrim = document.getElementById('review-modal-scrim');
+    scrim.classList.remove('hidden');
+    scrim.classList.add('flex');
+  }
+
+  function closeReviewModal() {
+    const scrim = document.getElementById('review-modal-scrim');
+    scrim.classList.add('hidden');
+    scrim.classList.remove('flex');
+  }
+
+  function submitDecision(actionLabel) {
+    const justification = document.getElementById('modal-justification-text').value.trim();
+    if (!justification) {
+      alert('Compliance Requirement: Please enter a mandatory Justification Reason for this audit record.');
+      return;
+    }
+    const student = document.getElementById('modal-student-name').textContent;
+    closeReviewModal();
+    showQuickToast(`${actionLabel} recorded for ${student}. Ledger audited.`);
+    document.getElementById('modal-justification-text').value = '';
+  }
+
+  function viewStudentProfile(id, name, level, studentClass, balance, sbfas) {
+    showQuickToast(`Profile details loaded for ${name} (${id})`);
+  }
+
+  function openCsvModal() {
+    const scrim = document.getElementById('csv-modal-scrim');
+    scrim.classList.remove('hidden');
+    scrim.classList.add('flex');
+  }
+
+  function closeCsvModal() {
+    const scrim = document.getElementById('csv-modal-scrim');
+    scrim.classList.add('hidden');
+    scrim.classList.remove('flex');
+  }
+
+  function commitCsvImport() {
+    closeCsvModal();
+    showQuickToast('Successfully committed 3 verified students to Riverside ledger.');
+  }
+
+  function openAddStudentModal() {
+    const scrim = document.getElementById('add-student-modal-scrim');
+    scrim.classList.remove('hidden');
+    scrim.classList.add('flex');
+  }
+
+  function closeAddStudentModal() {
+    const scrim = document.getElementById('add-student-modal-scrim');
+    scrim.classList.add('hidden');
+    scrim.classList.remove('flex');
+  }
+
+  function submitAddStudent() {
+    const name = document.getElementById('new-student-name').value.trim();
+    if (!name) {
+      alert('Please provide the student legal name.');
+      return;
+    }
+    closeAddStudentModal();
+    showQuickToast(`Student ${name} successfully enrolled in Riverside Primary database.`);
+    document.getElementById('new-student-name').value = '';
+  }
+
+  function filterStudentsTable() {
+    const searchVal = document.getElementById('student-search-input').value.toLowerCase();
+    const levelVal = document.getElementById('filter-level').value;
+    const classVal = document.getElementById('filter-class').value;
+    const rows = document.querySelectorAll('#students-tbody tr');
+
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      const matchesSearch = text.includes(searchVal);
+      const matchesLevel = (levelVal === 'ALL') || text.includes(levelVal.toLowerCase());
+      const matchesClass = (classVal === 'ALL') || text.includes(classVal.toLowerCase());
+
+      if (matchesSearch && matchesLevel && matchesClass) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+</script></div>
+<script>
+  // Tab Switching Logic
+  function switchTab(target) {
+    const tabs = ['overview', 'workbench', 'budget'];
+    tabs.forEach(tab => {
+      const content = document.getElementById('tab-content-' + tab);
+      const btn = document.getElementById('tab-btn-' + tab);
+      if (tab === target) {
+        content.classList.remove('hidden');
+        content.classList.add('flex');
+        btn.className = "px-space-md py-2 rounded font-label-md text-label-md transition-colors bg-secondary text-on-secondary shadow-sm flex items-center gap-2";
+      } else {
+        content.classList.add('hidden');
+        content.classList.remove('flex');
+        btn.className = "px-space-md py-2 rounded font-label-md text-label-md transition-colors text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high flex items-center gap-2";
+      }
+    });
+  }
+
+  // Toast Notification Controller
+  function showQuickToast(msg) {
+    const toast = document.getElementById('toast-notification');
+    const msgEl = document.getElementById('toast-message');
+    msgEl.textContent = msg;
+    toast.classList.remove('opacity-0', 'translate-y-[-100px]', 'pointer-events-none');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'translate-y-[-100px]', 'pointer-events-none');
+    }, 3200);
+  }
+
+  // Review Modal Logic
+  function openReviewModal(name, studentClass, id, pci, risk, recommendedTier, explanation, riskType) {
+    document.getElementById('modal-student-name').textContent = name;
+    document.getElementById('modal-student-meta').textContent = id + ' (' + studentClass + ')';
+    document.getElementById('modal-student-pci').textContent = pci + ' / mo';
+    document.getElementById('modal-recommended-tier').textContent = recommendedTier;
+    document.getElementById('modal-ai-explanation').textContent = explanation;
+
+    const riskBadge = document.getElementById('modal-risk-badge');
+    riskBadge.textContent = risk;
+    if (riskType === 'critical') {
+      riskBadge.className = "px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FDE3E3] text-[#D61F26] inline-block";
+    } else if (riskType === 'warning') {
+      riskBadge.className = "px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FDF1D6] text-[#8F5F00] inline-block";
+    } else {
+      riskBadge.className = "px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#E4F4EC] text-[#18794A] inline-block";
+    }
+
+    const scrim = document.getElementById('review-modal-scrim');
+    scrim.classList.remove('hidden');
+    scrim.classList.add('flex');
+  }
+
+  function closeReviewModal() {
+    const scrim = document.getElementById('review-modal-scrim');
+    scrim.classList.add('hidden');
+    scrim.classList.remove('flex');
+  }
+
+  function submitDecision(actionLabel) {
+    const justification = document.getElementById('modal-justification-text').value.trim();
+    if (!justification) {
+      alert("Compliance Requirement: Please enter a mandatory Justification Reason for this audit record.");
+      return;
+    }
+    const student = document.getElementById('modal-student-name').textContent;
+    closeReviewModal();
+    showQuickToast(`${actionLabel} recorded for ${student}. Ledger audited.`);
+    document.getElementById('modal-justification-text').value = '';
+  }
+
+  // Single Student Profile View Modal / Action
+  function viewStudentProfile(id, name, level, studentClass, balance, sbfas) {
+    showQuickToast(`Profile details loaded for ${name} (${id})`);
+  }
+
+  // CSV Ingestion Modal
+  function openCsvModal() {
+    const scrim = document.getElementById('csv-modal-scrim');
+    scrim.classList.remove('hidden');
+    scrim.classList.add('flex');
+  }
+
+  function closeCsvModal() {
+    const scrim = document.getElementById('csv-modal-scrim');
+    scrim.classList.add('hidden');
+    scrim.classList.remove('flex');
+  }
+
+  function commitCsvImport() {
+    closeCsvModal();
+    showQuickToast("Successfully committed 3 verified students to Riverside ledger.");
+  }
+
+  // Add Student Modal
+  function openAddStudentModal() {
+    const scrim = document.getElementById('add-student-modal-scrim');
+    scrim.classList.remove('hidden');
+    scrim.classList.add('flex');
+  }
+
+  function closeAddStudentModal() {
+    const scrim = document.getElementById('add-student-modal-scrim');
+    scrim.classList.add('hidden');
+    scrim.classList.remove('flex');
+  }
+
+  function submitAddStudent() {
+    const name = document.getElementById('new-student-name').value.trim();
+    if (!name) {
+      alert("Please provide the student's legal name.");
+      return;
+    }
+    closeAddStudentModal();
+    showQuickToast(`Student ${name} successfully enrolled in Riverside Primary database.`);
+    document.getElementById('new-student-name').value = '';
+  }
+
+  // Client-Side Table Filter
+  function filterStudentsTable() {
+    const searchVal = document.getElementById('student-search-input').value.toLowerCase();
+    const levelVal = document.getElementById('filter-level').value;
+    const classVal = document.getElementById('filter-class').value;
+    const rows = document.querySelectorAll('#students-tbody tr');
+
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      const matchesSearch = text.includes(searchVal);
+      const matchesLevel = (levelVal === 'ALL') || text.includes(levelVal.toLowerCase());
+      const matchesClass = (classVal === 'ALL') || text.includes(classVal.toLowerCase());
+
+      if (matchesSearch && matchesLevel && matchesClass) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+</script></main></div>
+</body></html>

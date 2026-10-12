@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"background":"#F8F6F6","tertiary-container":"#E4575C","on-tertiary-fixed-variant":"#A8151C","surface":"#F8F6F6","surface-container":"#F0ECEC","surface-dim":"#DDD7D7","outline":"#8A8082","error":"#BA1A1A","on-secondary-container":"#5C1520","on-secondary-fixed":"#5C1520","on-surface":"#1A1512","inverse-surface":"#2E2628","on-tertiary":"#FFFFFF","tertiary-fixed":"#FDE3E3","secondary":"#A8343F","on-primary-container":"#FBE3E5","on-surface-variant":"#5E5658","surface-container-highest":"#E4DEDE","on-primary-fixed-variant":"#8A2538","tertiary":"#D61F26","on-background":"#1A1512","surface-tint":"#8A2538","surface-container-high":"#EAE5E5","surface-container-low":"#F6F3F3","error-container":"#FFDAD6","surface-variant":"#E4DEDE","secondary-fixed-dim":"#E8BFC3","inverse-on-surface":"#F7F2F2","on-error-container":"#93000A","surface-container-lowest":"#FFFFFF","on-tertiary-fixed":"#410004","on-primary-fixed":"#3A0A12","secondary-container":"#F3D2D5","on-secondary-fixed-variant":"#7A1F2B","inverse-primary":"#E8BFC3","surface-bright":"#F8F6F6","secondary-fixed":"#F9E3E5","outline-variant":"#E0D8D9","tertiary-fixed-dim":"#F5B1B3","on-primary":"#FFFFFF","on-tertiary-container":"#FFFFFF","primary-fixed-dim":"#E8BFC3","on-error":"#FFFFFF","primary":"#8A2538","on-secondary":"#FFFFFF","primary-fixed":"#F3D2D5","primary-container":"#A8343F"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"margin-tablet":"1.5rem","margin":"1rem","space-xl":"1.5rem","margin-desktop":"2rem","space-lg":"1rem","space-xs":"0.25rem","space-md":"0.75rem","space-sm":"0.5rem","space-2xl":"2rem","gutter":"1rem","gutter-desktop":"1.5rem"},fontFamily:{"headline-xl-mobile":["Inter"],"title-md":["Inter"],"label-md":["Inter"],"caption":["Inter"],"headline-lg-mobile":["Inter"],"headline-lg":["Inter"],"headline-xl":["Inter"],"body-md":["Inter"],"label-sm":["Inter"],"body-lg":["Inter"],"body-sm":["Inter"],"headline-md":["Inter"]},fontSize:{"headline-xl-mobile":["26px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"700"}],"title-md":["16px",{lineHeight:"22px",fontWeight:"600"}],"label-md":["13px",{lineHeight:"16px",fontWeight:"500"}],"caption":["12px",{lineHeight:"16px",fontWeight:"400"}],"headline-lg-mobile":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"headline-xl":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}],"body-lg":["15px",{lineHeight:"22px",fontWeight:"400"}],"body-sm":["13px",{lineHeight:"18px",fontWeight:"400"}],"headline-md":["18px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest"><div class="h-14 w-full px-margin md:px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><button class="lg:hidden p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded" id="mobile-drawer-toggle" type="button"><span class="material-symbols-outlined text-title-md">menu</span></button><div class="flex items-center gap-space-sm"><img alt="EduFund Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wl81QwcCmrVZNb_9iMONA0bD0vccoey0IOkl5InDkX_ZjtfS3rOFuKJ_5V0s120cMe5auMa4db0-z8SJwnJKCiHJ83BfV10YonGogY64H4DcPH2EhHWzCgs5YZOIa3feJZhiywLRAGRPZRJc5MbVEFqtNE-dR2H2wTb4qa6GrltsBuaCnbyDrgOIyAG88ccHA5T2yIWVD3OJzk0mcUW1GKeAwFUE6nOPi0GjH0WDFkdW-RAS583sHVHgLN"/></div><div class="h-4 w-px bg-surface-container-highest hidden sm:block"></div><div class="hidden sm:flex items-center gap-space-xs"><span class="px-2 py-0.5 rounded text-label-sm font-label-sm uppercase tracking-wider bg-secondary-fixed text-on-secondary-fixed" id="portal-badge">School Admin</span><span class="font-caption text-caption text-on-surface-variant hidden md:inline" id="portal-entity">Riverside Primary School</span></div></div><div class="flex items-center gap-space-sm"><button class="hidden sm:flex items-center gap-space-xs px-space-md py-1.5 rounded text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-title-md">help_outline</span><span class="">Help</span></button><div class="relative"><button aria-label="Notifications" class="p-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface relative transition-colors" type="button"><span class="material-symbols-outlined text-headline-md">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-tertiary ring-2 ring-surface-container-lowest"></span></button></div><div class="h-5 w-px bg-surface-container-highest hidden sm:block"></div><div class="relative flex items-center gap-space-sm pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUwoWOGhm86R7tUm3yHA_MP_UQ3B8mjx5sUPbDeXNiiUne5jB9Xpxnl6PEPijPbQ-ZeSect4heHhbV4SfXMSKr3iC4RZjo5ILT1wLXgxaOtsQn0gnNFqcUTMmnA0YZyt2_usqK1yx-me06uEEY3E_zLlYZFOTXXfIc4K06kJM7qAfj8UKAgjFVrvGOB5WMrKD-5l1y_g8sUGRQmBy3oGckU4fMPmPD9t9tXAy1uRY7MikkEyZ3Bckwpw"/><div class="hidden md:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight">Alicia Tan</span><span class="font-caption text-caption text-on-surface-variant leading-tight">School Bursar</span></div><span class="material-symbols-outlined text-title-md text-on-surface-variant hidden md:inline">expand_more</span></div></div></div></header><aside class="fixed left-0 top-0 h-full w-[232px] bg-surface-container-lowest z-40 flex flex-col justify-between pt-[88px] pb-space-lg transition-transform duration-200 ease-in-out -translate-x-full lg:translate-x-0" id="sidebar-drawer"><div class="flex flex-col flex-1 overflow-y-auto px-space-sm"><div class="px-space-md py-space-xs mb-space-sm"><span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">PORTAL CONTEXT</span><div class="mt-space-xs flex items-center justify-between rounded p-space-xs bg-surface-container-low"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-title-md text-secondary">domain</span><span class="font-label-md text-label-md text-on-surface">School HQ</span></div><span class="font-caption text-caption text-secondary font-semibold">ACTIVE</span></div></div><nav class="flex-1 flex flex-col gap-0.5" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded"><a class="flex items-center gap-space-md px-space-md py-2 transition-colors rounded sidebar-nav-link text-on-surface-variant" data-view="overview" href="#" onclick="event.preventDefault(); navigateView('overview');"><span class="material-symbols-outlined text-title-md">dashboard</span><span class="">Overview</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link text-on-surface-variant" data-view="schools" href="#" onclick="event.preventDefault(); navigateView('schools');"><span class="material-symbols-outlined text-title-md">domain</span><span class="">Schools</span></a><a aria-current="page" class="flex items-center gap-space-md px-space-md py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link bg-secondary-container text-on-secondary-container font-semibold" data-view="education-levels" href="#" onclick="event.preventDefault(); navigateView('education-levels');"><span class="material-symbols-outlined text-title-md">layers</span><span class="">Budget allocation</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link text-on-surface-variant" data-view="classes" href="#" onclick="event.preventDefault(); navigateView('classes');"><span class="material-symbols-outlined text-title-md">co_present</span><span class="">Classes</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link" data-view="students" href="#" onclick="event.preventDefault(); navigateView('students');"><span class="material-symbols-outlined text-title-md">school</span><span class="">Students</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link" data-view="education-accounts" href="#" onclick="event.preventDefault(); navigateView('education-accounts');"><span class="material-symbols-outlined text-title-md">wallet</span><span class="">Education Accounts</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link" data-view="topup-management" href="#" onclick="event.preventDefault(); navigateView('topup-management');"><span class="material-symbols-outlined text-title-md">payments</span><span class="">Top-Up Management</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link" data-view="fee-types" href="#" onclick="event.preventDefault(); navigateView('fee-types');"><span class="material-symbols-outlined text-title-md">receipt_long</span><span class="">Fee Types</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link" data-view="fas-schemes" href="#" onclick="event.preventDefault(); navigateView('fas-schemes');"><span class="material-symbols-outlined text-title-md">volunteer_activism</span><span class="">FAS Schemes &amp; Budgets</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link" data-view="audit-log" href="#" onclick="event.preventDefault(); navigateView('audit-log');"><span class="material-symbols-outlined text-title-md">fact_check</span><span class="">Audit Log</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm sidebar-nav-link" data-view="settings" href="#" onclick="event.preventDefault(); navigateView('settings');"><span class="material-symbols-outlined text-title-md">settings</span><span class="">Settings</span></a></nav></div><div class="px-space-md pt-space-md flex flex-col gap-space-sm"><div class="h-px w-full bg-surface-container-highest"></div><a class="flex items-center gap-space-md px-space-md py-2 rounded text-tertiary hover:bg-surface-container-high hover:text-tertiary transition-colors font-body-sm text-body-sm" data-path="logout" href="#"><span class="material-symbols-outlined text-title-md">logout</span><span class="">Sign out</span></a></div></aside><div class="lg:pl-[232px] flex flex-col min-h-screen"><main class="flex-1 pt-24 bg-background w-full px-margin md:px-margin-desktop"><div class="flex flex-col w-full"><!-- Persistent MOE HQ Scope Banner -->
+<div class="w-full bg-secondary text-on-secondary px-space-lg py-space-sm rounded-lg mb-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-sm shadow-sm">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="inline-flex items-center justify-center p-1 bg-surface-container-lowest/15 rounded">
+<span class="material-symbols-outlined text-title-md">assured_workload</span>
+</span>
+<div class="flex flex-col sm:flex-row sm:items-center gap-x-2">
+
+
+
+
+<span class="font-body-sm text-body-sm font-medium text-surface-container-lowest">Ministry of Education HQ</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md self-end md:self-auto">
+
+<span class="bg-surface-container-lowest/20 px-2 py-0.5 rounded font-label-sm text-label-sm uppercase tracking-wider text-surface-container-lowest">HQ Root</span>
+</div>
+</div>
+<!-- Simulation Active Warning Banner -->
+<div class="hidden w-full bg-tertiary-fixed text-on-tertiary-fixed px-space-lg py-space-md rounded-lg mb-space-lg transition-all items-center justify-between flex-wrap gap-space-md shadow-sm" id="simulation-banner">
+<div class="flex items-center gap-space-md">
+<span class="material-symbols-outlined text-headline-md text-tertiary">warning</span>
+<div>
+<div class="font-title-md text-title-md text-tertiary font-bold tracking-tight flex items-center gap-2">
+<span class="">SIMULATION MODE (READ-ONLY)</span>
+<span class="bg-surface-container-lowest px-1.5 py-0.5 rounded text-label-sm font-label-sm text-on-surface">SESSION ACTIVE</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-tertiary-fixed-variant mt-0.5" style="display:none">
+        Simulating <span class="font-semibold text-tertiary" id="sim-user-label">Alicia Tan</span> @ <span class="font-semibold text-tertiary" id="sim-school-label">Riverside Primary School (BPS001)</span> • All simulated events streamed into immutable audit log <code class="font-mono bg-surface-container-lowest/80 px-1 py-0.5 rounded text-label-sm">EF-SIM-9012</code>.
+      </p>
+</div>
+</div>
+<button class="h-9 px-space-md rounded-lg bg-tertiary text-on-tertiary hover:bg-tertiary-container transition-colors font-label-md text-label-md flex items-center gap-space-xs shadow-sm" onclick="exitSimulation()" type="button">
+<span class="material-symbols-outlined text-title-md">logout</span>
+<span class="">Exit Simulation &amp; Return to MOE HQ</span>
+</button>
+</div>
+<!-- Simulated Local Sandbox Preview Banner -->
+<div class="hidden bg-surface-container-lowest rounded-xl p-space-lg shadow-sm mb-space-lg" id="simulated-dashboard-preview">
+<div class="flex items-center justify-between pb-space-md mb-space-md bg-secondary-fixed/30 p-space-md rounded-lg">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Simulated Local Environment</span>
+<h3 class="font-headline-md text-headline-md text-on-surface" id="sim-preview-title">Riverside Primary School - Bursar Financial Suite</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-surface-container-lowest px-2 py-1 rounded text-label-sm font-label-sm text-secondary font-semibold">READ-ONLY SANDBOX</span>
+<button class="h-8 px-3 rounded bg-secondary text-on-secondary text-label-sm font-label-sm hover:bg-on-secondary-container transition-colors" onclick="exitSimulation()" type="button">Close View</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md mb-space-md">
+<div class="bg-surface-container-low p-space-md rounded-lg">
+<div class="font-caption text-caption text-on-surface-variant">Available School Petty &amp; FAS Fund</div>
+<div class="font-title-md text-title-md text-on-surface font-bold mt-1" id="sim-budget-display">S$120,000.00</div>
+<div class="font-caption text-caption text-secondary mt-1">Disbursed to date: S$64,820.00</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg">
+<div class="font-caption text-caption text-on-surface-variant">Pending Subsidy Validations</div>
+<div class="font-title-md text-title-md text-on-surface font-bold mt-1">14 Student Batches</div>
+
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg">
+<div class="font-caption text-caption text-on-surface-variant">Active Cashiers &amp; Sub-Bursars</div>
+<div class="font-title-md text-title-md text-on-surface font-bold mt-1">3 Staff Members</div>
+
+</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg font-caption text-caption text-on-surface-variant flex items-center justify-between">
+
+
+</div>
+</div>
+<!-- ================= 1. VIEW: OVERVIEW ================= -->
+<div class="view-section flex-col gap-space-lg hidden" id="view-overview">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-xs">
+<div>
+<div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+
+<span class="">•</span>
+<span class="">National Executive Hub</span>
+</div>
+
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="bg-surface-container px-space-md py-2 rounded-lg flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-title-md">sync</span>
+<div class="text-left">
+<div class="font-caption text-caption text-on-surface-variant">Central Ledger Sync</div>
+
+</div>
+</div>
+<button class="h-9 px-space-md rounded-lg bg-surface-container-lowest text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md flex items-center gap-space-xs shadow-sm" onclick="alert('Exporting National Consolidated Audit Package for FY2026...')" type="button">
+<span class="material-symbols-outlined text-title-md">download</span>
+<span class="">Export National Audit</span>
+</button>
+</div>
+</div>
+<!-- 4 Macro Stats Tiles -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-sm">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:bg-surface-container-low transition-colors cursor-pointer" onclick="navigateView('schools')">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Total Schools</span>
+<span class="p-2 bg-surface-container text-secondary rounded-lg"><span class="material-symbols-outlined text-title-md">account_balance</span></span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-bold">186</div>
+<div class="font-caption text-caption text-secondary mt-1 flex items-center gap-1">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+<span class="">184 active • 2 pending setup</span>
+</div>
+</div>
+<div class="font-caption text-caption text-on-surface-variant pt-space-xs flex items-center justify-between">
+
+
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:bg-surface-container-low transition-colors cursor-pointer" onclick="navigateView('students')">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Total Students</span>
+<span class="p-2 bg-surface-container text-secondary rounded-lg"><span class="material-symbols-outlined text-title-md">groups</span></span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-bold">142,860</div>
+
+</div>
+<div class="font-caption text-caption text-on-surface-variant pt-space-xs flex items-center justify-between">
+<span class="">Primary: 84,650</span>
+<span class="">Secondary: 58,210</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:bg-surface-container-low transition-colors cursor-pointer" onclick="navigateView('classes')">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Total Classes</span>
+<span class="p-2 bg-surface-container text-secondary rounded-lg"><span class="material-symbols-outlined text-title-md">co_present</span></span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-bold">3,810</div>
+
+</div>
+<div class="font-caption text-caption text-on-surface-variant pt-space-xs flex items-center justify-between">
+<span class="">Avg 37.5 / class</span>
+<span class="text-secondary font-medium">Cap: 40</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:bg-surface-container-low transition-colors cursor-pointer" onclick="navigateView('education-accounts')">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Active Education Accounts</span>
+<span class="p-2 bg-secondary-fixed text-on-secondary-fixed rounded-lg"><span class="material-symbols-outlined text-title-md">wallet</span></span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-xl text-headline-xl text-secondary tracking-tight font-bold">114,280</div>
+
+</div>
+
+</div>
+</div>
+<!-- Institutional Registry & Quick Simulation -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="px-space-md py-space-sm bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-title-md">hub</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold">Institutional Registry &amp; Bursar Simulation Access</span>
+</div>
+
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">School Code</th>
+<th class="py-3 px-space-md">School Name &amp; Zone</th>
+<th class="py-3 px-space-md">Education Levels</th>
+<th class="py-3 px-space-md text-right">Students</th>
+<th class="py-3 px-space-md text-right">SBFAS Budget (S$)</th>
+<th class="py-3 px-space-md text-center">Governance Simulation</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono font-semibold text-secondary">BPS001</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-semibold text-on-surface">Riverside Primary School</div>
+<div class="font-caption text-caption text-on-surface-variant">Zone North-4 • Bursar: Alicia Tan</div>
+</td>
+<td class="py-3 px-space-md"><span class="bg-surface-container px-2 py-0.5 rounded text-label-sm font-label-sm text-on-surface-variant">Primary (P1–P6)</span></td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">1,200</td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">S$120,000</td>
+<td class="py-3 px-space-md text-center">
+<button class="h-8 px-2.5 rounded bg-secondary text-on-secondary hover:bg-on-secondary-container text-label-sm font-label-sm inline-flex items-center gap-1 transition-colors" onclick="startSimulation('Riverside Primary School', 'BPS001', 'Alicia Tan')" type="button">
+<span class="material-symbols-outlined text-label-md">visibility</span>
+<span class="">Open School Portal (Simulate)</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono font-semibold text-secondary">RV008</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-semibold text-on-surface">Riverview Academy</div>
+<div class="font-caption text-caption text-on-surface-variant">Zone East-2 • Bursar: Marcus Ng</div>
+</td>
+<td class="py-3 px-space-md"><span class="bg-secondary-fixed px-2 py-0.5 rounded text-label-sm font-label-sm text-on-secondary-fixed">Primary &amp; Secondary</span></td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">2,450</td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">S$280,000</td>
+<td class="py-3 px-space-md text-center">
+<button class="h-8 px-2.5 rounded bg-secondary text-on-secondary hover:bg-on-secondary-container text-label-sm font-label-sm inline-flex items-center gap-1 transition-colors" onclick="startSimulation('Riverview Academy', 'RV008', 'Marcus Ng')" type="button">
+<span class="material-symbols-outlined text-label-md">visibility</span>
+<span class="">Open School Portal (Simulate)</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono font-semibold text-secondary">RFS002</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-semibold text-on-surface">Raffles South Primary</div>
+<div class="font-caption text-caption text-on-surface-variant">Zone South-1 • Bursar: Evelyn Koh</div>
+</td>
+<td class="py-3 px-space-md"><span class="bg-surface-container px-2 py-0.5 rounded text-label-sm font-label-sm text-on-surface-variant">Primary (P1–P6)</span></td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">1,450</td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">S$140,000</td>
+<td class="py-3 px-space-md text-center">
+<button class="h-8 px-2.5 rounded bg-secondary text-on-secondary hover:bg-on-secondary-container text-label-sm font-label-sm inline-flex items-center gap-1 transition-colors" onclick="startSimulation('Raffles South Primary', 'RFS002', 'Evelyn Koh')" type="button">
+<span class="material-symbols-outlined text-label-md">visibility</span>
+<span class="">Open School Portal (Simulate)</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ================= 2. VIEW: SCHOOLS ================= -->
+<div class="view-section flex-col gap-space-lg hidden" id="view-schools">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div>
+<span class="text-secondary font-label-sm uppercase tracking-wider">National Directory</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mt-1">All 186 MOE Schools</h2>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="h-9 px-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md" onclick="alert('Exporting full 186 school registry CSV with bursar license metadata...')" type="button">
+        Export Directory
+      </button>
+</div>
+</div>
+<!-- Search Filter Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col md:flex-row gap-space-md items-center justify-between">
+<div class="flex-1 w-full grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<div class="relative">
+<span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-on-surface-variant"><span class="material-symbols-outlined text-title-md">search</span></span>
+<input class="h-9 w-full pl-9 pr-3 rounded-lg bg-surface-container-low text-body-md text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-secondary" id="school-search" oninput="filterSchools()" placeholder="Search School Name or Code..." type="text"/>
+</div>
+<select class="h-9 w-full px-3 rounded-lg bg-surface-container-low text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="zone-filter" onchange="filterSchools()">
+<option value="ALL">All Zones (North, South, East, West)</option>
+<option value="North">Zone North</option>
+<option value="South">Zone South</option>
+<option value="East">Zone East</option>
+<option value="West">Zone West</option>
+</select>
+<select class="h-9 w-full px-3 rounded-lg bg-surface-container-low text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="type-filter" onchange="filterSchools()">
+<option value="ALL">All Educational Types</option>
+<option value="Primary">Primary (P1–P6)</option>
+<option value="Combined">Primary &amp; Secondary Combined</option>
+<option value="Secondary">Secondary Only</option>
+</select>
+</div>
+<div class="flex items-center gap-space-sm whitespace-nowrap self-end md:self-auto">
+<span class="font-caption text-caption text-on-surface-variant">Showing <strong class="text-on-surface" id="school-count">3</strong> / 186</span>
+<button class="h-9 px-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md" onclick="resetSchoolFilters()" type="button">Reset</button>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">School Code</th>
+<th class="py-3 px-space-md">School &amp; MOE License</th>
+<th class="py-3 px-space-md">Zone</th>
+<th class="py-3 px-space-md">Bursar Appointed</th>
+<th class="py-3 px-space-md text-center">License Status</th>
+<th class="py-3 px-space-md text-right">Students</th>
+<th class="py-3 px-space-md text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-container-low/60 transition-colors school-row" data-code="BPS001" data-name="Riverside Primary School" data-type="Primary" data-zone="North">
+<td class="py-3 px-space-md font-mono font-semibold text-secondary">BPS001</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-semibold text-on-surface">Riverside Primary School</div>
+<div class="font-caption text-caption text-on-surface-variant">MOE License #SCH-8842 • Tier 1 Supervision</div>
+</td>
+<td class="py-3 px-space-md">Zone North-4</td>
+<td class="py-3 px-space-md font-medium">Alicia Tan</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">ACTIVE</span></td>
+<td class="py-3 px-space-md text-right font-semibold">1,200</td>
+<td class="py-3 px-space-md text-center">
+<button class="h-8 px-2.5 rounded bg-secondary text-on-secondary hover:bg-on-secondary-container text-label-sm font-label-sm transition-colors" onclick="startSimulation('Riverside Primary School', 'BPS001', 'Alicia Tan')" type="button">Simulate</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors school-row" data-code="RV008" data-name="Riverview Academy" data-type="Combined" data-zone="East">
+<td class="py-3 px-space-md font-mono font-semibold text-secondary">RV008</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-semibold text-on-surface">Riverview Academy</div>
+<div class="font-caption text-caption text-on-surface-variant">MOE License #SCH-9102 • Tier 1 Supervision</div>
+</td>
+<td class="py-3 px-space-md">Zone East-2</td>
+<td class="py-3 px-space-md font-medium">Marcus Ng</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">ACTIVE</span></td>
+<td class="py-3 px-space-md text-right font-semibold">2,450</td>
+<td class="py-3 px-space-md text-center">
+<button class="h-8 px-2.5 rounded bg-secondary text-on-secondary hover:bg-on-secondary-container text-label-sm font-label-sm transition-colors" onclick="startSimulation('Riverview Academy', 'RV008', 'Marcus Ng')" type="button">Simulate</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors school-row" data-code="RFS002" data-name="Raffles South Primary" data-type="Primary" data-zone="South">
+<td class="py-3 px-space-md font-mono font-semibold text-secondary">RFS002</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-semibold text-on-surface">Raffles South Primary</div>
+<div class="font-caption text-caption text-on-surface-variant">MOE License #SCH-7650 • Tier 1 Supervision</div>
+</td>
+<td class="py-3 px-space-md">Zone South-1</td>
+<td class="py-3 px-space-md font-medium">Evelyn Koh</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">ACTIVE</span></td>
+<td class="py-3 px-space-md text-right font-semibold">1,450</td>
+<td class="py-3 px-space-md text-center">
+<button class="h-8 px-2.5 rounded bg-secondary text-on-secondary hover:bg-on-secondary-container text-label-sm font-label-sm transition-colors" onclick="startSimulation('Raffles South Primary', 'RFS002', 'Evelyn Koh')" type="button">Simulate</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ================= 3. VIEW: EDUCATION LEVELS ================= -->
+<div class="view-section flex-col gap-space-lg flex" id="view-education-levels">
+<div class="flex items-center justify-between">
+<div>
+<span class="text-secondary font-label-sm uppercase tracking-wider">Curriculum &amp; Funding Standards</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mt-1">National Education Levels Framework</h2>
+</div>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full font-label-sm text-label-sm font-semibold">National Standard FY2026</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">Primary (P1–P6)</span>
+<span class="p-1.5 bg-secondary-fixed text-on-secondary-fixed rounded-lg"><span class="material-symbols-outlined text-title-md">child_care</span></span>
+</div>
+
+<div class="space-y-space-xs font-body-sm text-body-sm text-on-surface">
+<div class="flex justify-between py-1 border-b border-surface-container-high"><span class="">Cohort Size:</span><strong>84,650 students</strong></div>
+<div class="flex justify-between py-1 border-b border-surface-container-high"><span class="">Schools Offering:</span><strong>124 primary institutions</strong></div>
+<div class="flex justify-between py-1"><span class="">Annual Grant Ceiling:</span><strong class="text-secondary">S$250.00 / yr</strong></div>
+</div>
+</div>
+<button class="mt-space-md h-9 w-full bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md rounded-lg" onclick="alert('Primary Level Curriculum &amp; Fee Parameters Validated.')" type="button">Inspect Policy Matrix</button>
+</div>
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">Secondary (Sec 1–5)</span>
+<span class="p-1.5 bg-secondary-fixed text-on-secondary-fixed rounded-lg"><span class="material-symbols-outlined text-title-md">school</span></span>
+</div>
+
+<div class="space-y-space-xs font-body-sm text-body-sm text-on-surface">
+<div class="flex justify-between py-1 border-b border-surface-container-high"><span class="">Cohort Size:</span><strong>58,210 students</strong></div>
+<div class="flex justify-between py-1 border-b border-surface-container-high"><span class="">Schools Offering:</span><strong>62 secondary institutions</strong></div>
+<div class="flex justify-between py-1"><span class="">Annual Grant Ceiling:</span><strong class="text-secondary">S$290.00 / yr</strong></div>
+</div>
+</div>
+<button class="mt-space-md h-9 w-full bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md rounded-lg" onclick="alert('Secondary FSBB Level Policy Matrix Validated.')" type="button">Inspect Policy Matrix</button>
+</div>
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">Post-Secondary Transition</span>
+<span class="p-1.5 bg-surface-container text-on-surface-variant rounded-lg"><span class="material-symbols-outlined text-title-md">trending_up</span></span>
+</div>
+
+<div class="space-y-space-xs font-body-sm text-body-sm text-on-surface">
+<div class="flex justify-between py-1 border-b border-surface-container-high"><span class="">Transition Ready:</span><strong>28,100 students</strong></div>
+<div class="flex justify-between py-1 border-b border-surface-container-high"><span class="">PSEA Auto-Rollover:</span><strong>Active at 16 yrs</strong></div>
+<div class="flex justify-between py-1"><span class="">Transition Top-Up:</span><strong class="text-[#18794A]">S$500.00 one-off</strong></div>
+</div>
+</div>
+<button class="mt-space-md h-9 w-full bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md rounded-lg" onclick="alert('PSEA Migration Rules Active.')" type="button">Inspect Policy Matrix</button>
+</div>
+</div>
+</div>
+<!-- ================= 4. VIEW: CLASSES ================= -->
+<div class="view-section flex-col gap-space-lg hidden" id="view-classes">
+<div class="flex items-center justify-between">
+<div>
+<span class="text-secondary font-label-sm uppercase tracking-wider">Class Distribution Analytics</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mt-1">Nationwide Classes &amp; Ratios (3,810 Classes)</h2>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-caption text-caption text-on-surface-variant">Avg Teacher-to-Student Ratio: <strong>1 : 14.8</strong></span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm text-center">
+<div class="font-caption text-caption uppercase text-on-surface-variant">Zone North Classes</div>
+<div class="font-headline-xl text-headline-xl text-secondary font-bold mt-1">952</div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Quota: 1,000 max</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm text-center">
+<div class="font-caption text-caption uppercase text-on-surface-variant">Zone South Classes</div>
+<div class="font-headline-xl text-headline-xl text-secondary font-bold mt-1">890</div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Quota: 950 max</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm text-center">
+<div class="font-caption text-caption uppercase text-on-surface-variant">Zone East Classes</div>
+<div class="font-headline-xl text-headline-xl text-secondary font-bold mt-1">1,040</div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Quota: 1,100 max</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm text-center">
+<div class="font-caption text-caption uppercase text-on-surface-variant">Zone West Classes</div>
+<div class="font-headline-xl text-headline-xl text-secondary font-bold mt-1">928</div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Quota: 980 max</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<h3 class="font-title-md text-title-md font-semibold text-on-surface mb-space-sm">Class Enrollment Density Distribution</h3>
+
+<div class="w-full bg-surface-container h-6 rounded-lg overflow-hidden flex">
+<div class="bg-secondary h-full flex items-center justify-center text-on-secondary font-label-sm text-label-sm" style="width: 68%">Optimal (35–38): 68%</div>
+<div class="bg-[#FDF1D6] text-[#8F5F00] h-full flex items-center justify-center font-label-sm text-label-sm font-semibold" style="width: 28%">Near Cap (39–40): 28%</div>
+<div class="bg-tertiary text-on-tertiary h-full flex items-center justify-center font-label-sm text-label-sm font-semibold" style="width: 4%">Special: 4%</div>
+</div>
+</div>
+</div>
+<!-- ================= 5. VIEW: STUDENTS ================= -->
+<div class="view-section hidden flex-col gap-space-lg" id="view-students">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div>
+<span class="text-secondary font-label-sm uppercase tracking-wider">Central Student Registry</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mt-1">Master Student Records (142,860)</h2>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="h-9 px-space-md rounded-lg bg-secondary text-on-secondary hover:bg-on-secondary-container font-label-md text-label-md" onclick="alert('Simulated Cross-School Transfer Workflow initiated via MOE Central Registry.')" type="button">
+        Process Cross-School Transfer
+      </button>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="px-space-md py-space-sm bg-surface-container-low flex items-center justify-between">
+<span class="font-title-md text-title-md font-semibold text-on-surface">National Student Registry Sample</span>
+
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">National ID / NRIC</th>
+<th class="py-3 px-space-md">Student Full Name</th>
+<th class="py-3 px-space-md">Enrolled School</th>
+<th class="py-3 px-space-md">Level &amp; Class</th>
+<th class="py-3 px-space-md text-center">Singpass Auto-Link</th>
+<th class="py-3 px-space-md text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">T15****82A</td>
+<td class="py-3 px-space-md font-medium text-on-surface">Chloe Tan Rui En</td>
+<td class="py-3 px-space-md">Riverside Primary School (BPS001)</td>
+<td class="py-3 px-space-md">Primary 3 • Class 3-Care</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">LINKED</span></td>
+<td class="py-3 px-space-md text-center"><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded text-label-sm font-label-sm">ACTIVE</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">T14****19B</td>
+<td class="py-3 px-space-md font-medium text-on-surface">Ahmad Danish Bin Razak</td>
+<td class="py-3 px-space-md">Riverview Academy (RV008)</td>
+<td class="py-3 px-space-md">Secondary 2 • Class 2-Integrity</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">LINKED</span></td>
+<td class="py-3 px-space-md text-center"><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded text-label-sm font-label-sm">ACTIVE</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">T16****44F</td>
+<td class="py-3 px-space-md font-medium text-on-surface">Sarah Lee Min</td>
+<td class="py-3 px-space-md">Raffles South Primary (RFS002)</td>
+<td class="py-3 px-space-md">Primary 5 • Class 5-Excellence</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">LINKED</span></td>
+<td class="py-3 px-space-md text-center"><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded text-label-sm font-label-sm">ACTIVE</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ================= 6. VIEW: EDUCATION ACCOUNTS ================= -->
+<div class="view-section hidden flex-col gap-space-lg" id="view-education-accounts">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div>
+<span class="text-secondary font-label-sm uppercase tracking-wider">Citizen Accounts Subsystem</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mt-1">Active Education Accounts (114,280)</h2>
+</div>
+<div class="flex items-center gap-space-sm">
+
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<span class="font-caption text-caption text-on-surface-variant uppercase">Total Edusave Balances</span>
+<div class="font-headline-xl text-headline-xl text-secondary font-bold mt-1">S$42,850,200</div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Stored across citizen individual accounts</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<span class="font-caption text-caption text-on-surface-variant uppercase">Auto-Created Accounts (Age 7)</span>
+<div class="font-headline-xl text-headline-xl text-[#18794A] font-bold mt-1">38,420</div>
+
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<span class="font-caption text-caption text-on-surface-variant uppercase">PSEA Rollover Target (Age 16+)</span>
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold mt-1">14,210</div>
+
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="px-space-md py-space-sm bg-surface-container-low flex items-center justify-between">
+<span class="font-title-md text-title-md font-semibold text-on-surface">Ledger Transaction Inspection</span>
+
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">Account Ref</th>
+<th class="py-3 px-space-md">Beneficiary Citizen</th>
+<th class="py-3 px-space-md text-right">Current Balance</th>
+<th class="py-3 px-space-md">Last Activity</th>
+<th class="py-3 px-space-md text-center">Audit State</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">EDU-SG-882100</td>
+<td class="py-3 px-space-md font-medium">Chloe Tan Rui En (Age 9)</td>
+<td class="py-3 px-space-md text-right font-semibold">S$480.00</td>
+<td class="py-3 px-space-md">Annual Top-Up (BT-2026-001)</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">VERIFIED</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">EDU-SG-882101</td>
+<td class="py-3 px-space-md font-medium">Ahmad Danish (Age 14)</td>
+<td class="py-3 px-space-md text-right font-semibold">S$620.00</td>
+<td class="py-3 px-space-md">Sec 1 Hardware Subsidy Credit</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">VERIFIED</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ================= 7. VIEW: TOP-UP MANAGEMENT (EP-03) ================= -->
+<div class="view-section hidden flex-col gap-space-lg" id="view-topup-management">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-space-md mb-space-md gap-space-xs">
+<div>
+<div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+
+<span class="">•</span>
+<span class="">Rule Definition &amp; Targeting Engine (US-302)</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mt-1">Interactive National Batch Top-Up Builder</h2>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-surface-container px-2 py-1 rounded text-label-sm font-label-sm text-on-surface-variant">Targeting: Singapore Citizen Accounts</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-1 rounded text-label-sm font-label-sm font-semibold">MOE Treasury Active</span>
+</div>
+</div>
+<form class="space-y-space-md" id="batch-topup-form" onsubmit="event.preventDefault(); openBatchPreview();">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="rule-title">Top-Up Batch Rule Title <span class="text-tertiary">*</span></label>
+<input class="h-9 w-full px-3 rounded-lg bg-surface-container-low text-body-md text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-secondary" id="rule-title" required="" type="text" value="National Budget 2026 Primary School Edusave Annual Grant"/>
+
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-title-md text-title-md text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-title-md">filter_alt</span>
+            Targeting Filter Criteria (Strict AND Logic)
+          </span>
+<span class="font-caption text-caption text-secondary font-medium">Automatic Singpass Sync Query</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Age Range (Years)</label>
+<div class="flex items-center gap-2">
+<input class="h-9 w-full px-3 rounded-lg bg-surface-container-lowest text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="age-min" max="21" min="6" type="number" value="7"/>
+<span class="text-on-surface-variant text-caption">to</span>
+<input class="h-9 w-full px-3 rounded-lg bg-surface-container-lowest text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="age-max" max="21" min="6" type="number" value="12"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="citizen-status">Citizen Status</label>
+<select class="h-9 w-full px-3 rounded-lg bg-surface-container-lowest text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="citizen-status">
+<option value="SC">Singapore Citizen only (Mandatory)</option>
+<option value="PR">Permanent Resident (MOE FAS Supplementary)</option>
+<option value="ALL">All Resident Statuses</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="schooling-status">Schooling Enrollment</label>
+<select class="h-9 w-full px-3 rounded-lg bg-surface-container-lowest text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="schooling-status">
+<option value="PRI">Enrolled in MOE Primary School</option>
+<option value="SEC">Enrolled in MOE Secondary School</option>
+<option value="ALL_MOE">All MOE Government &amp; Govt-Aided</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="balance-filter">Account Balance Range</label>
+<select class="h-9 w-full px-3 rounded-lg bg-surface-container-lowest text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="balance-filter">
+<option value="ANY">Any balance (No threshold)</option>
+<option value="LOW">Below S$100.00 (Hardship booster)</option>
+<option value="ZERO">Zero balance only</option>
+</select>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="topup-amount">Top-Up Amount per Student Account <span class="text-tertiary">*</span></label>
+<div class="relative">
+<span class="absolute inset-y-0 left-3 flex items-center font-semibold text-secondary">S$</span>
+<input class="h-9 w-full pl-9 pr-3 rounded-lg bg-surface-container-low text-body-md text-on-surface font-semibold focus:outline-none focus:ring-2 focus:ring-secondary" id="topup-amount" max="5000" min="10" required="" step="10" type="number" value="250.00"/>
+</div>
+
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="fund-category">Top-up Reason / Fund Category</label>
+<input class="h-9 w-full px-3 rounded-lg bg-surface-container-low text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="fund-category" required="" type="text" value="MOE Annual Education Account Top-Up 2026"/>
+
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-sm flex-wrap gap-space-sm">
+<div class="flex items-center gap-space-xs text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-caption text-secondary">shield</span>
+<span class="">Requires Two-Officer Dual Sign-Off before disbursement execution.</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="h-9 px-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" onclick="document.getElementById('batch-topup-form').reset()" type="button">Clear Criteria</button>
+<button class="h-9 px-space-md rounded-lg bg-secondary text-on-secondary hover:bg-on-secondary-container font-label-md text-label-md transition-colors flex items-center gap-space-xs shadow-sm" type="submit">
+<span class="material-symbols-outlined text-title-md">preview</span>
+<span class="">Run Batch Preview &amp; Validation (US-303)</span>
+</button>
+</div>
+</div>
+</form>
+</div>
+<!-- Batch Execution History Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="px-space-md py-space-sm bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-title-md">history_edu</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold">Top-Up Execution Result &amp; Audit History (US-305)</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Archived Execution Logs</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">Batch ID</th>
+<th class="py-3 px-space-md">Execution Date</th>
+<th class="py-3 px-space-md">Rule Description</th>
+<th class="py-3 px-space-md text-right">Accounts Credited</th>
+<th class="py-3 px-space-md text-right">Total Disbursed (S$)</th>
+<th class="py-3 px-space-md text-center">Batch Status</th>
+<th class="py-3 px-space-md text-center">Audit Artifact</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 font-body-sm text-body-sm text-on-surface" id="batch-history-tbody">
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono font-semibold text-secondary">BT-2026-001</td>
+<td class="py-3 px-space-md whitespace-nowrap">02 Jan 2026, 09:30 AM</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-medium text-on-surface">Sec 1 Transition Hardware Subsidy</div>
+<div class="font-caption text-caption text-on-surface-variant">Target: Cohort 2026 Secondary 1 Students</div>
+</td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">28,100</td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">S$5,620,000.00</td>
+<td class="py-3 px-space-md text-center">
+<span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold uppercase tracking-wider">COMPLETED</span>
+</td>
+<td class="py-3 px-space-md text-center">
+<button class="font-caption text-caption text-secondary hover:underline flex items-center justify-center gap-1 mx-auto" onclick="alert('Downloading Failure &amp; Reconciled Audit Report CSV for BT-2026-001...')" type="button">
+<span class="material-symbols-outlined text-caption">description</span>
+<span class="">Report CSV</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono font-semibold text-secondary">BT-2025-089</td>
+<td class="py-3 px-space-md whitespace-nowrap">15 Nov 2025, 02:15 PM</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-medium text-on-surface">End-of-Year Opportunity Top-Up</div>
+<div class="font-caption text-caption text-on-surface-variant">Target: MOEFAS Tier-1 &amp; Tier-2 beneficiaries</div>
+</td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">14,200</td>
+<td class="py-3 px-space-md text-right tabular-nums font-semibold">S$2,840,000.00</td>
+<td class="py-3 px-space-md text-center">
+<span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold uppercase tracking-wider">COMPLETED</span>
+</td>
+<td class="py-3 px-space-md text-center">
+<button class="font-caption text-caption text-secondary hover:underline flex items-center justify-center gap-1 mx-auto" onclick="alert('Downloading Failure &amp; Reconciled Audit Report CSV for BT-2025-089...')" type="button">
+<span class="material-symbols-outlined text-caption">description</span>
+<span class="">Report CSV</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ================= 8. VIEW: FEE TYPES ================= -->
+<div class="view-section hidden flex-col gap-space-lg" id="view-fee-types">
+<div class="flex items-center justify-between">
+<div>
+<span class="text-secondary font-label-sm uppercase tracking-wider">National Tariff Schedules</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mt-1">Regulated School Fee Types &amp; National Caps</h2>
+</div>
+<button class="h-9 px-space-md rounded-lg bg-secondary text-on-secondary hover:bg-on-secondary-container font-label-md text-label-md" onclick="alert('Fee schedule adjustment wizard requires MOF gazette reference number.')" type="button">Propose Schedule Amendment</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">Fee Code</th>
+<th class="py-3 px-space-md">Fee Category &amp; Description</th>
+<th class="py-3 px-space-md">Singapore Citizens</th>
+<th class="py-3 px-space-md">Permanent Residents</th>
+<th class="py-3 px-space-md">International Students</th>
+<th class="py-3 px-space-md text-center">National Cap Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">FEE-PRI-STD</td>
+<td class="py-3 px-space-md">
+<div class="font-medium text-on-surface">Standard Primary Miscellaneous Fee</div>
+<div class="font-caption text-caption text-on-surface-variant">Covers laboratory, consumables &amp; library access</div>
+</td>
+<td class="py-3 px-space-md font-semibold text-[#18794A]">S$6.50 / mo</td>
+<td class="py-3 px-space-md font-medium">S$13.00 / mo</td>
+<td class="py-3 px-space-md font-medium">S$25.00 / mo</td>
+<td class="py-3 px-space-md text-center"><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded text-label-sm font-label-sm">LOCKED CEILING</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">FEE-SEC-STD</td>
+<td class="py-3 px-space-md">
+<div class="font-medium text-on-surface">Secondary Standard Miscellaneous Fee</div>
+<div class="font-caption text-caption text-on-surface-variant">Digital curriculum, hardware licenses &amp; co-curricular activities</div>
+</td>
+<td class="py-3 px-space-md font-semibold text-[#18794A]">S$10.00 / mo</td>
+<td class="py-3 px-space-md font-medium">S$20.00 / mo</td>
+<td class="py-3 px-space-md font-medium">S$40.00 / mo</td>
+<td class="py-3 px-space-md text-center"><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded text-label-sm font-label-sm">LOCKED CEILING</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">FEE-PRI-TUI</td>
+<td class="py-3 px-space-md">
+<div class="font-medium text-on-surface">Primary School Tuition Fee</div>
+<div class="font-caption text-caption text-on-surface-variant">Statutory free tuition policy for Singapore Citizens</div>
+</td>
+<td class="py-3 px-space-md font-bold text-[#18794A]">S$0.00 (Free)</td>
+<td class="py-3 px-space-md font-medium">S$255.00 / mo</td>
+<td class="py-3 px-space-md font-medium">S$885.00 / mo</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">STATUTORY FREE</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ================= 9. VIEW: FAS SCHEMES & BUDGETS ================= -->
+<div class="view-section hidden flex-col gap-space-lg" id="view-fas-schemes">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">National MOEFAS Allocation</span>
+<span class="material-symbols-outlined text-secondary text-title-md">monetization_on</span>
+</div>
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold mt-2">S$84,500,000</div>
+
+</div>
+<div class="pt-space-md mt-space-md bg-surface-container-low p-space-sm rounded-lg flex items-center justify-between">
+
+
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Granted To Date</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed font-bold text-label-sm px-2 py-0.5 rounded">64.3% UTILIZED</span>
+</div>
+<div class="font-headline-xl text-headline-xl text-secondary font-bold mt-2">S$54,330,000</div>
+<div class="w-full bg-surface-container rounded-full h-2 mt-3 overflow-hidden">
+<div class="bg-secondary h-2 rounded-full" style="width: 64.3%"></div>
+</div>
+</div>
+<div class="pt-space-sm flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span class="">Remaining: <strong class="text-on-surface">S$30,170,000</strong></span>
+<span class="">Window: 31 Dec 2026</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">National Beneficiaries</span>
+<span class="material-symbols-outlined text-secondary text-title-md">family_restroom</span>
+</div>
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold mt-2">28,400 <span class="font-body-md text-body-md font-normal text-on-surface-variant">students</span></div>
+<div class="font-caption text-caption text-secondary font-medium mt-1">100% Tuition &amp; Standard Misc Waived</div>
+</div>
+<div class="pt-space-md mt-space-md bg-surface-container-low p-space-sm rounded-lg flex items-center justify-between">
+
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Tier 1 &amp; Tier 2</span>
+</div>
+</div>
+</div>
+<!-- Automatic Grant Engine Logs -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="px-space-md py-space-sm bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-title-md">terminal</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold">National MOEFAS Automatic Grant Engine Log (US-504)</span>
+</div>
+
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">Event Timestamp</th>
+<th class="py-3 px-space-md">Application ID</th>
+<th class="py-3 px-space-md">Student &amp; School</th>
+<th class="py-3 px-space-md">Income Assessment (PCI)</th>
+<th class="py-3 px-space-md text-center">AI Confidence</th>
+<th class="py-3 px-space-md text-center">Autonomous Action</th>
+<th class="py-3 px-space-md text-center">Audit Ref</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md whitespace-nowrap font-mono text-caption">Today, 14:32:08</td>
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">FAS-2026-9812</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-medium text-on-surface">Chloe Tan Rui En (P3)</div>
+<div class="font-caption text-caption text-on-surface-variant">Riverside Primary School (BPS001)</div>
+</td>
+<td class="py-3 px-space-md"><span class="tabular-nums font-semibold">S$420.00 / mo</span><span class="text-caption text-on-surface-variant block">GovTech IRAS verified</span></td>
+<td class="py-3 px-space-md text-center"><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded font-label-sm text-label-sm font-semibold">98.2%</span></td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold uppercase tracking-wider">AUTO-GRANTED TIER 1</span></td>
+<td class="py-3 px-space-md text-center font-mono text-caption text-on-surface-variant">LGD-0984</td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md whitespace-nowrap font-mono text-caption">Today, 14:28:15</td>
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">FAS-2026-9811</td>
+<td class="py-3 px-space-md">
+<div class="font-label-md text-label-md font-medium text-on-surface">Ahmad Danish (S2)</div>
+<div class="font-caption text-caption text-on-surface-variant">Riverview Academy (RV008)</div>
+</td>
+<td class="py-3 px-space-md"><span class="tabular-nums font-semibold">S$580.00 / mo</span><span class="text-caption text-on-surface-variant block">CPF Board declaration</span></td>
+<td class="py-3 px-space-md text-center"><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded font-label-sm text-label-sm font-semibold">94.7%</span></td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold uppercase tracking-wider">AUTO-GRANTED TIER 1</span></td>
+<td class="py-3 px-space-md text-center font-mono text-caption text-on-surface-variant">LGD-0983</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ================= 10. VIEW: AUDIT LOG ================= -->
+<div class="view-section hidden flex-col gap-space-lg" id="view-audit-log">
+<div class="flex items-center justify-between">
+<div>
+<span class="text-secondary font-label-sm uppercase tracking-wider">Statutory Compliance Subsystem</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mt-1">System-Wide Immutable Audit Log (US-103)</h2>
+</div>
+<button class="h-9 px-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md" onclick="alert('Cryptographic audit trail integrity hash check passed: SHA-256 MATCH.')" type="button">Verify Chain Hash</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">Log ID</th>
+<th class="py-3 px-space-md">Timestamp</th>
+<th class="py-3 px-space-md">Initiator</th>
+<th class="py-3 px-space-md">Action Scope &amp; Target</th>
+<th class="py-3 px-space-md">Cryptographic Signature</th>
+<th class="py-3 px-space-md text-center">Verdict</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">AUD-2026-9921</td>
+<td class="py-3 px-space-md whitespace-nowrap">28 Jan 2026, 14:35:10</td>
+<td class="py-3 px-space-md font-medium">Daniel Lim (MOE HQ Root)</td>
+<td class="py-3 px-space-md">Batch Top-Up Validation Trigger [Rule: Edusave P1-P6]</td>
+<td class="py-3 px-space-md font-mono text-caption">8a9f2...e3b1</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">COMMITTED</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">AUD-2026-9920</td>
+<td class="py-3 px-space-md whitespace-nowrap">28 Jan 2026, 14:32:08</td>
+<td class="py-3 px-space-md font-medium">MOE Autonomous Engine (US-504)</td>
+<td class="py-3 px-space-md">Auto-Grant FAS Tier 1 Approved [Student: Chloe Tan]</td>
+<td class="py-3 px-space-md font-mono text-caption">4c1b9...77f0</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">COMMITTED</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-secondary font-semibold">AUD-2026-9919</td>
+<td class="py-3 px-space-md whitespace-nowrap">28 Jan 2026, 13:10:02</td>
+<td class="py-3 px-space-md font-medium">Alicia Tan (Riverside Bursar)</td>
+<td class="py-3 px-space-md">Local Petty Disbursement S$420.00 Authorized</td>
+<td class="py-3 px-space-md font-mono text-caption">3d55a...a204</td>
+<td class="py-3 px-space-md text-center"><span class="bg-[#E4F4EC] text-[#18794A] px-2 py-0.5 rounded text-label-sm font-label-sm font-bold">COMMITTED</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ================= 11. VIEW: SETTINGS ================= -->
+<div class="view-section hidden flex-col gap-space-lg" id="view-settings">
+<div class="flex items-center justify-between">
+<div>
+<span class="text-secondary font-label-sm uppercase tracking-wider">Central Configuration</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mt-1">HQ Root System Settings &amp; API Policies</h2>
+</div>
+<button class="h-9 px-space-md rounded-lg bg-secondary text-on-secondary hover:bg-on-secondary-container font-label-md text-label-md" onclick="alert('Settings successfully saved and propagated to all 186 school gateways.')" type="button">Save Changes</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<h3 class="font-title-md text-title-md font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-title-md">sync_alt</span>
+        Singpass &amp; GovTech Integration Gateway
+      </h3>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Singpass API Public Key Endpoint</label>
+<input class="h-9 w-full px-3 rounded-lg bg-surface-container-low text-body-md text-on-surface font-mono" readonly="" type="text" value="https://api.singpass.gov.sg/moe-edufund/v2/verify"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Auto-Sync Frequency</label>
+<select class="h-9 w-full px-3 rounded-lg bg-surface-container-low text-body-md text-on-surface">
+<option>Every 15 minutes (Real-Time Cohort Tracking)</option>
+<option>Hourly</option>
+<option>Daily at 00:00 UTC+8</option>
+</select>
+</div>
+<div class="pt-space-sm flex items-center justify-between text-caption text-on-surface-variant">
+<span class="">Connection Status: <strong class="text-[#18794A]">HEALTHY (0 dropped packets)</strong></span>
+<button class="text-secondary hover:underline" onclick="alert('Test ping sent to GovTech Singpass gateway: 12ms latency.')" type="button">Ping Gateway</button>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<h3 class="font-title-md text-title-md font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-title-md">calendar_month</span>
+        Fiscal Calendar &amp; Disbursement Windows
+      </h3>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Active Fiscal Year</label>
+<input class="h-9 w-full px-3 rounded-lg bg-surface-container-low text-body-md text-on-surface font-semibold" readonly="" type="text" value="Academic Fiscal Year 2026 (01 Jan 2026 - 31 Dec 2026)"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Disbursement Cut-Off Window</label>
+<input class="h-9 w-full px-3 rounded-lg bg-surface-container-low text-body-md text-on-surface" type="text" value="Last Friday of each calendar month, 17:00 SGT"/>
+</div>
+<div class="p-space-sm rounded bg-surface-container-low text-caption text-on-surface-variant">
+        Policy: Automated dual-officer signoff mandatory for batch payouts exceeding S$500,000.00.
+      </div>
+</div>
+</div>
+</div>
+<!-- BATCH PREVIEW MODAL (US-303 / US-304) -->
+<div class="fixed inset-0 z-50 bg-[#1A1512]/50 backdrop-blur-sm hidden items-center justify-center p-space-md" id="batch-preview-modal">
+<div class="bg-surface-container-lowest rounded-xl w-full max-w-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+<div class="px-space-lg py-space-md bg-secondary text-on-secondary flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-title-md">fact_check</span>
+<h3 class="font-title-md text-title-md font-semibold text-surface-container-lowest">Batch Top-Up Validation &amp; Treasury Preview (US-303)</h3>
+</div>
+<button class="text-surface-container-lowest/80 hover:text-surface-container-lowest" onclick="closeBatchPreview()" type="button">
+<span class="material-symbols-outlined text-title-md">close</span>
+</button>
+</div>
+<div class="p-space-lg space-y-space-md">
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<div class="font-caption text-caption text-secondary uppercase tracking-wider font-semibold">Active Rule Package</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold mt-0.5" id="modal-rule-title">National Budget 2026 Primary School Edusave Annual Grant</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-1" id="modal-rule-desc">
+          Scope: Singapore Citizens Ages 7–12 • MOE Primary Schools • Grant Rate: S$250.00
+        </div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container p-space-md rounded-lg">
+<span class="font-caption text-caption text-on-surface-variant block">Eligible Accounts</span>
+<span class="font-headline-md text-headline-md text-secondary font-bold tabular-nums">84,650</span>
+<span class="font-caption text-caption text-on-surface-variant block mt-0.5">Students identified</span>
+</div>
+<div class="bg-surface-container p-space-md rounded-lg">
+<span class="font-caption text-caption text-on-surface-variant block">Required Treasury Funds</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold tabular-nums">S$21,162,500</span>
+<span class="font-caption text-caption text-on-surface-variant block mt-0.5">@ S$250.00 / student</span>
+</div>
+<div class="bg-surface-container p-space-md rounded-lg">
+<span class="font-caption text-caption text-on-surface-variant block">Treasury Availability</span>
+<span class="font-headline-md text-headline-md text-[#18794A] font-bold tabular-nums">S$54.20M</span>
+<span class="font-caption text-caption text-on-surface-variant block mt-0.5">National Edusave FY26</span>
+</div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low text-body-sm text-on-surface">
+<div class="flex items-center justify-between font-label-md text-label-md mb-1">
+<span class="font-semibold text-secondary">Source Budget: MOE National Edusave Fund FY2026</span>
+<span class="text-[#18794A] font-bold">Solvency: 256% Covered</span>
+</div>
+
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="schedule-mode">Execution Schedule (US-304)</label>
+<select class="h-9 w-full px-3 rounded-lg bg-surface-container-low text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary" id="schedule-mode">
+<option value="NOW">Execute Batch Asynchronously Now (Immediate Queue)</option>
+<option value="MONTHLY">Schedule Recurring: Monthly on 1st</option>
+<option value="QUARTERLY">Schedule Recurring: Quarterly</option>
+<option value="YEARLY">Schedule Recurring: Yearly (FY Start)</option>
+</select>
+</div>
+</div>
+<div class="px-space-lg py-space-md bg-surface-container-low flex items-center justify-between gap-space-sm flex-wrap">
+<button class="h-9 px-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" onclick="closeBatchPreview()" type="button">
+        Cancel &amp; Adjust Rule
+      </button>
+<button class="h-9 px-space-md rounded-lg bg-secondary text-on-secondary hover:bg-on-secondary-container font-label-md text-label-md transition-colors flex items-center gap-1 shadow-sm" onclick="executeBatchTopUp()" type="button">
+<span class="material-symbols-outlined text-title-md">send</span>
+<span class="">Confirm &amp; Dispatch Top-Up Batch</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Universal Navigation and Filter Script -->
+<script>
+  // View switcher function for all 11 views
+  function navigateView(viewName) {
+    // Hide all view sections
+    document.querySelectorAll('.view-section').forEach(el => {
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    });
+
+    // Show targeted view
+    const target = document.getElementById('view-' + viewName);
+    if (target) {
+      target.classList.remove('hidden');
+      target.classList.add('flex');
+    }
+
+    // Update sidebar navigation active status
+    document.querySelectorAll('.sidebar-nav-link').forEach(link => {
+      link.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'font-semibold');
+      link.classList.add('text-on-surface-variant');
+      link.removeAttribute('aria-current');
+      if (link.getAttribute('data-view') === viewName) {
+        link.classList.add('bg-secondary-container', 'text-on-secondary-container', 'font-semibold');
+        link.classList.remove('text-on-surface-variant');
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // School filtering
+  function filterSchools() {
+    const query = (document.getElementById('school-search') ? document.getElementById('school-search').value.toLowerCase() : '');
+    const zone = (document.getElementById('zone-filter') ? document.getElementById('zone-filter').value : 'ALL');
+    const type = (document.getElementById('type-filter') ? document.getElementById('type-filter').value : 'ALL');
+    const rows = document.querySelectorAll('.school-row');
+
+    let visibleCount = 0;
+    rows.forEach(row => {
+      const name = (row.getAttribute('data-name') || '').toLowerCase();
+      const code = (row.getAttribute('data-code') || '').toLowerCase();
+      const rowZone = row.getAttribute('data-zone') || '';
+      const rowType = row.getAttribute('data-type') || '';
+
+      const matchesQuery = name.includes(query) || code.includes(query);
+      const matchesZone = (zone === 'ALL' || rowZone === zone);
+      const matchesType = (type === 'ALL' || rowType === type);
+
+      if (matchesQuery && matchesZone && matchesType) {
+        row.style.display = '';
+        visibleCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    const countEl = document.getElementById('school-count');
+    if (countEl) countEl.innerText = visibleCount;
+  }
+
+  function resetSchoolFilters() {
+    if (document.getElementById('school-search')) document.getElementById('school-search').value = '';
+    if (document.getElementById('zone-filter')) document.getElementById('zone-filter').value = 'ALL';
+    if (document.getElementById('type-filter')) document.getElementById('type-filter').value = 'ALL';
+    filterSchools();
+  }
+
+  // Simulation controllers
+  function startSimulation(schoolName, schoolCode, bursarName) {
+    const banner = document.getElementById('simulation-banner');
+    if (banner) {
+      banner.classList.remove('hidden');
+      banner.classList.add('flex');
+    }
+    const simUser = document.getElementById('sim-user-label');
+    if (simUser) simUser.innerText = bursarName;
+    const simSchool = document.getElementById('sim-school-label');
+    if (simSchool) simSchool.innerText = schoolName + ' (' + schoolCode + ')';
+
+    const preview = document.getElementById('simulated-dashboard-preview');
+    if (preview) {
+      preview.classList.remove('hidden');
+      const title = document.getElementById('sim-preview-title');
+      if (title) title.innerText = schoolName + ' - Bursar Financial Suite';
+      preview.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function exitSimulation() {
+    const banner = document.getElementById('simulation-banner');
+    if (banner) {
+      banner.classList.add('hidden');
+      banner.classList.remove('flex');
+    }
+    const preview = document.getElementById('simulated-dashboard-preview');
+    if (preview) preview.classList.add('hidden');
+  }
+
+  // Batch preview modal triggers
+  function openBatchPreview() {
+    const title = document.getElementById('rule-title') ? document.getElementById('rule-title').value : '';
+    const amount = document.getElementById('topup-amount') ? parseFloat(document.getElementById('topup-amount').value || '250').toFixed(2) : '250.00';
+    const minAge = document.getElementById('age-min') ? document.getElementById('age-min').value : '7';
+    const maxAge = document.getElementById('age-max') ? document.getElementById('age-max').value : '12';
+
+    if (document.getElementById('modal-rule-title')) {
+      document.getElementById('modal-rule-title').innerText = title;
+    }
+    if (document.getElementById('modal-rule-desc')) {
+      document.getElementById('modal-rule-desc').innerText = 
+        'Scope: Singapore Citizens Ages ' + minAge + '–' + maxAge + ' • MOE Primary Schools • Grant Rate: S$' + amount;
+    }
+
+    const modal = document.getElementById('batch-preview-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  }
+
+  function closeBatchPreview() {
+    const modal = document.getElementById('batch-preview-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  }
+
+  function executeBatchTopUp() {
+    closeBatchPreview();
+    const title = document.getElementById('rule-title') ? document.getElementById('rule-title').value : 'Batch Top-Up';
+    const tbody = document.getElementById('batch-history-tbody');
+    if (tbody) {
+      const newRow = document.createElement('tr');
+      newRow.className = 'hover:bg-surface-container-low/60 transition-colors bg-secondary-fixed/20';
+      newRow.innerHTML = `
+        <td class="py-3 px-space-md font-mono font-semibold text-secondary">BT-2026-002</td>
+        <td class="py-3 px-space-md whitespace-nowrap">Just now (Live Queue)</td>
+        <td class="py-3 px-space-md">
+          <div class="font-label-md text-label-md font-medium text-on-surface">${title}</div>
+          <div class="font-caption text-caption text-on-surface-variant">Target: Primary Cohorts (Ages 7–12)</div>
+        </td>
+        <td class="py-3 px-space-md text-right tabular-nums font-semibold">84,650</td>
+        <td class="py-3 px-space-md text-right tabular-nums font-semibold">S$21,162,500.00</td>
+        <td class="py-3 px-space-md text-center">
+          <span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded text-label-sm font-label-sm font-bold uppercase tracking-wider animate-pulse">PROCESSING</span>
+        </td>
+        <td class="py-3 px-space-md text-center">
+          <button type="button" onclick="alert('Batch currently executing in asynchronous queue EF-Q-882. Real-time reconciliation active.')" class="font-caption text-caption text-secondary hover:underline flex items-center justify-center gap-1 mx-auto">
+            <span class="material-symbols-outlined text-caption">pending</span>
+            <span>Live Stream</span>
+          </button>
+        </td>
+      `;
+      tbody.insertBefore(newRow, tbody.firstChild);
+    }
+    alert('Batch Top-Up successfully validated and dispatched to MOE High-Throughput Treasury Engine (EF-DISBURSE-2026).');
+  }
+</script></div></main></div>
+</body></html>
