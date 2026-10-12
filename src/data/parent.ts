@@ -1,5 +1,6 @@
 // ASSUMPTION: all mock data for the parent e-Service portal. Single source of truth: Overview, Payments (Task 15) and FAS read from here.
-// Dates are ISO yyyy-mm-dd; the mock "today" is 2026-10-12.
+// Dates are ISO yyyy-mm-dd; the mock "today" is MOCK_TODAY.
+export const MOCK_TODAY = "2026-10-12";
 
 export type Invoice = { id: string; childId: string; title: string; amount: number; dueDate: string; status: "unpaid" | "overdue" | "paid" };
 export type Child = { id: string; name: string; level: string; school: string; educationBalance: number };

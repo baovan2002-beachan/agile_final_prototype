@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { parentData } from "../../../data/parent";
+import { useParent } from "../../../data/parentStore";
 import { useMockQuery } from "../../../lib/useMockQuery";
 import { FasCard } from "./FasCard";
 import { RecentTransactions, UpcomingInvoices } from "./Lists";
@@ -23,7 +23,7 @@ function Skeleton() {
 
 export default function Overview() {
   const query = useMockQuery(parentData);
-  const [profile, setProfile] = useState(parentData.profile);
+  const { state, dispatch } = useParent();
 
   if (query.status === "loading") return <Skeleton />;
   if (query.status === "error" || !query.data) {
@@ -33,7 +33,8 @@ export default function Overview() {
       </Card>
     );
   }
-  const { children, invoices, transactions, fasStatus } = query.data;
+  const { children, invoices, transactions, profile } = state;
+  const { fasStatus } = query.data;
   return (
     <div className="space-y-4">
       <Stats invoices={invoices} />
@@ -45,7 +46,7 @@ export default function Overview() {
         </div>
         <div className="space-y-4">
           <FasCard fas={fasStatus} />
-          <ProfileCard profile={profile} onSave={(f) => setProfile((p) => ({ ...p, ...f }))} />
+          <ProfileCard profile={profile} onSave={(form) => dispatch({ type: "saveProfile", form })} />
         </div>
       </div>
     </div>

@@ -3,17 +3,19 @@ import { CheckCircle } from "@phosphor-icons/react";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { EmptyState } from "../../../components/ui/EmptyState";
-import { children as CHILDREN, invoices as INVOICES } from "../../../data/parent";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
+import { MOCK_TODAY } from "../../../data/parent";
+import { useParent } from "../../../data/parentStore";
 import { formatSGD } from "../../../lib/format";
 import { useMockQuery } from "../../../lib/useMockQuery";
 import { GatewayModal } from "./GatewayModal";
 import { InvoiceList } from "./InvoiceList";
 import { PaymentSummary } from "./PaymentSummary";
-import { applyPayment, isPayable, settle, type Mode } from "./settle";
+import { isPayable, settle, type Mode } from "./settle";
 
 export default function Payments() {
   const query = useMockQuery(null);
-  const [data, setData] = useState({ invoices: INVOICES, children: CHILDREN });
+  const { state: data, dispatch } = useParent();
   const [selected, setSelected] = useState<ReadonlySet<string>>(new Set());
   const [mode, setMode] = useState<Mode>("account-first");
   const [open, setOpen] = useState(false);
@@ -30,18 +32,19 @@ export default function Payments() {
   const toggleAll = () => setSelected((s) => (payableIds.every((id) => s.has(id)) ? new Set() : new Set(payableIds)));
 
   const onPaid = useCallback(() => {
-    setData((d) => applyPayment(d.invoices, d.children, selected, mode));
+    dispatch({ type: "pay", ids: [...selected], mode, date: MOCK_TODAY });
     setMessage(`Payment of ${formatSGD(summary.total)} received for ${selected.size} ${selected.size === 1 ? "invoice" : "invoices"}.`);
     setSelected(new Set());
     focusMsg.current = true;
-  }, [selected, mode, summary.total]);
+  }, [dispatch, selected, mode, summary.total]);
 
   return (
     <div className="space-y-4">
       <div ref={msgRef} tabIndex={-1} aria-live="polite" className="outline-none empty:hidden">
         {message && (
-          <p className="flex items-center gap-2 rounded-control border border-line bg-success-container px-3 py-2 text-sm font-medium text-success">
+          <p className="flex flex-wrap items-center gap-2 rounded-control border border-line bg-success-container px-3 py-2 text-sm font-medium text-success">
             <CheckCircle size={18} weight="bold" aria-hidden="true" /> {message}
+            <AssumptionTag>state resets on reload</AssumptionTag>
           </p>
         )}
       </div>

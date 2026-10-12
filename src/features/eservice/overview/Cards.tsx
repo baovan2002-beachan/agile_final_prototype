@@ -40,7 +40,7 @@ export function ChildCards({ children, invoices }: { children: Child[]; invoices
             <Card className="h-full">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h3 className="truncate text-[15px] font-semibold">{c.name}</h3>
+                  <h2 className="truncate text-[15px] font-semibold">{c.name}</h2>
                   <p className="text-[13px] text-on-surface-variant">{c.level} - {c.school}</p>
                 </div>
                 {owed > 0 ? <Badge tone={late ? "alert" : "warning"}>{late ? "Overdue" : "Payment due"}</Badge> : <Badge tone="success">Paid up</Badge>}

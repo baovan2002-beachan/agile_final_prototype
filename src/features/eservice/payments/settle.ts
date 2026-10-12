@@ -1,5 +1,5 @@
 import { splitSettlement } from "../../../lib/settlement";
-import type { Child, Invoice } from "../../../data/parent";
+import type { Child, Invoice, Transaction } from "../../../data/parent";
 
 // ASSUMPTION: two payment modes. "account-first" spends each child's Education Account first and sends the
 // remainder to the card/bank gateway; "gateway" pays everything through the gateway. A child's account only pays that child's invoices.
@@ -35,4 +35,24 @@ export function applyPayment(invoices: Invoice[], children: Child[], ids: Readon
     invoices: invoices.map((i) => (isPayable(i) && ids.has(i.id) ? { ...i, status: "paid" as const } : i)),
     children: children.map((c) => ({ ...c, educationBalance: cents(c.educationBalance - (spent.get(c.id) ?? 0)) })),
   };
+}
+
+/**
+ * Ledger rows for a payment, newest first: per invoice, the Education Account share (debits the account) and the gateway share (Card).
+ * Row amounts sum to -invoice amount and only account rows move the balance, so balance === ledgerBalance() still holds after paying.
+ */
+export function paymentTransactions(invoices: Invoice[], children: Child[], ids: ReadonlySet<string>, mode: Mode, date: string, firstSeq: number): Transaction[] {
+  const rows: Transaction[] = [];
+  const row = (i: Invoice, amount: number, method: Transaction["method"]) =>
+    rows.push({ id: `TX-PAY-${String(firstSeq + rows.length).padStart(3, "0")}`, date, childId: i.childId, description: i.title, amount: -amount, method, invoiceId: i.id });
+  for (const line of settle(invoices, children, ids, mode).lines) {
+    let left = line.fromAccount;
+    for (const i of invoices.filter((x) => x.childId === line.child.id && isPayable(x) && ids.has(x.id))) {
+      const account = Math.min(left, i.amount);
+      left = cents(left - account);
+      if (account > 0) row(i, account, "Education account");
+      if (cents(i.amount - account) > 0) row(i, cents(i.amount - account), "Card");
+    }
+  }
+  return rows.reverse();
 }

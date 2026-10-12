@@ -10,20 +10,23 @@ const firstName = (children: Child[], id: string) => children.find((c) => c.id =
 
 export function UpcomingInvoices({ invoices, children }: { invoices: Invoice[]; children: Child[] }) {
   const open = invoices.filter((i) => i.status !== "paid").sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+  // The latest three paid invoices follow the open ones, so a payment made on the Payments screen is visible here.
+  const paid = invoices.filter((i) => i.status === "paid").sort((a, b) => b.dueDate.localeCompare(a.dueDate)).slice(0, 3);
+  const rows = [...open, ...paid];
   return (
-    <Card title="Upcoming invoices" action={open.length ? <PayLink label="Pay now for all open invoices" /> : undefined}>
-      {open.length === 0 ? (
-        <EmptyState title="No invoices due" hint="You are all caught up. New school invoices will appear here." />
+    <Card title="Invoices" action={open.length ? <PayLink label="Pay now for all open invoices" /> : undefined}>
+      {rows.length === 0 ? (
+        <EmptyState title="No invoices" hint="New school invoices will appear here." />
       ) : (
         <ul className="divide-y divide-line">
-          {open.map((i) => (
+          {rows.map((i) => (
             <li key={i.id} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-3 first:pt-0 last:pb-0">
               <div className="min-w-0">
                 <p className="text-sm font-semibold">{i.title}</p>
                 <p className="text-[13px] text-on-surface-variant">{firstName(children, i.childId)} - {i.id} - due {fmtDate(i.dueDate)}</p>
               </div>
               <div className="flex items-center gap-3">
-                <Badge tone={i.status === "overdue" ? "alert" : "neutral"}>{i.status === "overdue" ? "Overdue" : "Unpaid"}</Badge>
+                <Badge tone={i.status === "overdue" ? "alert" : i.status === "paid" ? "success" : "neutral"}>{i.status === "overdue" ? "Overdue" : i.status === "paid" ? "Paid" : "Unpaid"}</Badge>
                 <span className="w-24 text-right text-sm font-semibold tabular-nums">{formatSGD(i.amount)}</span>
               </div>
             </li>
