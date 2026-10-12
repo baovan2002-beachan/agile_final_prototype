@@ -31,9 +31,13 @@ test("validateForm requires fields, a valid SG number and consent", () => {
   expect(validateForm(ok, false).consent).toBeTruthy();
 });
 
-test("autoFill uses mock data and passes its own validation", () => {
-  expect(autoFill()).toEqual(autoFillSource);
-  expect(validateForm(autoFill(), true)).toEqual({});
+test("autoFill fills only empty fields and counts them", () => {
+  const empty = { contact: "", mailingAddress: "", circumstance: "", note: "" };
+  expect(autoFill(empty)).toEqual({ values: autoFillSource, count: 4 });
+  expect(validateForm(autoFill(empty).values, true)).toEqual({});
+  const typed = { ...empty, note: "my own words", contact: "9000 0000" };
+  expect(autoFill(typed)).toEqual({ values: { ...autoFillSource, note: "my own words", contact: "9000 0000" }, count: 2 });
+  expect(autoFill(autoFillSource).count).toBe(0);
 });
 
 test("answersToForm maps picks and keeps the typed value when the parent will type their own", () => {

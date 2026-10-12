@@ -1,15 +1,14 @@
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
 import { Card } from "../../../components/ui/Card";
 import { children } from "../../../data/parent";
-import { BANDS } from "../../../data/familyFas";
+import type { Band } from "../../../data/familyFas";
 import { assess } from "./logic";
 import { AssumptionTag } from "./shared";
 
 const tone: Record<string, BadgeTone> = { Indicative: "success", "School decides": "warning", "Not eligible": "neutral" };
 
-export function ChildResults({ bandId }: { bandId: string }) {
-  const band = BANDS.find((b) => b.id === bandId) ?? BANDS[0];
-  const r = assess(band);
+export function ChildResults({ band }: { band: Band | undefined }) {
+  const r = band ? assess(band) : null;
   return (
     <Card title="Result per child">
       <ul className="space-y-3">
@@ -20,9 +19,9 @@ export function ChildResults({ bandId }: { bandId: string }) {
                 <p className="text-sm font-semibold">{c.name}</p>
                 <p className="text-[13px] text-on-surface-variant">{c.level}, {c.school}</p>
               </div>
-              <Badge tone={tone[r.status]}>{r.scheme ? `${r.scheme}${r.tier ? ` ${r.tier}` : ""} - ` : ""}{r.status}</Badge>
+              {r ? <Badge tone={tone[r.status]}>{r.scheme ? `${r.scheme}${r.tier ? ` ${r.tier}` : ""} - ` : ""}{r.status}</Badge> : <Badge tone="neutral">Not synced</Badge>}
             </div>
-            <p className="mt-2 text-[13px] text-on-surface-variant">{r.note}</p>
+            <p className="mt-2 text-[13px] text-on-surface-variant">{r ? r.note : "Sync your household income band to see a result."}</p>
           </li>
         ))}
       </ul>

@@ -48,8 +48,18 @@ export function validateForm(v: FormValues, consent: boolean): FormErrors {
   return e;
 }
 
-/** ASSUMPTION: mock AI auto-fill, fixed data. */
-export const autoFill = (): FormValues => ({ ...autoFillSource });
+/** ASSUMPTION: mock AI auto-fill with fixed data. Only empty fields are filled; `count` says how many. */
+export function autoFill(cur: FormValues): { values: FormValues; count: number } {
+  const values = { ...cur };
+  let count = 0;
+  for (const k of Object.keys(autoFillSource) as (keyof FormValues)[]) {
+    if (!cur[k].trim()) {
+      values[k] = autoFillSource[k];
+      count++;
+    }
+  }
+  return { values, count };
+}
 
 /** "different" leaves the field as typed so the parent can enter their own value. */
 export function answersToForm(a: Partial<Record<"circumstance" | "mailing" | "contact", string>>, cur: FormValues): FormValues {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { EmptyState } from "../../../components/ui/EmptyState";
+import { BANDS } from "../../../data/familyFas";
 import { useMockQuery } from "../../../lib/useMockQuery";
 import { AiHelper } from "./AiHelper";
 import { ApplicationForm } from "./ApplicationForm";
@@ -20,6 +21,7 @@ export default function FamilyApplication() {
   const [values, setValues] = useState<FormValues>(blank);
   const [filledNote, setFilledNote] = useState("");
   const [aiOpen, setAiOpen] = useState(false);
+  const band = BANDS.find((b) => b.id === sync.bandId); // undefined = unknown band, shown as "Not synced"
 
   if (query.status === "loading") {
     return (
@@ -39,13 +41,13 @@ export default function FamilyApplication() {
 
   return (
     <div className="space-y-4">
-      <Tracker steps={trackerSteps(sync.status, Boolean(sync.bandId))} />
+      <Tracker steps={trackerSteps(sync.status, Boolean(band))} />
       <div className="grid items-start gap-4 xl:grid-cols-2">
         <div className="space-y-4">
           <Household status={sync.status} bandId={sync.bandId} syncedOn={sync.syncedOn} onSync={sync.run} />
-          <ChildResults bandId={sync.bandId} />
+          <ChildResults band={band} />
         </div>
-        <ApplicationForm values={values} onChange={setValues} filledNote={filledNote} onAskAi={() => setAiOpen(true)} />
+        <ApplicationForm values={values} onChange={(v) => { setValues(v); setFilledNote(""); }} filledNote={filledNote} onAskAi={() => setAiOpen(true)} />
       </div>
       <AiHelper open={aiOpen} onClose={() => setAiOpen(false)} values={values} onFill={(v, note) => { setValues(v); setFilledNote(note); }} />
     </div>
