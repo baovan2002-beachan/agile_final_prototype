@@ -39,7 +39,7 @@ export function HqBudget() {
               <li key={l.id} className="py-4 first:pt-0 last:pb-0">
                 <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                   <span className="font-semibold">
-                    {l.id} <span className="font-normal text-on-surface-variant">- {l.students.toLocaleString("en-US")} students</span>
+                    {l.id} <span className="font-normal text-on-surface-variant">- {l.beneficiaries.toLocaleString("en-US")} beneficiaries</span>
                   </span>
                   {over && <Badge tone="alert">Over budget</Badge>}
                 </div>

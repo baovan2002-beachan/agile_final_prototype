@@ -34,7 +34,7 @@ export function SchoolBudget() {
       <div className="grid gap-4 lg:grid-cols-2">
         <Card title="Beneficiaries by tier">
           <BarChart data={SBFAS_BY_TIER} />
-          <p className="mt-2 text-sm text-on-surface-variant">{total} students receiving SBFAS this year.</p>
+          <p className="mt-2 text-sm text-on-surface-variant">{total} beneficiaries receiving SBFAS this year.</p>
         </Card>
         <Card title="Governance notes">
           <ul className="space-y-3 text-sm text-on-surface-variant">
