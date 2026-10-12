@@ -93,6 +93,7 @@ export function PreviewModal({ draft, eligible, onClose, onExecute }: Props) {
             </div>
           )}
 
+          {/* ASSUMPTION: dual sign-off is one confirmation checkbox; the real second-officer approval flow is undefined. */}
           <div className="rounded-control border border-line bg-surface-container-low p-4">
             <label className="flex min-h-11 cursor-pointer items-start gap-3 text-on-surface">
               <input
