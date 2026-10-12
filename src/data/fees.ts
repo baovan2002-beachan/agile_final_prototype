@@ -6,6 +6,9 @@ export const CYCLES: { value: Cycle; label: string }[] = [
 ];
 export const cycleLabel = (c: Cycle) => CYCLES.find((x) => x.value === c)!.label;
 
+/** "/month", "/term", "/year" */
+export const per = (c: Cycle) => cycleLabel(c).replace("Per ", "/");
+
 export type Ceiling = { citizen: number; pr: number; international: number };
 export type FeeType = { id: string; name: string; amount: number; cycle: Cycle; ceiling?: Ceiling };
 
@@ -20,17 +23,21 @@ export const FEE_TYPES: FeeType[] = [
 
 export const exceedsCeiling = (f: FeeType) => !!f.ceiling && f.amount > f.ceiling.citizen;
 
-/** Positive number, at most 2 decimals. Returns the parsed value or an error message. */
+/** Positive number, at most 2 decimals, at most 9 integer digits. Returns the parsed value or an error message. */
 export function validateRate(raw: string): { value?: number; error?: string } {
   const s = raw.trim();
   if (!s) return { error: "Enter an amount." };
-  if (!/^\d+(\.\d{1,2})?$/.test(s)) return { error: "Use a positive number with at most 2 decimals." };
+  if (!/^\d{1,9}(\.\d{1,2})?$/.test(s)) return { error: "Use a positive number with at most 2 decimals." };
   const value = Number(s);
-  return value > 0 ? { value } : { error: "Amount must be greater than 0." };
+  if (!Number.isFinite(value) || value <= 0) return { error: "Amount must be greater than 0." };
+  return { value };
 }
 
+/** Trim and collapse inner whitespace. */
+export const normalizeName = (raw: string) => raw.trim().replace(/\s+/g, " ");
+
 export function validateName(raw: string, existing: FeeType[]): string | undefined {
-  const s = raw.trim();
+  const s = normalizeName(raw).toLowerCase();
   if (!s) return "Enter a fee name.";
-  if (existing.some((f) => f.name.toLowerCase() === s.toLowerCase())) return "A fee type with this name already exists.";
+  if (existing.some((f) => normalizeName(f.name).toLowerCase() === s)) return "A fee type with this name already exists.";
 }
