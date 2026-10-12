@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { CheckCircle, CircleNotch, WarningOctagon } from "@phosphor-icons/react";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
@@ -15,9 +15,10 @@ export function GatewayModal({ open, summary, onClose, onPaid }: Props) {
   const [fail, setFail] = useState(false);
   // Freeze the summary at open: the page's selection is cleared once the payment succeeds.
   const [snap, setSnap] = useState(summary);
-  useEffect(() => {
-    if (open) { setPhase("review"); setFail(false); setSnap(summary); }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- snapshot only when the modal opens
+  // Reset on open AND close, before paint, so a reopened dialog never flashes the previous phase or summary.
+  useLayoutEffect(() => {
+    setPhase("review"); setFail(false); setSnap(summary);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- snapshot only when the modal opens or closes
   }, [open]);
 
   useEffect(() => {

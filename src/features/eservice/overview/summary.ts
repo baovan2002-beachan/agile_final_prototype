@@ -21,7 +21,7 @@ export function nextDue(invoices: Invoice[]): { date: string; amount: number; co
 export type ProfileForm = { address: string; mailingAddress: string; contact: string };
 
 // ASSUMPTION: parents may edit only address, mailing address and contact number (editable-fields rule is an open question).
-// Address rule: at least 5 chars and a 6-digit Singapore postal code. Contact: Singapore number, 8 digits starting 6, 8 or 9, optional +65.
+// Address rule: at least 5 chars and a 6-digit Singapore postal code. Contact: Singapore number, 8 digits starting 3, 6, 8 or 9, optional +65, spaces and hyphens ignored.
 export function validateProfile(f: ProfileForm): Partial<Record<keyof ProfileForm, string>> {
   const errors: Partial<Record<keyof ProfileForm, string>> = {};
   const addr = (v: string) => (v.trim().length < 5 ? "Enter the full address." : !/\b\d{6}\b/.test(v) ? "Include the 6-digit postal code." : undefined);
@@ -29,6 +29,6 @@ export function validateProfile(f: ProfileForm): Partial<Record<keyof ProfileFor
   if (a) errors.address = a;
   const m = addr(f.mailingAddress);
   if (m) errors.mailingAddress = m;
-  if (!/^[689]\d{7}$/.test(f.contact.replace(/^\+65/, "").replace(/\s/g, ""))) errors.contact = "Enter a Singapore number, for example +65 9123 4567.";
+  if (!/^[3689]\d{7}$/.test(f.contact.replace(/[\s-]/g, "").replace(/^\+65/, ""))) errors.contact = "Enter a Singapore number, for example +65 9123 4567.";
   return errors;
 }

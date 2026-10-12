@@ -44,7 +44,12 @@ export function PaymentSummary({ summary, mode, onMode, onAuthorize }: Props) {
         {lines.map((l) => (
           <Row key={l.child.id} label={`${l.child.name} (${l.child.level})`} value={formatSGD(l.total)} />
         ))}
-        {lines.length === 0 && <p className="py-1.5 text-sm text-on-surface-variant">No invoices selected. Tick an invoice to see the breakdown.</p>}
+        {lines.length === 0 && (
+          <div className="py-1.5 text-sm text-on-surface-variant">
+            <dt className="sr-only">Selection</dt>
+            <dd>No invoices selected. Tick an invoice to see the breakdown.</dd>
+          </div>
+        )}
         <div className="mt-2 border-t border-line pt-2">
           <Row label="Education Account" value={formatSGD(fromAccount)} />
           <Row label="Card or bank (gateway)" value={formatSGD(fromGateway)} />

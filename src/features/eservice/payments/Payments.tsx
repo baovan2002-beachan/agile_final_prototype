@@ -19,7 +19,9 @@ export default function Payments() {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const msgRef = useRef<HTMLDivElement>(null);
-  useEffect(() => { if (message) msgRef.current?.focus(); }, [message]);
+  // Focus the success message only once the gateway dialog has closed (the dialog would otherwise hold focus, then hand it back to a disabled button).
+  const focusMsg = useRef(false);
+  useEffect(() => { if (!open && focusMsg.current) { focusMsg.current = false; msgRef.current?.focus(); } }, [open]);
 
   const summary = useMemo(() => settle(data.invoices, data.children, selected, mode), [data, selected, mode]);
   const payableIds = data.invoices.filter(isPayable).map((i) => i.id);
@@ -31,6 +33,7 @@ export default function Payments() {
     setData((d) => applyPayment(d.invoices, d.children, selected, mode));
     setMessage(`Payment of ${formatSGD(summary.total)} received for ${selected.size} ${selected.size === 1 ? "invoice" : "invoices"}.`);
     setSelected(new Set());
+    focusMsg.current = true;
   }, [selected, mode, summary.total]);
 
   return (
@@ -58,8 +61,11 @@ export default function Payments() {
               </ul>
             </Card>
             <Card title="Outstanding invoices">
-              {payableIds.length === 0 && <EmptyState title="All invoices are paid" hint="You have no outstanding charges." />}
-              <InvoiceList invoices={data.invoices} kids={data.children} selected={selected} onToggle={toggle} onToggleAll={toggleAll} />
+              {payableIds.length === 0 ? (
+                <EmptyState title="All invoices are paid" hint="You have no outstanding charges." />
+              ) : (
+                <InvoiceList invoices={data.invoices} kids={data.children} selected={selected} onToggle={toggle} onToggleAll={toggleAll} />
+              )}
             </Card>
           </div>
           <PaymentSummary summary={summary} mode={mode} onMode={setMode} onAuthorize={() => setOpen(true)} />

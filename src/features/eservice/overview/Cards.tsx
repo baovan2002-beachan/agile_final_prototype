@@ -17,7 +17,7 @@ export function Stats({ invoices }: { invoices: Invoice[] }) {
         <StatCard icon={<Wallet size={28} />} label={overdue ? `Outstanding balance (${overdue} overdue)` : "Outstanding balance"} value={formatSGD(outstanding(invoices))} />
         <StatCard
           icon={<CalendarCheck size={28} />}
-          label={due ? `Next payment due ${fmtDate(due.date)}` : "Next payment due"}
+          label={due ? `Next payment due ${fmtDate(due.date)}` : overdue ? `No upcoming payments (${overdue} overdue to settle)` : "No upcoming payments"}
           value={due ? formatSGD(due.amount) : "None"}
         />
         <StatCard icon={<CheckCircle size={28} />} label="Paid this year" value={formatSGD(paidThisYear(invoices))} />

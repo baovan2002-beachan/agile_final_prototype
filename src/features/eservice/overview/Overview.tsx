@@ -9,11 +9,11 @@ import { RecentTransactions, UpcomingInvoices } from "./Lists";
 import { ProfileCard } from "./ProfileCard";
 import { ChildCards, Stats } from "./Cards";
 
-const pulse = "animate-pulse rounded-card bg-track";
+const pulse = "animate-pulse motion-reduce:animate-none rounded-card bg-track";
 
 function Skeleton() {
   return (
-    <div aria-busy="true" aria-label="Loading overview" className="space-y-4">
+    <div role="status" aria-busy="true" aria-label="Loading overview" className="space-y-4">
       <div className={`${pulse} h-28`} />
       <div className="grid gap-4 lg:grid-cols-2"><div className={`${pulse} h-48`} /><div className={`${pulse} h-48`} /></div>
       <div className="grid gap-4 xl:grid-cols-3"><div className={`${pulse} h-72 xl:col-span-2`} /><div className={`${pulse} h-72`} /></div>
