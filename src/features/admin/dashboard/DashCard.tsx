@@ -1,6 +1,7 @@
 import { useId, type ReactNode } from "react";
 import { Link, useSearchParams } from "react-router";
 import { ArrowUpRight, type Icon } from "@phosphor-icons/react";
+import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { useMockQuery } from "../../../lib/useMockQuery";
@@ -20,10 +21,20 @@ export function Skeleton({ className = "" }: { className?: string }) {
   return <div className={`rounded-control bg-track motion-safe:animate-pulse ${className}`} />;
 }
 
-type CardProps = { title: string; icon: Icon; to?: string; children: ReactNode; className?: string };
+/** "Assumption" badge for invented behaviour; the note is in the tooltip and read by screen readers. */
+export function AssumptionTag({ note }: { note: string }) {
+  return (
+    <span title={note} className="shrink-0">
+      <Badge tone="neutral">Assumption</Badge>
+      <span className="sr-only">: {note}</span>
+    </span>
+  );
+}
 
-/** Dashboard card: flat white panel, icon tile + h2 title, optional "open" link at top right. */
-export function DashCard({ title, icon: Icon, to, children, className = "" }: CardProps) {
+type CardProps = { title: string; icon: Icon; to?: string; tag?: ReactNode; children: ReactNode; className?: string };
+
+/** Dashboard card: flat white panel, icon tile + h2 title, optional tag and "open" link at top right. */
+export function DashCard({ title, icon: Icon, to, tag, children, className = "" }: CardProps) {
   const id = useId();
   return (
     <section
@@ -32,11 +43,12 @@ export function DashCard({ title, icon: Icon, to, children, className = "" }: Ca
     >
       <div className="flex min-h-10 items-center justify-between gap-3">
         <h2 id={id} className="flex items-center gap-2.5 text-[15px] font-semibold text-on-surface">
-          <span className="grid size-[30px] place-items-center rounded-[9px] border border-primary-fixed text-primary" aria-hidden="true">
+          <span className="grid size-[30px] place-items-center rounded-control border border-primary-fixed text-primary" aria-hidden="true">
             <Icon size={17} />
           </span>
           {title}
         </h2>
+        {tag && <span className="ml-auto">{tag}</span>}
         {to && (
           <Link
             to={to}
@@ -73,7 +85,7 @@ export function Loadable<T>({
     );
   if (query.status === "error" || query.data === undefined)
     return (
-      <div role="alert" className="flex flex-1 flex-col justify-center">
+      <div role="status" className="flex flex-1 flex-col justify-center">
         <EmptyState
           title={`Could not load ${what}`}
           hint="The mock service did not respond. Try again."

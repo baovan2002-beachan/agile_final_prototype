@@ -7,7 +7,7 @@ const nf = new Intl.NumberFormat("en-US");
 
 function LegendChip({ dot, name, value }: { dot: string; name: string; value: number }) {
   return (
-    <li className="flex items-center gap-2 rounded-xl border border-line px-3 py-2 text-[13px] font-semibold">
+    <li className="flex items-center gap-2 rounded-control border border-line px-3 py-2 text-[13px] font-semibold">
       <span className={`size-2 rounded-full ${dot}`} aria-hidden="true" />
       {name} <b className="font-bold">{nf.format(value)}</b>
     </li>

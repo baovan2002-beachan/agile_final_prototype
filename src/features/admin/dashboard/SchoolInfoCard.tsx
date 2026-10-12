@@ -1,7 +1,7 @@
-﻿import { Buildings, MapPin, Phone, Users } from "@phosphor-icons/react";
+import { Buildings, MapPin, Phone, Users } from "@phosphor-icons/react";
 import { school } from "../../../data/dashboard";
 import { useSession } from "../../../session";
-import { DashCard, Loadable, Skeleton, useDashQuery } from "./DashCard";
+import { AssumptionTag, DashCard, Loadable, Skeleton, useDashQuery } from "./DashCard";
 
 const nf = new Intl.NumberFormat("en-US");
 
@@ -10,7 +10,13 @@ export function SchoolInfoCard() {
   const q = useDashQuery(school);
   return (
     // The school registry is an HQ-only route, so School users get no link.
-    <DashCard title="School Info" icon={Buildings} to={role === "hq" ? "/admin/schools" : undefined}>
+    // ASSUMPTION: HQ sees one "selected" school and School users see their own; the selection rule is not specified.
+    <DashCard
+      title="School Info"
+      icon={Buildings}
+      to={role === "hq" ? "/admin/schools" : undefined}
+      tag={<AssumptionTag note="Which school is shown here is a mock rule" />}
+    >
       <Loadable
         query={q}
         what="school info"
@@ -33,7 +39,7 @@ export function SchoolInfoCard() {
             </div>
             <p className="text-[15.5px] font-bold leading-tight tracking-tight">{s.name}</p>
             <p className="mt-2">
-              <span className="inline-block rounded-md bg-primary px-2.5 py-0.5 text-[11px] font-bold text-on-primary">
+              <span className="inline-block rounded-full bg-primary px-2.5 py-0.5 text-[11px] font-bold text-on-primary">
                 {role === "hq" ? "Selected school" : "Your school"}
               </span>
             </p>

@@ -1,4 +1,4 @@
-﻿import { CurrencyCircleDollar } from "@phosphor-icons/react";
+import { CurrencyCircleDollar } from "@phosphor-icons/react";
 import { Badge } from "../../../components/ui/Badge";
 import { BUDGET_ALERT_PCT, budgets, budgetsUpdated } from "../../../data/dashboard";
 import { budgetUsage } from "../../../lib/budget";
@@ -34,10 +34,10 @@ function BudgetRow({ b, primary }: { b: Budget; primary: boolean }) {
         aria-valuemax={100}
         aria-valuenow={barPct}
         aria-valuetext={`${pct}% used${over ? " - over budget" : ""}`}
-        className="h-3.5 overflow-hidden rounded-lg bg-track"
+        className="h-3.5 overflow-hidden rounded-full bg-track"
       >
         <div
-          className={`h-full rounded-lg ${over ? "bg-alert" : primary ? "bg-primary" : "bg-primary-container/60"}`}
+          className={`h-full rounded-full ${over ? "bg-alert" : primary ? "bg-primary" : "bg-primary-container/60"}`}
           style={{ width: `${barPct}%` }}
         />
       </div>

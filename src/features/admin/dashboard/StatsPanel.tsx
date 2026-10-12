@@ -12,7 +12,7 @@ function TrendChip({ trend }: { trend: Trend }) {
   const flat = trend.dir === "flat";
   return (
     <span
-      className={`inline-flex items-center gap-0.5 rounded-lg px-1.5 py-0.5 text-[11px] font-bold leading-4 tracking-normal ${
+      className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[11px] font-bold leading-4 tracking-normal ${
         flat ? "bg-track text-on-surface-variant" : "bg-primary text-on-primary"
       }`}
     >

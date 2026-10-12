@@ -1,11 +1,11 @@
-﻿import { CreditCard, FileText } from "@phosphor-icons/react";
+import { CreditCard, FileText } from "@phosphor-icons/react";
 import { Link } from "react-router";
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
 import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { payments, type Payment, type PaymentStatus } from "../../../data/dashboard";
 import { formatSGD } from "../../../lib/format";
-import { DashCard, Loadable, Skeleton, useDashQuery } from "./DashCard";
+import { AssumptionTag, DashCard, Loadable, Skeleton, useDashQuery } from "./DashCard";
 
 const tone: Record<PaymentStatus, BadgeTone> = { Paid: "success", Upcoming: "primary", Overdue: "alert" };
 // ASSUMPTION: no invoice detail screen yet; the invoice link opens the accounts area.
@@ -35,7 +35,12 @@ const columns: Column<Payment>[] = [
 export function PaymentHistoryCard() {
   const q = useDashQuery(payments);
   return (
-    <DashCard title="Payment History" icon={CreditCard} to={INVOICES}>
+    <DashCard
+      title="Payment History"
+      icon={CreditCard}
+      to={INVOICES}
+      tag={<AssumptionTag note="No invoice screen yet; invoice links open Education Accounts" />}
+    >
       <Loadable
         query={q}
         what="payment history"

@@ -37,9 +37,9 @@ export function TopUpCard() {
                     <abbr title={m.name} className="no-underline">
                       {m.month}
                     </abbr>
-                    <span className="h-4 overflow-hidden rounded-lg bg-track" aria-hidden="true">
+                    <span className="h-4 overflow-hidden rounded-full bg-track" aria-hidden="true">
                       <span
-                        className={`block h-full rounded-lg ${m.amount === max ? "bg-primary" : "bg-primary-container/60"}`}
+                        className={`block h-full rounded-full ${m.amount === max ? "bg-primary" : "bg-primary-container/60"}`}
                         style={{ width: `${(m.amount / max) * 100}%` }}
                       />
                     </span>
