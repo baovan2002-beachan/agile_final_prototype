@@ -1,6 +1,6 @@
 import { useId, useMemo, useRef, useState } from "react";
 import { CheckCircle, Eye } from "@phosphor-icons/react";
-import { Badge } from "../../../components/ui/Badge";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { DataTable, type Column } from "../../../components/ui/DataTable";
@@ -160,7 +160,7 @@ export default function TopUp() {
               Currently enrolled in school only
             </label>
             <p className="mt-1 text-[13px] text-on-surface-variant">
-              <span className="mr-2"><Badge tone="primary">Assumption</Badge></span>
+              <span className="mr-2"><AssumptionTag /></span>
               Both filters start on. Whether non-citizens or out-of-school accounts can ever receive a top-up is still open.
             </p>
           </div>

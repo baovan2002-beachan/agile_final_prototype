@@ -6,7 +6,8 @@ import { Field, inputClass } from "../../../components/ui/Field";
 import { application, circumstances } from "../../../data/familyFas";
 import { fmtDate } from "../overview/shared";
 import { validateForm, type FormValues } from "./logic";
-import { AssumptionTag, TODAY } from "./shared";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
+import { TODAY } from "./shared";
 
 type Props = { values: FormValues; onChange: (v: FormValues) => void; filledNote: string; onAskAi: () => void };
 

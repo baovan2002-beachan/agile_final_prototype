@@ -1,6 +1,7 @@
 import { flushSync } from "react-dom";
 import { Eye, SignOut } from "@phosphor-icons/react";
 import { useNavigate } from "react-router";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { useSession } from "../../../session";
@@ -37,7 +38,7 @@ export default function SimulationBanner() {
             Session {simulating.sessionId}
           </span>
           <Badge tone="neutral">Read-only</Badge>
-          <Badge tone="warning">Assumption (open question)</Badge>
+          <AssumptionTag>open question</AssumptionTag>
         </div>
         <Button variant="secondary" size="sm" icon={<SignOut size={16} aria-hidden />} onClick={exit}>
           Exit simulation

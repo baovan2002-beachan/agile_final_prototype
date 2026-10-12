@@ -6,7 +6,7 @@ import { Field, inputClass } from "../../../components/ui/Field";
 import { BANDS, household, initialBandId } from "../../../data/familyFas";
 import { fmtDate } from "../overview/shared";
 import type { SyncStatus } from "./logic";
-import { AssumptionTag } from "./shared";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import type { Outcome } from "./useSync";
 
 type Props = { status: SyncStatus; bandId: string; syncedOn: string; onSync: (o: Outcome) => void };
@@ -46,7 +46,7 @@ export function Household({ status, bandId, syncedOn, onSync }: Props) {
         <p className="mt-1 text-lg font-bold">{band?.label ?? "Not synced"}</p>
         <p className="text-[13px] text-on-surface-variant">Only a band is shared with MOE, never exact income. Last synced {fmtDate(syncedOn)}.</p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
-          <Button size="sm" variant="secondary" disabled={loading} onClick={sync} icon={<ArrowsClockwise size={16} weight="bold" aria-hidden="true" className={loading ? "animate-spin" : ""} />}>
+          <Button size="sm" variant="secondary" disabled={loading} onClick={sync} icon={<ArrowsClockwise size={16} weight="bold" aria-hidden="true" className={loading ? "motion-safe:animate-spin" : ""} />}>
             {loading ? "Syncing..." : status === "error" ? "Retry sync" : "Sync income band"}
           </Button>
           <p role="status" className={`text-[13px] font-medium ${status === "error" ? "text-alert" : status === "success" ? "text-success" : "text-on-surface-variant"}`}>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Lock, PencilSimple, Plus, WarningCircle } from "@phosphor-icons/react";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
@@ -37,7 +38,7 @@ export default function FeeTypes() {
   if (q.status === "loading") {
     return (
       <div aria-busy="true" aria-label="Loading fee types" className="grid gap-4 sm:grid-cols-2">
-        {[0, 1, 2, 3].map((i) => <div key={i} className="h-40 animate-pulse rounded-card bg-track" />)}
+        {[0, 1, 2, 3].map((i) => <div key={i} className="h-40 motion-safe:animate-pulse rounded-card bg-track" />)}
       </div>
     );
   }
@@ -69,7 +70,7 @@ export default function FeeTypes() {
         <div role="alert" className="flex flex-wrap items-center gap-2 rounded-card border border-alert bg-error-container px-4 py-3 text-sm text-on-error-container">
           <WarningCircle size={18} weight="bold" aria-hidden="true" />
           {flagged.length} fee {flagged.length > 1 ? "types are" : "type is"} above the national ceiling: {flagged.map((f) => f.name).join(", ")}.
-          <Badge tone="primary">Assumption</Badge>
+          <AssumptionTag />
         </div>
       )}
 
@@ -118,7 +119,7 @@ export default function FeeTypes() {
         >
           <p className="mb-3 flex items-center gap-1.5 text-[13px] text-on-surface-variant">
             <Lock size={14} weight="bold" aria-hidden="true" />
-            Set nationally and not editable here. Ceiling rule is an <Badge tone="primary">Assumption</Badge>
+            Set nationally and not editable here. Ceiling rule is an <AssumptionTag />
           </p>
           <DataTable
             columns={ceilingCols}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { WarningCircle } from "@phosphor-icons/react";
-import { Badge } from "../../../components/ui/Badge";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Button } from "../../../components/ui/Button";
 import { Modal } from "../../../components/ui/Modal";
 import type { Account, Schedule } from "../../../data/topup";
@@ -107,7 +107,7 @@ export function PreviewModal({ draft, eligible, onClose, onExecute }: Props) {
               <span className="font-semibold">Dual sign-off confirmed: a second authorised officer has approved this top-up (required)</span>
             </label>
             <p id="topup-exec-help" className="mt-2 text-[13px]">
-              <span className="mr-2"><Badge tone="primary">Assumption</Badge></span>
+              <span className="mr-2"><AssumptionTag /></span>
               {blocked
                 ? "Execute is disabled because no accounts are eligible."
                 : signed

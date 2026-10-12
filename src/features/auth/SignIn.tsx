@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { Check, CheckCircle, CircleNotch, EnvelopeSimple, HandHeart, ShieldCheck, Wallet, WarningCircle, type Icon } from "@phosphor-icons/react";
-import { Badge } from "../../components/ui/Badge";
+import { AssumptionTag } from "../../components/ui/AssumptionTag";
 import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
 import { Field, inputClass } from "../../components/ui/Field";
@@ -76,7 +76,7 @@ export default function SignIn() {
               aria-controls={tab === t.id ? `panel-${t.id}` : undefined}
               tabIndex={tab === t.id ? 0 : -1}
               onClick={() => setTab(t.id)}
-              className={`min-h-11 rounded-control px-2 text-sm font-semibold transition-colors ${focus} ${
+              className={`min-h-11 rounded-control px-2 text-sm font-semibold motion-safe:transition-colors ${focus} ${
                 tab === t.id ? "bg-primary text-on-primary" : "text-on-surface-variant hover:bg-primary-fixed hover:text-primary"
               }`}
             >
@@ -137,7 +137,7 @@ function ParentPanel() {
             <>
               <MockQr />
               <p className="mt-3 text-on-surface">Scan with the SingPass app to continue.</p>
-              <span className="mt-2"><Badge tone="warning">Assumption: mock QR</Badge></span>
+              <span className="mt-2"><AssumptionTag>mock QR</AssumptionTag></span>
             </>
           )}
           {step === "verifying" && (
@@ -272,7 +272,7 @@ function ForgotModal({ open, onClose }: { open: boolean; onClose: () => void }) 
             <CheckCircle size={20} weight="fill" className="shrink-0 text-success" aria-hidden="true" />
             If this email exists, a reset link is sent.
           </p>
-          <Badge tone="warning">Assumption: mock, no email is sent</Badge>
+          <AssumptionTag>mock, no email is sent</AssumptionTag>
         </div>
       ) : (
         <form id="forgot-form" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>

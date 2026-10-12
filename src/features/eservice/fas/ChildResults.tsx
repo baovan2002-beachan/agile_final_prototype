@@ -3,7 +3,7 @@ import { Card } from "../../../components/ui/Card";
 import { children } from "../../../data/parent";
 import type { Band } from "../../../data/familyFas";
 import { assess } from "./logic";
-import { AssumptionTag } from "./shared";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 
 const tone: Record<string, BadgeTone> = { Indicative: "success", "School decides": "warning", "Not eligible": "neutral" };
 

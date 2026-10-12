@@ -1,4 +1,5 @@
 import { CurrencyCircleDollar } from "@phosphor-icons/react";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Badge } from "../../../components/ui/Badge";
 import { BUDGET_ALERT_PCT, budgets, budgetsUpdated } from "../../../data/dashboard";
 import { budgetUsage } from "../../../lib/budget";
@@ -79,7 +80,7 @@ export function BudgetUsageCard() {
               <span className="flex flex-wrap items-center justify-between gap-2">
                 Updated {budgetsUpdated}
                 {/* ASSUMPTION: alert threshold is invented; see BUDGET_ALERT_PCT. */}
-                <Badge tone="neutral">Assumption: alert at {BUDGET_ALERT_PCT}% used</Badge>
+                <AssumptionTag>alert at {BUDGET_ALERT_PCT}% used</AssumptionTag>
               </span>
             </CardFoot>
           </>

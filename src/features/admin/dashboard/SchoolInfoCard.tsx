@@ -1,7 +1,8 @@
 import { Buildings, MapPin, Phone, Users } from "@phosphor-icons/react";
 import { school } from "../../../data/dashboard";
 import { useSession } from "../../../session";
-import { AssumptionTag, DashCard, Loadable, Skeleton, useDashQuery } from "./DashCard";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
+import { DashCard, Loadable, Skeleton, useDashQuery } from "./DashCard";
 
 const nf = new Intl.NumberFormat("en-US");
 

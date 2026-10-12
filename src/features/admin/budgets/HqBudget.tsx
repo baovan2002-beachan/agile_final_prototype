@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Coins, Receipt, WarningOctagon } from "@phosphor-icons/react";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
@@ -52,7 +53,7 @@ export function HqBudget() {
           })}
         </ul>
         <p className="mt-4 flex items-center gap-2 text-[13px] text-on-surface-variant">
-          <Badge tone="neutral">Assumption</Badge>
+          <AssumptionTag />
           {OVER_BUDGET_NOTE}
         </p>
       </Card>

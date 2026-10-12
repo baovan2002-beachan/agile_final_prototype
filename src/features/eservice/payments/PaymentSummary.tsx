@@ -1,4 +1,4 @@
-import { Badge } from "../../../components/ui/Badge";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { formatSGD } from "../../../lib/format";
@@ -23,7 +23,7 @@ type Props = { summary: Summary; mode: Mode; onMode: (m: Mode) => void; onAuthor
 export function PaymentSummary({ summary, mode, onMode, onAuthorize }: Props) {
   const { total, fromAccount, fromGateway, lines } = summary;
   return (
-    <Card title="Payment summary" action={<Badge tone="neutral">Assumption</Badge>} className="lg:sticky lg:top-4">
+    <Card title="Payment summary" action={<AssumptionTag />} className="lg:sticky lg:top-4">
       <fieldset>
         <legend className="mb-2 text-[13px] font-semibold">Payment method</legend>
         <div className="space-y-2">

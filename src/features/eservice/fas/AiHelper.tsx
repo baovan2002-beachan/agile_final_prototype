@@ -3,7 +3,7 @@ import { Button } from "../../../components/ui/Button";
 import { Modal } from "../../../components/ui/Modal";
 import { questions } from "../../../data/familyFas";
 import { answersToForm, autoFill, type FormValues } from "./logic";
-import { AssumptionTag } from "./shared";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 
 type Props = { open: boolean; onClose: () => void; values: FormValues; onFill: (v: FormValues, note: string) => void };
 type Answers = Partial<Record<(typeof questions)[number]["id"], string>>;
