@@ -21,10 +21,24 @@ export function Modal({ open, onClose, title, children, footer }: Props) {
     }
   }, [open]);
 
+  // Scroll lock while open; restored on close/unmount.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   return (
     <dialog
       ref={ref}
       aria-labelledby={titleId}
+      // Native close (e.g. <form method="dialog"> inside) must not desync `open`.
+      onClose={() => {
+        if (open) onClose();
+      }}
       // Esc: keep the dialog controlled by `open` instead of letting the browser close it.
       onCancel={(e) => {
         e.preventDefault();
@@ -34,7 +48,7 @@ export function Modal({ open, onClose, title, children, footer }: Props) {
       onClick={(e) => {
         if (e.target === ref.current) onClose();
       }}
-      className="m-auto w-[min(32rem,calc(100vw-2rem))] rounded-3xl border border-line bg-surface-container-lowest p-0 text-on-surface backdrop:bg-inverse-surface/40"
+      className="m-auto w-[min(32rem,calc(100vw-2rem))] rounded-card border border-line bg-surface-container-lowest p-0 text-on-surface backdrop:bg-inverse-surface/40"
     >
       <div className="p-6">
         <div className="flex items-start justify-between gap-4">

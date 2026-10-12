@@ -15,7 +15,7 @@ const tones: Record<BadgeTone, { cls: string; Icon: typeof Info }> = {
 export function Badge({ tone, children }: { tone: BadgeTone; children: ReactNode }) {
   const { cls, Icon } = tones[tone];
   return (
-    <span className={`inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2 py-0.5 text-xs font-semibold ${cls}`}>
+    <span className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-semibold ${cls}`}>
       <Icon size={14} weight="bold" aria-hidden="true" />
       {children}
     </span>
