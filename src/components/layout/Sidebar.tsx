@@ -86,13 +86,13 @@ export default function Sidebar({ pinned, onTogglePin }: { pinned: boolean; onTo
             type="button"
             onClick={() => { hide(); onTogglePin(); }}
             aria-pressed={pinned}
-            aria-label={pinned ? "Unpin sidebar" : "Pin sidebar open"}
-            title={pinned ? "Unpin sidebar" : undefined}
-            {...tipProps("Pin sidebar open")}
+            aria-label="Pin sidebar"
+            title={pinned ? "Pin sidebar" : undefined}
+            {...tipProps("Pin sidebar")}
             className={`${row} ${width} ${focus} text-on-surface-variant hover:bg-primary-fixed hover:text-on-primary-fixed`}
           >
             <span className="grid size-11 shrink-0 place-items-center"><SidebarSimple size={22} /></span>
-            {pinned && <span className="truncate pr-2 text-sm font-medium">Unpin sidebar</span>}
+            {pinned && <span className="truncate pr-2 text-sm font-medium">Pin sidebar</span>}
           </button>
           <button
             type="button"

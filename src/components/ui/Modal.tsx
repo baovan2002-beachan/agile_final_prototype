@@ -1,6 +1,10 @@
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { X } from "@phosphor-icons/react";
 
+// Body scroll lock is refcounted across open modals, so closing them in any order restores the original overflow once.
+let locks = 0;
+let savedOverflow = "";
+
 type Props = { open: boolean; onClose: () => void; title: string; children: ReactNode; footer?: ReactNode };
 
 /** Native <dialog> modal: showModal() gives focus trap + inert background; Esc and backdrop click call onClose. */
@@ -15,6 +19,9 @@ export function Modal({ open, onClose, title, children, footer }: Props) {
     if (open && !d.open) {
       opener.current = document.activeElement as HTMLElement | null;
       d.showModal();
+      // React's autoFocus runs while the dialog is still closed and is lost. To focus a field on open, mark it
+      // `autoFocus` (React 19 also renders it as the native attribute) or `data-autofocus`; the first match gets focus.
+      d.querySelector<HTMLElement>("[data-autofocus],[autofocus]")?.focus();
     } else if (!open && d.open) {
       d.close();
       opener.current?.focus();
@@ -24,10 +31,10 @@ export function Modal({ open, onClose, title, children, footer }: Props) {
   // Scroll lock while open; restored on close/unmount.
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
+    if (locks++ === 0) savedOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = prev;
+      if (--locks === 0) document.body.style.overflow = savedOverflow;
     };
   }, [open]);
 
