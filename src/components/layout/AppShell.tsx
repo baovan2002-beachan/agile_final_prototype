@@ -4,6 +4,7 @@ import { homeFor, navFor } from "../../data/nav";
 import { useSession, type Role } from "../../session";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import SimulationBanner, { READ_ONLY_HINT } from "../../features/admin/simulation/SimulationBanner";
 
 const SUBTITLE: Record<Role, string> = {
   hq: "MOE HQ - Education Account & FAS",
@@ -19,7 +20,7 @@ export function RequireRole({ roles, children }: { roles: Role[]; children: Reac
 }
 
 export default function AppShell() {
-  const { role } = useSession();
+  const { role, simulating } = useSession();
   const { pathname } = useLocation();
   const [pinned, setPinned] = useState(false);
 
@@ -42,13 +43,24 @@ export default function AppShell() {
       </a>
       <Sidebar pinned={pinned} onTogglePin={() => setPinned((p) => !p)} />
       <div className="min-w-0 flex-1 p-6">
+        <SimulationBanner />
         <Header
           title={current?.title ?? current?.label ?? "MOE"}
-          subtitle={SUBTITLE[role]}
+          subtitle={simulating?.schoolName ?? SUBTITLE[role]}
           showFilter={role !== "parent"}
         />
         <main id="main" tabIndex={-1} className="outline-none">
-          <Outlet />
+          {simulating ? (
+            // Read-only simulation: a disabled fieldset natively disables every button, input and select inside it
+            // (dialogs included), so simulated screens need no per-screen gating. Links stay clickable.
+            // ponytail: sort headers, pagination and filters are disabled too; no way to whitelist inside a disabled fieldset.
+            <fieldset disabled title={READ_ONLY_HINT} className="m-0 min-w-0 border-0 p-0">
+              <legend className="sr-only">Simulated screen, read-only</legend>
+              <Outlet />
+            </fieldset>
+          ) : (
+            <Outlet />
+          )}
         </main>
       </div>
     </div>
