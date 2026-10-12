@@ -17,7 +17,7 @@ const columns: Column<Row>[] = [
   { key: "school", header: "School", sortable: true },
   { key: "balance", header: "Balance", sortable: true, align: "right", render: (r) => `S$${r.balance.toFixed(2)}` },
 ];
-const card = "rounded-2xl border border-line bg-surface-container-lowest p-5";
+const card = "rounded-card border border-line bg-surface-container-lowest p-5";
 
 export default function DataGallery() {
   return (

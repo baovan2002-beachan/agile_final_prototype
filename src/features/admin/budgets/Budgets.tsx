@@ -13,7 +13,7 @@ function Gate({ data, children }: { data: unknown; children: ReactNode }) {
   if (query.status === "loading")
     return (
       <div aria-busy="true" aria-label="Loading budgets" className="space-y-4">
-        {[0, 1].map((i) => <div key={i} className="h-40 animate-pulse rounded-card bg-track" />)}
+        {[0, 1].map((i) => <div key={i} className="h-40 motion-safe:animate-pulse rounded-card bg-track" />)}
       </div>
     );
   if (query.status === "error")

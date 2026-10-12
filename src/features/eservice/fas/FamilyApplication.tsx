@@ -12,7 +12,7 @@ import { trackerSteps, type FormValues } from "./logic";
 import { Tracker } from "./Tracker";
 import { useSync } from "./useSync";
 
-const pulse = "animate-pulse rounded-card bg-track";
+const pulse = "motion-safe:animate-pulse rounded-card bg-track";
 const blank: FormValues = { contact: "", mailingAddress: "", circumstance: "", note: "" };
 
 export default function FamilyApplication() {

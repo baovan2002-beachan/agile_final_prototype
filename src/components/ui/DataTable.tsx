@@ -77,7 +77,7 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10 }: Pr
                       <button
                         type="button"
                         onClick={() => toggle(k)}
-                        className={`inline-flex min-h-8 items-center gap-1 rounded font-medium hover:text-primary ${focus}`}
+                        className={`inline-flex min-h-8 items-center gap-1 rounded-control font-medium hover:text-primary ${focus}`}
                       >
                         {c.header}
                         {active ? (

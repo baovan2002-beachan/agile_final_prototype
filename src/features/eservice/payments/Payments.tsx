@@ -45,7 +45,7 @@ export default function Payments() {
           </p>
         )}
       </div>
-      {query.status === "loading" && <div aria-busy="true" aria-label="Loading payments" className="space-y-3">{[0, 1, 2, 3].map((i) => <div key={i} className="h-14 animate-pulse rounded-control bg-track" />)}</div>}
+      {query.status === "loading" && <div aria-busy="true" aria-label="Loading payments" className="space-y-3">{[0, 1, 2, 3].map((i) => <div key={i} className="h-14 motion-safe:animate-pulse rounded-control bg-track" />)}</div>}
       {query.status === "error" && <Card><EmptyState title="Could not load invoices" hint="Check your connection and try again." action={<Button onClick={query.retry}>Retry</Button>} /></Card>}
       {query.status === "ready" && (
         <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_24rem]">

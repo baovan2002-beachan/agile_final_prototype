@@ -9,7 +9,7 @@ import { RecentTransactions, UpcomingInvoices } from "./Lists";
 import { ProfileCard } from "./ProfileCard";
 import { ChildCards, Stats } from "./Cards";
 
-const pulse = "animate-pulse motion-reduce:animate-none rounded-card bg-track";
+const pulse = "motion-safe:animate-pulse rounded-card bg-track";
 
 function Skeleton() {
   return (

@@ -112,7 +112,7 @@ export default function Sidebar({ pinned, onTogglePin }: { pinned: boolean; onTo
         <span
           role="tooltip"
           style={{ top: tip.top, left: 108 + 8 }}
-          className="pointer-events-none fixed z-50 -translate-y-1/2 whitespace-nowrap rounded-[10px] bg-inverse-surface px-3 py-1.5 text-xs font-medium text-inverse-on-surface"
+          className="pointer-events-none fixed z-50 -translate-y-1/2 whitespace-nowrap rounded-control bg-inverse-surface px-3 py-1.5 text-xs font-medium text-inverse-on-surface"
         >
           {tip.label}
         </span>

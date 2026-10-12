@@ -5,7 +5,7 @@ import { useSession } from "../../session";
 
 export default function PagePlaceholder({ title, note }: { title: string; note?: string }) {
   return (
-    <section className="flex flex-col items-center rounded-2xl border border-line bg-surface-container-lowest px-6 py-16 text-center">
+    <section className="flex flex-col items-center rounded-card border border-line bg-surface-container-lowest px-6 py-16 text-center">
       <span className="grid size-14 place-items-center rounded-full border border-line text-primary">
         <Hammer size={24} />
       </span>

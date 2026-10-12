@@ -9,6 +9,13 @@ export const effectiveRole = (real: Role | null, sim: Simulating | null): Role |
 /** Only an HQ user may simulate. Anyone else gets no simulation, whatever was stored. */
 export const simulationFor = (real: Role | null, sim: Simulating | null): Simulating | null => (real === "hq" ? sim : null);
 
+/** Where AppShell must send the visitor, or null to render. Signed out goes to sign-in; a role cannot open another role's prefix. */
+export function guardRedirect(role: Role | null, pathname: string): string | null {
+  if (!role) return "/signin";
+  const prefix = role === "parent" ? "/parent" : "/admin";
+  return pathname === prefix || pathname.startsWith(prefix + "/") ? null : prefix;
+}
+
 /** Validates a value read back from storage. */
 export function parseSimulating(raw: unknown): Simulating | null {
   if (!raw || typeof raw !== "object") return null;
