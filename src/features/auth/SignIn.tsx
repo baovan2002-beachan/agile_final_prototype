@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
-import { CheckCircle, CircleNotch, EnvelopeSimple, HandHeart, ShieldCheck, Wallet, WarningCircle, type Icon } from "@phosphor-icons/react";
+import { Check, CheckCircle, CircleNotch, EnvelopeSimple, HandHeart, ShieldCheck, Wallet, WarningCircle, type Icon } from "@phosphor-icons/react";
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
@@ -73,13 +73,14 @@ export default function SignIn() {
               type="button"
               id={`tab-${t.id}`}
               aria-selected={tab === t.id}
-              aria-controls={`panel-${t.id}`}
+              aria-controls={tab === t.id ? `panel-${t.id}` : undefined}
               tabIndex={tab === t.id ? 0 : -1}
               onClick={() => setTab(t.id)}
-              className={`min-h-11 rounded-[8px] px-2 text-sm font-semibold transition-colors ${focus} ${
+              className={`min-h-11 rounded-control px-2 text-sm font-semibold transition-colors ${focus} ${
                 tab === t.id ? "bg-primary text-on-primary" : "text-on-surface-variant hover:bg-primary-fixed hover:text-primary"
               }`}
             >
+              {tab === t.id && <Check size={16} weight="bold" aria-hidden="true" className="mr-1.5 inline align-[-2px]" />}
               {t.label}
             </button>
           ))}
@@ -240,6 +241,10 @@ function StaffPanel() {
 
 function ForgotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [sent, setSent] = useState(false);
+  // The focused field is replaced by the success message on send; move focus to the way out.
+  useEffect(() => {
+    if (sent) document.getElementById("forgot-back")?.focus();
+  }, [sent]);
   const close = () => {
     onClose();
     setSent(false);
@@ -251,7 +256,7 @@ function ForgotModal({ open, onClose }: { open: boolean; onClose: () => void }) 
       title="Reset staff password"
       footer={
         sent ? (
-          <Button onClick={close}>Back to sign in</Button>
+          <Button id="forgot-back" onClick={close}>Back to sign in</Button>
         ) : (
           <>
             <Button variant="secondary" onClick={close}>Cancel</Button>
@@ -261,10 +266,14 @@ function ForgotModal({ open, onClose }: { open: boolean; onClose: () => void }) 
       }
     >
       {sent ? (
-        <p role="status" className="flex items-start gap-2 text-on-surface">
-          <CheckCircle size={20} weight="fill" className="shrink-0 text-success" aria-hidden="true" />
-          Check your email. We have sent reset instructions to the address you entered.
-        </p>
+        // ASSUMPTION: mock flow; wording avoids confirming whether the address belongs to an account.
+        <div role="status" className="space-y-2 text-on-surface">
+          <p className="flex items-start gap-2">
+            <CheckCircle size={20} weight="fill" className="shrink-0 text-success" aria-hidden="true" />
+            If this email exists, a reset link is sent.
+          </p>
+          <Badge tone="warning">Assumption: mock, no email is sent</Badge>
+        </div>
       ) : (
         <form id="forgot-form" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
           <Field label="Institutional email" hint="We will email you a link to set a new password.">

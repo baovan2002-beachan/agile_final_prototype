@@ -15,8 +15,8 @@ export type Transaction = {
 };
 
 export const children: Child[] = [
-  { id: "c1", name: "Ethan Mitchell-Tan", level: "Primary 5", school: "Greenridge Primary School", educationBalance: 0 },
-  { id: "c2", name: "Chloe Mitchell-Tan", level: "Secondary 2", school: "Eastbrook Secondary School", educationBalance: 120 },
+  { id: "c1", name: "Ethan Lim", level: "Primary 5", school: "Greenridge Primary School", educationBalance: 0 },
+  { id: "c2", name: "Chloe Lim", level: "Secondary 2", school: "Eastbrook Secondary School", educationBalance: 120 },
 ];
 
 export const invoices: Invoice[] = [
@@ -56,7 +56,7 @@ export type Fas = typeof fasStatus;
 export type Profile = { name: string; nric: string; address: string; mailingAddress: string; contact: string };
 
 export const profile: Profile = {
-  name: "Sarah Mitchell",
+  name: "Rachel Lim",
   nric: "S****567A",
   address: "Blk 214 Bishan Street 23, #08-112, Singapore 570214",
   mailingAddress: "Blk 214 Bishan Street 23, #08-112, Singapore 570214",

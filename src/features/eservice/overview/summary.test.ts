@@ -30,5 +30,8 @@ test("validateProfile", () => {
   expect(Object.keys(validateProfile({ address: "", mailingAddress: "x", contact: "12345" })).sort()).toEqual(["address", "contact", "mailingAddress"]);
   expect(validateProfile({ ...ok, contact: "91234567" })).toEqual({});
   expect(validateProfile({ ...ok, contact: "5123 4567" }).contact).toBeTruthy();
+  expect(validateProfile({ ...ok, contact: "+65 9123-4567" })).toEqual({});
+  expect(validateProfile({ ...ok, contact: "3123 4567" })).toEqual({});
+  expect(validateProfile({ ...ok, contact: "+65 5123 4567" }).contact).toBeTruthy();
   expect(validateProfile({ ...ok, address: "Blk 1 Bishan St 23" }).address).toBeTruthy();
 });

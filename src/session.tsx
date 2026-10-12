@@ -8,6 +8,7 @@ type Session = {
   role: Role | null;
   /** The role actually signed in (HQ while simulating). */
   realRole: Role | null;
+  /** The person actually signed in (the HQ user while simulating, never the simulated one). */
   user: User;
   simulating: Simulating | null;
   startSimulation(as: "school" | "parent", schoolName?: string): void;
@@ -49,6 +50,7 @@ const Ctx = createContext<Session | null>(null);
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [realRole, setRole] = useState<Role | null>(initialRole);
   const [sim, setSim] = useState<Simulating | null>(initialSim);
+  const [note, setNote] = useState("");
   const simulating = simulationFor(realRole, sim);
   const role = effectiveRole(realRole, simulating);
   const setSimulating = (v: Simulating | null) => {
@@ -75,14 +77,26 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     realRole,
     simulating,
     startSimulation: (as, schoolName) => {
-      if (realRole === "hq") setSimulating({ as, sessionId: newSessionId(), ...(schoolName ? { schoolName } : {}) });
+      if (realRole === "hq") {
+        setSimulating({ as, sessionId: newSessionId(), ...(schoolName ? { schoolName } : {}) });
+        setNote("Simulation started");
+      }
     },
-    stopSimulation: () => setSimulating(null),
-    user: role ? userFor(role) : GUEST,
+    stopSimulation: () => {
+      setSimulating(null);
+      setNote("Simulation ended");
+    },
+    user: realRole ? userFor(realRole) : GUEST,
     signIn: set,
     signOut: () => set(null),
   };
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+  return (
+    <Ctx.Provider value={value}>
+      {children}
+      {/* Lives here, not in a screen: the shell and banner unmount while the role changes. */}
+      <div role="status" className="sr-only">{note}</div>
+    </Ctx.Provider>
+  );
 }
 
 export function useSession(): Session {

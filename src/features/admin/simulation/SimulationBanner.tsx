@@ -1,3 +1,4 @@
+import { flushSync } from "react-dom";
 import { Eye, SignOut } from "@phosphor-icons/react";
 import { useNavigate } from "react-router";
 import { Badge } from "../../../components/ui/Badge";
@@ -14,8 +15,11 @@ export default function SimulationBanner() {
 
   const who = simulating.as === "school" ? `School user${simulating.schoolName ? ` - ${simulating.schoolName}` : ""}` : "Parent";
   const exit = () => {
-    stopSimulation();
-    navigate("/admin/schools");
+    // Commit the role change first, so the route guard has already sent the HQ user to /admin; only then
+    // navigate. Batched, the guard's redirect to /admin won this race and the user lost the Schools page.
+    flushSync(stopSimulation);
+    // focusMain: the Exit button unmounts, so AppShell moves focus to the main content after navigating.
+    navigate("/admin/schools", { state: { focusMain: true } });
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Navigate, Outlet, useLocation } from "react-router";
 import { homeFor, navFor } from "../../data/nav";
 import { useSession, type Role } from "../../session";
@@ -23,6 +23,12 @@ export default function AppShell() {
   const { role, simulating } = useSession();
   const { pathname } = useLocation();
   const [pinned, setPinned] = useState(false);
+  const mainRef = useRef<HTMLElement>(null);
+  const { key, state } = useLocation() as { key: string; state: { focusMain?: boolean } | null };
+  // A navigation can ask for focus on the content (e.g. after the Exit simulation button unmounts).
+  useEffect(() => {
+    if (state?.focusMain) mainRef.current?.focus();
+  }, [key, state]);
 
   if (!role) return <Navigate to="/signin" replace />;
   // A role cannot open another role's prefix.
@@ -37,7 +43,7 @@ export default function AppShell() {
     <div className="flex min-h-screen">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-[10px] focus:bg-primary focus:px-4 focus:py-2 focus:text-on-primary"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-control focus:bg-primary focus:px-4 focus:py-2 focus:text-on-primary"
       >
         Skip to content
       </a>
@@ -49,7 +55,7 @@ export default function AppShell() {
           subtitle={simulating?.schoolName ?? SUBTITLE[role]}
           showFilter={role !== "parent"}
         />
-        <main id="main" tabIndex={-1} className="outline-none">
+        <main ref={mainRef} id="main" tabIndex={-1} className="outline-none">
           {simulating ? (
             // Read-only simulation: a disabled fieldset natively disables every button, input and select inside it
             // (dialogs included), so simulated screens need no per-screen gating. Links stay clickable.

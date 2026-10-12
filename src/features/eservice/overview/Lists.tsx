@@ -11,7 +11,7 @@ const firstName = (children: Child[], id: string) => children.find((c) => c.id =
 export function UpcomingInvoices({ invoices, children }: { invoices: Invoice[]; children: Child[] }) {
   const open = invoices.filter((i) => i.status !== "paid").sort((a, b) => a.dueDate.localeCompare(b.dueDate));
   return (
-    <Card title="Upcoming invoices" action={open.length ? <PayLink label="Pay invoices now" /> : undefined}>
+    <Card title="Upcoming invoices" action={open.length ? <PayLink label="Pay now for all open invoices" /> : undefined}>
       {open.length === 0 ? (
         <EmptyState title="No invoices due" hint="You are all caught up. New school invoices will appear here." />
       ) : (

@@ -18,4 +18,4 @@ export function PayLink({ label }: { label: string }) {
 }
 
 export const linkClass =
-  "inline-flex min-h-9 items-center rounded text-[13px] font-semibold text-primary underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary pointer-coarse:min-h-11";
+  "inline-flex min-h-9 items-center rounded-control text-[13px] font-semibold text-primary underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary pointer-coarse:min-h-11";
