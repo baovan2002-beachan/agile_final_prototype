@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-background: #F8F6F6;
+  --color-surface: #F8F6F6;
+  --color-surface-bright: #F8F6F6;
+  --color-surface-dim: #DDD7D7;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-low: #F6F3F3;
+  --color-surface-container: #F0ECEC;
+  --color-surface-container-high: #EAE5E5;
+  --color-surface-container-highest: #E4DEDE;
+  --color-surface-variant: #E4DEDE;
+  --color-on-surface: #1A1512;
+  --color-on-background: #1A1512;
+  --color-on-surface-variant: #5E5658;
+  --color-outline: #8A8082;
+  --color-outline-variant: #E0D8D9;
+  --color-inverse-surface: #2E2628;
+  --color-inverse-on-surface: #F7F2F2;
+  --color-inverse-primary: #E8BFC3;
+  --color-primary: #8A2538;
+  --color-on-primary: #FFFFFF;
+  --color-primary-container: #A8343F;
+  --color-on-primary-container: #FBE3E5;
+  --color-primary-fixed: #F3D2D5;
+  --color-primary-fixed-dim: #E8BFC3;
+  --color-on-primary-fixed: #3A0A12;
+  --color-on-primary-fixed-variant: #8A2538;
+  --color-surface-tint: #8A2538;
+  --color-secondary: #A8343F;
+  --color-on-secondary: #FFFFFF;
+  --color-secondary-container: #F3D2D5;
+  --color-on-secondary-container: #5C1520;
+  --color-secondary-fixed: #F9E3E5;
+  --color-secondary-fixed-dim: #E8BFC3;
+  --color-on-secondary-fixed: #5C1520;
+  --color-on-secondary-fixed-variant: #7A1F2B;
+  --color-tertiary: #D61F26;
+  --color-on-tertiary: #FFFFFF;
+  --color-tertiary-container: #E4575C;
+  --color-on-tertiary-container: #FFFFFF;
+  --color-tertiary-fixed: #FDE3E3;
+  --color-tertiary-fixed-dim: #F5B1B3;
+  --color-on-tertiary-fixed: #410004;
+  --color-on-tertiary-fixed-variant: #A8151C;
+  --color-error: #BA1A1A;
+  --color-on-error: #FFFFFF;
+  --color-error-container: #FFDAD6;
+  --color-on-error-container: #93000A;
+  --color-success: #18794A;
+  --color-success-container: #E4F4EC;
+  --color-warning: #8F5F00;
+  --color-warning-container: #FDF1D6;
+  --color-alert: #B52F37;
+  --color-line: #ECE6E6;
+  --color-track: #F1EFEF;
+  --color-slate: #73787A;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+}
