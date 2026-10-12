@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { createBrowserRouter, Navigate, type RouteObject } from "react-router";
 import AppShell, { RequireRole } from "./components/layout/AppShell";
 import { ComingSoon } from "./components/layout/PagePlaceholder";
@@ -7,10 +7,16 @@ import { useSession } from "./session";
 
 type Loader = () => Promise<{ default: ComponentType }>;
 
-/** Lazy route from a default-export module. `hqOnly` sends School users back to /admin. */
-const page = (load: Loader, hqOnly = false): Pick<RouteObject, "lazy"> => ({
+function RedirectIfSignedIn({ children }: { children: ReactNode }) {
+  const { role } = useSession();
+  return role ? <Navigate to={homeFor(role)} replace /> : children;
+}
+
+/** Lazy route from a default-export module. `hqOnly` sends School users back to /admin; `guestOnly` sends a signed-in visitor home. */
+const page = (load: Loader, hqOnly = false, guestOnly = false): Pick<RouteObject, "lazy"> => ({
   lazy: async () => {
     const C = (await load()).default;
+    if (guestOnly) return { Component: () => <RedirectIfSignedIn><C /></RedirectIfSignedIn> };
     return {
       Component: hqOnly
         ? () => (
@@ -40,7 +46,7 @@ if (import.meta.env.DEV) {
 
 export const router = createBrowserRouter([
   { path: "/", Component: Landing },
-  { path: "signin", HydrateFallback: () => null, ...page(() => import("./features/auth/SignIn")) },
+  { path: "signin", HydrateFallback: () => null, ...page(() => import("./features/auth/SignIn"), false, true) },
   {
     Component: AppShell,
     HydrateFallback: () => null,
