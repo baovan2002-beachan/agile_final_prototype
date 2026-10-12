@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
+import { userFor, type User } from "./data/users";
 
 export type Role = "hq" | "school" | "parent";
-type User = { name: string; initials: string };
 type Session = {
   role: Role | null;
   user: User;
@@ -9,12 +9,6 @@ type Session = {
   signOut(): void;
 };
 
-// ASSUMPTION: temporary names; Task 6 replaces them with the mock users in src/data.
-const USERS: Record<Role, User> = {
-  hq: { name: "Daniel Lim", initials: "DL" },
-  school: { name: "Alicia Tan", initials: "AT" },
-  parent: { name: "Sarah Mitchell", initials: "SM" },
-};
 const GUEST: User = { name: "Guest", initials: "G" };
 const KEY = "moe-ui-role";
 const isRole = (v: unknown): v is Role => v === "hq" || v === "school" || v === "parent";
@@ -48,7 +42,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   };
   const value: Session = {
     role,
-    user: role ? USERS[role] : GUEST,
+    user: role ? userFor(role) : GUEST,
     signIn: set,
     signOut: () => set(null),
   };
