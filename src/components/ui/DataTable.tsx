@@ -24,6 +24,14 @@ const focus = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi
 export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10 }: Props<T>) {
   const [sort, setSort] = useState<{ key: string; dir: "asc" | "desc" } | null>(null);
   const [page, setPage] = useState(0);
+  const size = Math.max(1, Math.floor(pageSize) || 1);
+
+  // Reset to page 1 when the data (reference or length) changes: adjust state during render.
+  const [seen, setSeen] = useState({ rows, len: rows.length });
+  if (seen.rows !== rows || seen.len !== rows.length) {
+    setSeen({ rows, len: rows.length });
+    setPage(0);
+  }
 
   const sorted = useMemo(() => {
     if (!sort) return rows;
@@ -39,9 +47,9 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10 }: Pr
 
   if (rows.length === 0) return <>{empty}</>;
 
-  const pages = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const pages = Math.max(1, Math.ceil(sorted.length / size));
   const cur = Math.min(page, pages - 1);
-  const visible = sorted.slice(cur * pageSize, (cur + 1) * pageSize);
+  const visible = sorted.slice(cur * size, (cur + 1) * size);
 
   const toggle = (key: string) => {
     setSort((s) => (s?.key === key && s.dir === "asc" ? { key, dir: "desc" } : { key, dir: "asc" }));
@@ -69,7 +77,7 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10 }: Pr
                       <button
                         type="button"
                         onClick={() => toggle(k)}
-                        className={`inline-flex items-center gap-1 rounded font-medium hover:text-primary ${focus}`}
+                        className={`inline-flex min-h-8 items-center gap-1 rounded font-medium hover:text-primary ${focus}`}
                       >
                         {c.header}
                         {active ? (
