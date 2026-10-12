@@ -19,8 +19,9 @@ export function Modal({ open, onClose, title, children, footer }: Props) {
     if (open && !d.open) {
       opener.current = document.activeElement as HTMLElement | null;
       d.showModal();
-      // React's autoFocus runs while the dialog is still closed and is lost. To focus a field on open, mark it
-      // `autoFocus` (React 19 also renders it as the native attribute) or `data-autofocus`; the first match gets focus.
+      // React's autoFocus prop runs while the dialog is still closed (display:none) and is lost, and React does not
+      // render it as an attribute. To focus a field on open, give it `data-autofocus` (or a native `autofocus`
+      // attribute); the first match gets focus, otherwise the browser's default (first focusable) applies.
       d.querySelector<HTMLElement>("[data-autofocus],[autofocus]")?.focus();
     } else if (!open && d.open) {
       d.close();

@@ -241,6 +241,10 @@ function StaffPanel() {
 
 function ForgotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [sent, setSent] = useState(false);
+  // The focused field is replaced by the success message on send; move focus to the way out.
+  useEffect(() => {
+    if (sent) document.getElementById("forgot-back")?.focus();
+  }, [sent]);
   const close = () => {
     onClose();
     setSent(false);
@@ -252,8 +256,7 @@ function ForgotModal({ open, onClose }: { open: boolean; onClose: () => void }) 
       title="Reset staff password"
       footer={
         sent ? (
-          // autoFocus: this button mounts inside the already-open dialog, so React focuses it right after send.
-          <Button onClick={close} autoFocus>Back to sign in</Button>
+          <Button id="forgot-back" onClick={close}>Back to sign in</Button>
         ) : (
           <>
             <Button variant="secondary" onClick={close}>Cancel</Button>
