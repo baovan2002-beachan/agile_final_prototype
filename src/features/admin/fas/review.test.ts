@@ -1,0 +1,38 @@
+import { expect, test } from "vitest";
+import { applyDecision, sortQueue, validateDecision } from "./review";
+import type { FasApplication } from "../../../data/fasApplications";
+
+const app = (id: string, riskScore: number, status: FasApplication["status"] = "Pending"): FasApplication => ({
+  id, student: id, level: "P5", incomeBand: "b", riskScore, recommendedTier: "Tier 2", slaDays: 3, explanation: "x", status,
+});
+
+test("sortQueue: pending first, then risk score desc", () => {
+  const out = sortQueue([app("a", 20), app("b", 90, "Approved"), app("c", 60), app("d", 85)]);
+  expect(out.map((a) => a.id)).toEqual(["d", "c", "a", "b"]);
+});
+
+test("override without justification is blocked, with field=justification", () => {
+  expect(validateDecision("override", { justification: "", tier: "Tier 3" }, "Tier 2")).toEqual({
+    field: "justification", message: expect.any(String),
+  });
+  expect(validateDecision("override", { justification: "   ", tier: "Tier 3" }, "Tier 2")?.field).toBe("justification");
+});
+
+test("override to the recommended tier is blocked on the tier field", () => {
+  expect(validateDecision("override", { justification: "Reason", tier: "Tier 2" }, "Tier 2")?.field).toBe("tier");
+});
+
+test("valid override, approve and reject pass without justification where not required", () => {
+  expect(validateDecision("override", { justification: "Sibling in care", tier: "Tier 1" }, "Tier 2")).toBeNull();
+  expect(validateDecision("approve", { justification: "", tier: "Tier 2" }, "Tier 2")).toBeNull();
+  expect(validateDecision("reject", { justification: "", tier: "Tier 2" }, "Tier 2")).toBeNull();
+});
+
+test("applyDecision sets status, final tier and justification on one app only", () => {
+  const list = [app("a", 20), app("b", 90)];
+  const out = applyDecision(list, "b", "override", { justification: " why ", tier: "Tier 1" });
+  expect(out[1]).toMatchObject({ status: "Overridden", finalTier: "Tier 1", justification: "why" });
+  expect(out[0].status).toBe("Pending");
+  expect(applyDecision(list, "a", "reject", { justification: "", tier: "Tier 2" })[0]).toMatchObject({ status: "Rejected", finalTier: undefined });
+  expect(applyDecision(list, "a", "approve", { justification: "", tier: "Tier 2" })[0]).toMatchObject({ status: "Approved", finalTier: "Tier 2" });
+});
