@@ -49,12 +49,13 @@
 
 ### Task 2: Pure logic (`src/lib`)
 
-**Files:** Create `src/lib/format.ts`, `src/lib/fas.ts`, `src/lib/settlement.ts`, `src/lib/budget.ts`; tests beside each (`*.test.ts`).
+**Files:** Create `src/lib/format.ts`, `src/lib/fas.ts`, `src/lib/settlement.ts`, `src/lib/budget.ts`, `src/lib/useMockQuery.ts`; tests beside each pure module (`*.test.ts`).
 
 **Interfaces (produces):**
 - `formatSGD(n: number, opts?: {compact?: boolean}): string` -> `"S$2.40M"` compact, `"S$1,284.50"` otherwise.
 - `riskLevel(score: number): "Low" | "Medium" | "High"` (score 0-100: `<35` Low, `<70` Medium, else High). `// ASSUMPTION` thresholds.
 - `splitSettlement(total: number, balance: number): {fromAccount: number; fromGateway: number}` (account first, remainder gateway; clamps to >= 0).
+- `useMockQuery<T>(data: T, opts?: {delayMs?: number; fail?: boolean}): {status: "loading" | "error" | "ready"; data: T | undefined; retry(): void}` (default delay 400ms; hook, verified by use in later tasks, no unit test).
 - `budgetUsage(used: number, budget: number): {pct: number; over: boolean; barPct: number}` (`barPct` capped at 100; `budget<=0` -> pct 0).
 
 - [ ] **Step 1:** Write tests: `riskLevel(18)==="Low"`, `riskLevel(54)==="Medium"`, `riskLevel(89)==="High"`; `splitSettlement(100,40)` -> `{40,60}`, `(100,0)` -> `{0,100}`, `(100,250)` -> `{100,0}`, `(0,50)` -> `{0,0}`; `budgetUsage(2.4e6,3e6)` -> `{pct:80,over:false,barPct:80}`, `(120,100)` -> `over:true, barPct:100`, `(5,0)` -> `pct:0`; `formatSGD(2400000,{compact:true})==="S$2.40M"`, `formatSGD(310000,{compact:true})==="S$310K"`.
@@ -75,7 +76,7 @@
 - `EmptyState({title, hint?, action?})`; `Field({label, error?, hint?, children})` label above input, error below with `role="alert"`.
 
 - [ ] **Step 1:** Implement the components against the tokens; `Button` has a 44px min touch target and `focus-visible` ring.
-- [ ] **Step 2:** Temporary `/dev/ui` route showing every variant; screenshot; verify contrast and Tab order, Esc closes Modal. Remove or keep route only under `import.meta.env.DEV`.
+- [ ] **Step 2:** Create `src/dev/UiGallery.tsx` (default export) showing every variant. To view it, temporarily make `src/App.tsx` render it in your worktree, screenshot, verify contrast and Tab order, Esc closes Modal, then `git checkout src/App.tsx` before committing (Task 5 registers the route `/dev/ui` under `import.meta.env.DEV`).
 
 ### Task 4: DataTable and charts
 
@@ -88,7 +89,7 @@
 - `ProgressBar({pct: number; tone?: "primary"|"alert"; label: string})` no gradient, fill `barPct`.
 
 - [ ] **Step 1:** Implement; sorting is stable and toggles asc/desc via a `<button>` in the header with `aria-sort`.
-- [ ] **Step 2:** Add each to `/dev/ui` with: 0 rows (shows `empty`), 25 rows (paginates), over-budget ProgressBar; screenshot.
+- [ ] **Step 2:** Create `src/dev/DataGallery.tsx` (default export; route `/dev/data` is registered by Task 5) showing: 0 rows (shows `empty`), 25 rows (paginates), over-budget ProgressBar, both charts; view via a temporary uncommitted `src/App.tsx` edit as in Task 3; screenshot.
 
 ### Task 5: Layout, session, routing
 
@@ -100,11 +101,12 @@
 
 - [ ] **Step 1:** Sidebar: 84px rounded rail, icons with `aria-label` and tooltip, pin toggle to 232px showing labels (no clipping: `truncate` + title); active item burgundy.
 - [ ] **Step 2:** Header: title/subtitle props, "Filter A-Z" pill, bell with dot, avatar initials, sign out.
-- [ ] **Step 3:** Verify by screenshot: rail and pinned states at 1600 and 768 widths; HQ nav shows 11 items without clipping.
+- [ ] **Step 3:** Create stub screens so later tasks only replace file contents (each a default-export component rendering `<PagePlaceholder title="..."/>` from `src/components/layout/PagePlaceholder.tsx`, plain markup, no dependency on `components/ui`): `features/auth/SignIn.tsx`, `features/admin/dashboard/Dashboard.tsx`, `features/admin/students/Students.tsx`, `features/admin/fee-types/FeeTypes.tsx`, `features/admin/fas/FasApplications.tsx`, `features/admin/budgets/Budgets.tsx`, `features/admin/top-up/TopUp.tsx`, `features/admin/simulation/SchoolRegistry.tsx`, `features/eservice/overview/Overview.tsx`, `features/eservice/payments/Payments.tsx`, `features/eservice/fas/FamilyApplication.tsx`. `routes.tsx` lazy-loads all of them: `/signin`, `/admin` (Dashboard), `/admin/students`, `/admin/fee-types`, `/admin/fas`, `/admin/budgets`, `/admin/top-up` (hq only), `/admin/schools` (hq only, SchoolRegistry), `/parent`, `/parent/payments`, `/parent/fas`; every other nav entry goes to a generic "Coming soon" placeholder route. Also register `/dev/ui` -> `src/dev/UiGallery` and `/dev/data` -> `src/dev/DataGallery` only when `import.meta.env.DEV` (lazy, via `import.meta.glob("/src/dev/*.tsx")` so the route works whichever gallery files exist in your branch; do not create gallery files yourself).
+- [ ] **Step 4:** Verify by screenshot: rail and pinned states at 1600 and 768 widths; HQ nav shows 11 items without clipping.
 
 ### Task 6: Sign-in
 
-**Files:** Create `src/features/auth/SignIn.tsx`, `src/data/users.ts`.
+**Files:** Replace the stub `src/features/auth/SignIn.tsx` (default export); Create `src/data/users.ts`.
 
 - [ ] **Step 1:** Two tabs: Parent (button "Log in with SingPass" opens Modal: mock QR -> "Verifying" -> "Authenticated" -> `signIn("parent")` and navigate `/parent`) and Staff (email, password with labelled Fields, forgot-password Modal; two seeded accounts from `users.ts`, wrong credentials show an inline error). No demo quick-jump buttons.
 - [ ] **Step 2:** Per-screen gate; confirm each role lands on its own home.
@@ -116,7 +118,7 @@
 **Interfaces:** Consumes Tasks 3-5 and `budgetUsage`, `formatSGD`.
 
 - [ ] **Step 1:** Stats panel (Total Student 12,480; Active Account 9,236; Total School 186; Pending FAS Application 342) and the 3x2 card grid from the handoff section 6 (Received FAS ring 1,284/3,420 with MOEFAS 962 / SBFAS 322; FAS by Tier 612/388/191/93; Payment History table; Budget Usage with 80% alert chip and 62%; School Info; Total Top-Up Jan-Apr bar chart). Values come from `dashboard.ts`.
-- [ ] **Step 2:** Each card has a skeleton state (first render shows skeletons for 400ms via a `useMockQuery` helper in `src/lib/useMockQuery.ts`, which also exposes an `error` path).
+- [ ] **Step 2:** Each card has a skeleton state (first render shows skeletons via `useMockQuery` from Task 2; error state shows `EmptyState` with a Retry action).
 - [ ] **Step 3:** Screenshot at 1600x1000 and overlay-compare with `reference/dashboard_v6_burgundy.png`; fix spacing/typography deltas until layout matches.
 
 ### Task 8: Students (School)
