@@ -2,6 +2,8 @@
 
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 16px;
+  --radius-control: 10px;
   --color-background: #F8F6F6;
   --color-surface: #F8F6F6;
   --color-surface-bright: #F8F6F6;
