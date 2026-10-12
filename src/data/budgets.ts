@@ -1,0 +1,30 @@
+export type Level = "Primary" | "Secondary" | "Post-secondary";
+export type LevelBudget = { id: Level; budget: number; used: number; students: number };
+
+/** School (SBFAS) budget, school-funded. 74,800 / 120,000 = 62.3%. */
+export const SBFAS = { budget: 120000, absorbed: 74800 };
+
+/** 148 beneficiaries in total. */
+export const SBFAS_BY_TIER = [
+  { label: "Tier 1", value: 52 },
+  { label: "Tier 2", value: 44 },
+  { label: "Tier 3", value: 32 },
+  { label: "Tier 4", value: 20 },
+];
+
+export const SBFAS_GOVERNANCE = [
+  "SBFAS only applies where MOEFAS is not granted; the school decides tier and amount.",
+  "Absorbed cost is reported to MOE HQ every quarter.",
+  "Unused SBFAS budget does not roll over to the next financial year.",
+];
+
+/** MOE HQ view (MOEFAS). Secondary is deliberately over budget (Review Focus 2). Total allocated: S$48,000,000. */
+export const MOEFAS_BY_LEVEL: LevelBudget[] = [
+  { id: "Primary", budget: 20000000, used: 17400000, students: 31200 },
+  { id: "Secondary", budget: 18000000, used: 18900000, students: 24800 },
+  { id: "Post-secondary", budget: 10000000, used: 6200000, students: 9400 },
+];
+
+// ASSUMPTION: what happens when spend exceeds budget is an open question. The UI only displays it
+// (capped bar + "Over budget" badge); nothing blocks payouts or triggers an approval step.
+export const OVER_BUDGET_NOTE = "When spend exceeds budget it is shown for review only; payouts are not blocked.";
