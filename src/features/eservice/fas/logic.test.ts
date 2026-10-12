@@ -1,0 +1,47 @@
+import { expect, test } from "vitest";
+import { BANDS, autoFillSource } from "../../../data/familyFas";
+import { assess, autoFill, answersToForm, trackerSteps, validateForm } from "./logic";
+
+test("assess: MOEFAS tiers first, SBFAS only when MOEFAS is not granted, never both", () => {
+  expect(assess(BANDS[0])).toMatchObject({ scheme: "MOEFAS", tier: "Tier 1", status: "Indicative" });
+  expect(assess(BANDS[1])).toMatchObject({ scheme: "MOEFAS", tier: "Tier 2" });
+  expect(assess(BANDS[2])).toMatchObject({ scheme: "SBFAS", status: "School decides" });
+  expect(assess(BANDS[3])).toMatchObject({ scheme: null, status: "Not eligible" });
+});
+
+test("trackerSteps follows submission and income sync", () => {
+  const s = (sync: "idle" | "loading" | "success" | "error", hasBand: boolean) => trackerSteps(sync, hasBand).map((x) => x.state);
+  expect(s("idle", true)).toEqual(["Done", "Done", "In progress", "Waiting"]);
+  expect(s("idle", false)).toEqual(["Done", "To do", "Waiting", "Waiting"]);
+  expect(s("loading", true)).toEqual(["Done", "In progress", "Waiting", "Waiting"]);
+  expect(s("error", false)).toEqual(["Done", "Failed", "Waiting", "Waiting"]);
+  expect(s("error", true)).toEqual(["Done", "Failed", "Waiting", "Waiting"]);
+  expect(s("success", true)).toEqual(["Done", "Done", "In progress", "Waiting"]);
+});
+
+const ok = { contact: "+65 9123 4567", mailingAddress: "Blk 1", circumstance: "Job loss", note: "" };
+
+test("validateForm requires fields, a valid SG number and consent", () => {
+  expect(validateForm(ok, true)).toEqual({});
+  expect(validateForm({ ...ok, contact: "" }, true).contact).toBeTruthy();
+  expect(validateForm({ ...ok, contact: "12345" }, true).contact).toBeTruthy();
+  expect(validateForm({ ...ok, contact: "91234567" }, true)).toEqual({});
+  expect(validateForm({ ...ok, mailingAddress: " " }, true).mailingAddress).toBeTruthy();
+  expect(validateForm({ ...ok, circumstance: "" }, true).circumstance).toBeTruthy();
+  expect(validateForm(ok, false).consent).toBeTruthy();
+});
+
+test("autoFill uses mock data and passes its own validation", () => {
+  expect(autoFill()).toEqual(autoFillSource);
+  expect(validateForm(autoFill(), true)).toEqual({});
+});
+
+test("answersToForm maps picks and keeps the typed value when the parent will type their own", () => {
+  const empty = { contact: "", mailingAddress: "", circumstance: "", note: "" };
+  expect(answersToForm({ circumstance: "Job loss", mailing: "same", contact: "same" }, empty)).toMatchObject({
+    circumstance: "Job loss",
+    contact: autoFillSource.contact,
+    mailingAddress: autoFillSource.mailingAddress,
+  });
+  expect(answersToForm({ contact: "different" }, { ...empty, contact: "9000 0000" }).contact).toBe("9000 0000");
+});
