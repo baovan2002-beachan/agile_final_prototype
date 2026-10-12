@@ -6,7 +6,6 @@ import { Card } from "../../../components/ui/Card";
 import { ProgressBar } from "../../../components/ui/ProgressBar";
 import { StatCard } from "../../../components/ui/StatCard";
 import { MOEFAS_BY_LEVEL, OVER_BUDGET_NOTE } from "../../../data/budgets";
-import { budgetUsage } from "../../../lib/budget";
 import { formatSGD } from "../../../lib/format";
 import { SetBudgetModal } from "./SetBudgetModal";
 
@@ -17,7 +16,7 @@ export function HqBudget() {
   const [modal, setModal] = useState(false);
   const allocation = levels.reduce((s, l) => s + l.budget, 0);
   const used = levels.reduce((s, l) => s + l.used, 0);
-  const overCount = levels.filter((l) => budgetUsage(l.used, l.budget).over).length;
+  const overCount = levels.filter((l) => l.used > l.budget).length;
 
   return (
     <div className="space-y-4">
@@ -34,7 +33,7 @@ export function HqBudget() {
       <Card title="Breakdown by level">
         <ul className="divide-y divide-line">
           {levels.map((l) => {
-            const { over } = budgetUsage(l.used, l.budget);
+            const over = l.used > l.budget;
             return (
               <li key={l.id} className="py-4 first:pt-0 last:pb-0">
                 <div className="mb-2 flex flex-wrap items-center justify-between gap-2">

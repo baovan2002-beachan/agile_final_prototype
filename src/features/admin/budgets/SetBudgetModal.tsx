@@ -1,30 +1,29 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../../../components/ui/Button";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
+import { parseAmount } from "../../../lib/amount";
 import { formatSGD } from "../../../lib/format";
 
 export type Target = { id: string; label: string; budget: number };
 type Props = { open: boolean; onClose: () => void; targets: Target[]; onSave: (id: string, amount: number) => void };
 
-/** Validated positive amount (max 2 decimals); null if invalid. */
-export function parseAmount(raw: string): number | null {
-  const s = raw.replace(/[,\s]/g, "").replace(/^S\$/i, "");
-  if (!/^\d+(\.\d{1,2})?$/.test(s)) return null;
-  const n = Number(s);
-  return n > 0 && n <= 1e10 ? n : null;
-}
-
 function Form({ onClose, targets, onSave }: Omit<Props, "open">) {
   const [id, setId] = useState(targets[0].id);
   const [raw, setRaw] = useState("");
   const [error, setError] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  // autoFocus is unreliable inside <dialog>; focus once the modal's showModal() effect has run.
+  useEffect(() => {
+    const t = setTimeout(() => inputRef.current?.focus(), 0);
+    return () => clearTimeout(t);
+  }, []);
   const current = targets.find((t) => t.id === id)!;
 
   const submit = () => {
-    const n = parseAmount(raw);
-    if (n === null) return setError("Enter an amount greater than 0, for example 125000");
-    onSave(id, n);
+    const r = parseAmount(raw);
+    if ("error" in r) return setError(r.error);
+    onSave(id, r.value);
     onClose();
   };
 
@@ -58,7 +57,7 @@ function Form({ onClose, targets, onSave }: Omit<Props, "open">) {
           className={inputClass}
           inputMode="decimal"
           autoComplete="off"
-          autoFocus
+          ref={inputRef}
           value={raw}
           onChange={(e) => {
             setRaw(e.target.value);

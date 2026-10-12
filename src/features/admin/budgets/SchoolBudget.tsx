@@ -7,7 +7,6 @@ import { BarChart } from "../../../components/ui/BarChart";
 import { ProgressBar } from "../../../components/ui/ProgressBar";
 import { StatCard } from "../../../components/ui/StatCard";
 import { SBFAS, SBFAS_BY_TIER, SBFAS_GOVERNANCE } from "../../../data/budgets";
-import { budgetUsage } from "../../../lib/budget";
 import { formatSGD } from "../../../lib/format";
 import { SetBudgetModal } from "./SetBudgetModal";
 
@@ -15,7 +14,7 @@ export function SchoolBudget() {
   const [budget, setBudget] = useState(SBFAS.budget);
   const [modal, setModal] = useState(false);
   const { absorbed } = SBFAS;
-  const { over } = budgetUsage(absorbed, budget);
+  const over = absorbed > budget;
   const exact = budget > 0 ? (absorbed / budget) * 100 : 0;
   const total = SBFAS_BY_TIER.reduce((s, t) => s + t.value, 0);
 
