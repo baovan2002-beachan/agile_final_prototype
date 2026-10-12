@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
 import { formatSGD } from "../../../lib/format";
 import { isPayable } from "./settle";
-import type { Child, Invoice } from "./types";
+import type { Child, Invoice } from "../../../data/parent";
 
 const tone: Record<Invoice["status"], BadgeTone> = { unpaid: "neutral", overdue: "alert", paid: "success" };
 const label: Record<Invoice["status"], string> = { unpaid: "Unpaid", overdue: "Overdue", paid: "Paid" };

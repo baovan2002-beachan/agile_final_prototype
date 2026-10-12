@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { applyPayment, settle } from "./settle";
-import type { Child, Invoice } from "./types";
+import type { Child, Invoice } from "../../../data/parent";
 
 const kid = (id: string, educationBalance: number): Child => ({ id, name: id, level: "P4", school: "S", educationBalance });
 const inv = (id: string, childId: string, amount: number, status: Invoice["status"] = "unpaid"): Invoice => ({ id, childId, title: id, amount, dueDate: "2026-10-31", status });

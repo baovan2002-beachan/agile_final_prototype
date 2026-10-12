@@ -3,7 +3,7 @@ import { CheckCircle } from "@phosphor-icons/react";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { EmptyState } from "../../../components/ui/EmptyState";
-import { children as CHILDREN, invoices as INVOICES } from "../../../data/payments";
+import { children as CHILDREN, invoices as INVOICES } from "../../../data/parent";
 import { formatSGD } from "../../../lib/format";
 import { useMockQuery } from "../../../lib/useMockQuery";
 import { GatewayModal } from "./GatewayModal";

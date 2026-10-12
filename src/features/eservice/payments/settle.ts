@@ -1,5 +1,5 @@
 import { splitSettlement } from "../../../lib/settlement";
-import type { Child, Invoice } from "./types";
+import type { Child, Invoice } from "../../../data/parent";
 
 // ASSUMPTION: two payment modes. "account-first" spends each child's Education Account first and sends the
 // remainder to the card/bank gateway; "gateway" pays everything through the gateway. A child's account only pays that child's invoices.
