@@ -74,7 +74,8 @@ const ROWS: Row[] = [
   ["Joel Soh Wen Jie", "Sec 4", 1, "Not Enrolled", 4418.95, "Not applied"],
 ];
 
-export const STUDENTS: Student[] = ROWS.map(([name, level, c, status, balance, sbfas], i) => ({
+// Ordered by name (a visible column), not by level/class, so the list does not look sorted by hidden fields.
+export const STUDENTS: Student[] = [...ROWS].sort((a, b) => a[0].localeCompare(b[0])).map(([name, level, c, status, balance, sbfas], i) => ({
   id: `S2026${String(i + 1).padStart(4, "0")}`,
   name,
   level,
