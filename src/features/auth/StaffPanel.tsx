@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { CheckCircle, EnvelopeSimple, WarningCircle } from "@phosphor-icons/react";
 import { AssumptionTag } from "../../components/ui/AssumptionTag";
 import { Button } from "../../components/ui/Button";
@@ -13,6 +13,13 @@ export default function StaffPanel() {
   const { signIn } = useSession();
   const [error, setError] = useState("");
   const [forgot, setForgot] = useState(false);
+  const form = useRef<HTMLFormElement>(null);
+  const fill = (email: string, password: string) => {
+    const f = form.current!;
+    (f.elements.namedItem("email") as HTMLInputElement).value = email;
+    (f.elements.namedItem("password") as HTMLInputElement).value = password;
+    setError("");
+  };
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,8 +31,7 @@ export default function StaffPanel() {
 
   return (
     <>
-      <h3 className="text-[15px] font-semibold text-on-surface">Staff sign in</h3>
-      <form onSubmit={submit} className="mt-4 space-y-4">
+      <form ref={form} onSubmit={submit} className="space-y-4">
         {error && (
           <p role="alert" className="flex items-start gap-2 rounded-control border border-alert bg-error-container p-3 text-sm font-medium text-on-error-container">
             <WarningCircle size={18} weight="fill" className="mt-0.5 shrink-0" aria-hidden="true" />
@@ -43,15 +49,24 @@ export default function StaffPanel() {
         </button>
         <Button type="submit" className="w-full">Sign in</Button>
       </form>
-      <div className="mt-5 border-t border-line pt-4 text-[13px] text-on-surface-variant">
-        <p className="font-semibold text-on-surface">Demo accounts</p>
-        <ul className="mt-1 space-y-1">
+      <div className="mt-8 border-t border-line pt-5">
+        <p className="text-[13px] font-semibold text-on-surface">Demo accounts <span className="font-normal text-on-surface-variant">(click to fill)</span></p>
+        <div className="mt-2 grid gap-2">
           {STAFF.map((s) => (
-            <li key={s.email}>
-              {s.name} ({s.title}): {s.email} / {s.password}
-            </li>
+            <button
+              key={s.email}
+              type="button"
+              onClick={() => fill(s.email, s.password)}
+              className={`flex min-h-11 items-center gap-3 rounded-control border border-line px-3 text-left text-sm hover:bg-primary-fixed ${focus}`}
+            >
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary-fixed text-xs font-bold text-primary">{s.initials}</span>
+              <span>
+                <span className="block font-semibold text-on-surface">{s.name}</span>
+                <span className="block text-[13px] text-on-surface-variant">{s.title}</span>
+              </span>
+            </button>
           ))}
-        </ul>
+        </div>
       </div>
       <ForgotModal open={forgot} onClose={() => setForgot(false)} />
     </>
