@@ -8,8 +8,9 @@ import { Card } from "../../../components/ui/Card";
 import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
+import { Modal } from "../../../components/ui/Modal";
 import { SCHOOL_RECORDS, type SchoolRecord } from "../../../data/schoolMgmt";
-import { createSchoolUser } from "../../../data/users";
+import { saveSchoolUser } from "../../../data/users";
 import SchoolFormModal, { SCHOOL_TYPES } from "./SchoolFormModal";
 
 export default function SchoolMaintenance() {
@@ -19,6 +20,7 @@ export default function SchoolMaintenance() {
   const [q, setQ] = useState("");
   const [form, setForm] = useState<{ editing: SchoolRecord | null } | null>(null);
   const [notice, setNotice] = useState("");
+  const [creds, setCreds] = useState<{ school: string; email: string; password: string } | null>(null);
 
   // Memoised: DataTable goes back to page 1 whenever the rows reference changes.
   const rows = useMemo(() => {
@@ -26,11 +28,13 @@ export default function SchoolMaintenance() {
     return schools.filter((s) => (!type || s.level === type) && (!needle || `${s.code} ${s.name} ${s.email}`.toLowerCase().includes(needle)));
   }, [schools, type, q]);
   const reset = () => { setType(""); setQ(""); };
-  const save = (s: SchoolRecord, u?: { name: string; email: string }) => {
+  const save = (s: SchoolRecord, u: { name: string; email: string; resetPassword: boolean }) => {
     const exists = schools.some((x) => x.code === s.code);
     setSchools((all) => (exists ? all.map((x) => (x.code === s.code ? s : x)) : [s, ...all]));
-    const acct = u && createSchoolUser(s.code, u.name, u.email);
-    setNotice(`${s.name} was ${exists ? "updated" : "added"}.${acct ? ` School user login: ${acct.email}, one-time password ${acct.password} (shown once).` : ""}`);
+    const acct = saveSchoolUser(s.code, u.name, u.email, u.resetPassword);
+    const showPassword = !exists || u.resetPassword;
+    setNotice(`${s.name} was ${exists ? "updated" : "added"}. School user login: ${acct.email}.`);
+    if (showPassword) setCreds({ school: s.name, email: acct.email, password: acct.password });
   };
 
   const columns: Column<SchoolRecord>[] = [
@@ -67,7 +71,7 @@ export default function SchoolMaintenance() {
       <div role="status" className="empty:hidden">
         {notice && <p className="rounded-control border border-line bg-surface-container-lowest px-4 py-3 text-sm font-medium">{notice}</p>}
       </div>
-      <Card title="Schools">
+      <Card>
         <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
           <Field label="Search by ID or name">
             <input className={inputClass} value={q} onChange={(e) => setQ(e.target.value)} />
@@ -94,6 +98,18 @@ export default function SchoolMaintenance() {
           />
         </div>
       </Card>
+      <Modal open={!!creds} onClose={() => setCreds(null)} title="School user login" footer={<Button onClick={() => setCreds(null)}>I have noted it</Button>}>
+        {creds && (
+          <div className="grid gap-3 text-sm">
+            <p>Give these details to the school user of <strong>{creds.school}</strong>. The password is shown only once.</p>
+            <dl className="grid gap-2 rounded-control border border-line bg-surface-container-low p-4">
+              <div><dt className="text-[13px] text-on-surface-variant">Login email</dt><dd className="font-semibold">{creds.email}</dd></div>
+              <div><dt className="text-[13px] text-on-surface-variant">One-time password</dt><dd className="font-mono text-lg font-bold">{creds.password}</dd></div>
+            </dl>
+            <Button variant="secondary" className="justify-self-start" onClick={() => navigator.clipboard?.writeText(`${creds.email} / ${creds.password}`)}>Copy login details</Button>
+          </div>
+        )}
+      </Modal>
       {form && <SchoolFormModal key={form.editing?.code ?? "new"} open editing={form.editing} all={schools} onClose={() => setForm(null)} onSave={save} />}
     </div>
   );

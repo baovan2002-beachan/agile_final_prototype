@@ -20,12 +20,12 @@ export function nextId(rows: Student[]): string {
 
 /** Assign an existing Education Account to this school: keeps the account's id and balance. */
 export function assignStudent(a: UnassignedAccount, p: { level: Level; class: string }): Student {
-  return { id: a.id, name: a.name, level: p.level, class: p.class, status: "Active", balance: a.balance, sbfas: "Not applied" };
+  return { id: a.id, name: a.name, level: p.level, class: p.class, status: "Enrolled", balance: a.balance, sbfas: "Not applied" };
 }
 
 export function newStudent(rows: Student[], p: { name: string; level: Level; class: string }): Student {
   // ASSUMPTION: a newly added student starts Active, with an empty Education Account and no SBFAS application.
-  return { id: nextId(rows), name: p.name.trim(), level: p.level, class: p.class, status: "Active", balance: 0, sbfas: "Not applied" };
+  return { id: nextId(rows), name: p.name.trim(), level: p.level, class: p.class, status: "Enrolled", balance: 0, sbfas: "Not applied" };
 }
 
 /** Shared by the Add form and CSV import. Returns an error message or "" when valid. */
@@ -141,7 +141,6 @@ export function parseStudentCsv(fileName: string, text: string): CsvResult {
 }
 
 export const statusTone: Record<StudentStatus, "success" | "warning" | "neutral"> = {
-  Active: "success",
-  "On leave": "warning",
-  Transferred: "neutral",
+  "Enrolled": "success",
+  "Not Enrolled": "neutral",
 };

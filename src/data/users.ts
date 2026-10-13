@@ -18,6 +18,17 @@ export const findStaff = (email: string, password: string) =>
   STAFF.find((s) => s.email === email.trim().toLowerCase() && s.password === password);
 
 /** Req 3 (assumed): HQ creates the School User together with the school; the app generates a one-time password. */
+/** Creates the school's user, or updates the existing one (name, login email and optionally a fresh one-time password). */
+export function saveSchoolUser(schoolCode: string, name: string, email: string, resetPassword = false): StaffAccount {
+  const acct = STAFF.find((s) => s.role === "school" && s.schoolCode === schoolCode);
+  if (!acct) return createSchoolUser(schoolCode, name, email);
+  acct.name = name.trim();
+  acct.initials = acct.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+  acct.email = email.trim().toLowerCase();
+  if (resetPassword) acct.password = `Tmp-${crypto.randomUUID().slice(0, 8)}`;
+  return acct;
+}
+
 export function createSchoolUser(schoolCode: string, name: string, email: string): StaffAccount {
   const initials = name.trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
   const acct: StaffAccount = { role: "school", name: name.trim(), initials, title: "School Admin", email: email.trim().toLowerCase(), password: `Tmp-${crypto.randomUUID().slice(0, 8)}`, schoolCode };

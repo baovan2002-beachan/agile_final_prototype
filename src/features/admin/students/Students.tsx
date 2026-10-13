@@ -44,7 +44,7 @@ export default function Students() {
   const columns: Column<Student>[] = [
     { key: "id", header: "ID", sortable: true },
     { key: "name", header: "Name", sortable: true, render: (s) => <span className="font-medium">{s.name}</span> },
-    { key: "status", header: "Status", sortable: true, render: (s) => <Badge tone={statusTone[s.status]}>{s.status}</Badge> },
+    { key: "status", header: "Schooling status", sortable: true, render: (s) => <Badge tone={statusTone[s.status]}>{s.status}</Badge> },
     ...(role === "school" ? [{ key: "sbfas", header: "SBFAS", sortable: true, render: (s: Student) => <Badge tone={sbfasTone[s.sbfas]}>{s.sbfas}</Badge> } as Column<Student>] : []),
     {
       key: "actions",
@@ -72,7 +72,7 @@ export default function Students() {
         )}
       </div>
 
-      <Card title="Student list">
+      <Card>
         <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_auto] lg:items-end">
           <Field label="Search by ID or name">
             <input type="search" className={inputClass} value={q} onChange={(e) => setQ(e.target.value)} />

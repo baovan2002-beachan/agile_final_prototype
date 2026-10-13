@@ -53,7 +53,7 @@ export default function ImportCsvModal({ open, onClose, onImport }: Props) {
         </>
       }
     >
-      <Field label="CSV file" error={error} hint="Example row: Amy Lim,P1,P1 Courage. Use quotes around values that contain a comma.">
+      <Field required label="CSV file" error={error} hint="Example row: Amy Lim,P1,P1 Courage. Use quotes around values that contain a comma.">
         <input
           key={nonce}
           type="file"

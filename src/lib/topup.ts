@@ -33,32 +33,49 @@ export function eligibleAccounts(rule: TopUpRule, accounts: Account[]): Account[
   );
 }
 
-/** Accounts a saved rule covers: age inclusive, balance strictly below the limit, school in the rule. */
-export function eligibleForRule(rule: Pick<FundRule, "ageMin" | "ageMax" | "balanceBelow" | "schools">, accounts: Account[]): Account[] {
-  return accounts.filter((a) => a.age >= rule.ageMin && a.age <= rule.ageMax && a.balance < rule.balanceBelow && rule.schools.includes(a.school));
+/** Restricted view of a balance (HQ never sees the exact figure on this screen). */
+export const balanceBand = (n: number) => (n < 100 ? "Below S$100" : n < 300 ? "S$100 to under S$300" : n < 500 ? "S$300 to under S$500" : "S$500 and above");
+
+export type RuleCriteria = Pick<FundRule, "ageMin" | "ageMax" | "minBalance" | "maxBalance" | "schooling" | "schools">;
+
+/** Active accounts matching every criterion: age inclusive, balance in [min, max), schooling status, school (empty = all). */
+export function eligibleForRule(rule: RuleCriteria, accounts: Account[]): Account[] {
+  return accounts.filter(
+    (a) =>
+      a.status === "Active" &&
+      a.age >= rule.ageMin && a.age <= rule.ageMax &&
+      a.balance >= rule.minBalance && a.balance < rule.maxBalance &&
+      rule.schooling === a.schooling &&
+      (!rule.schools.length || rule.schools.includes(a.school)),
+  );
 }
 
-export type RuleInput = { ageMin: number; ageMax: number; balanceBelow: number; amount: number; schools: string[] };
-export type Overlap = { rule: FundRule; ageMin: number; ageMax: number; schools: string[]; balanceBelow: number };
+export type RuleInput = RuleCriteria & { amount: number };
+export type Overlap = { rule: FundRule; ageMin: number; ageMax: number; minBalance: number; maxBalance: number; schools: string[] };
 
 /**
  * Validation errors plus overlap warnings against the other Active rules.
- * Overlap needs shared age AND a shared school; it is a warning, never a block. `selfId` is excluded when editing.
+ * Overlap needs shared age, balance range, schooling status AND school scope; it is a warning, never a block.
+ * `selfId` is excluded when editing.
  */
 export function checkRule(input: RuleInput, others: FundRule[], selfId?: string): { errors: string[]; overlaps: Overlap[] } {
-  const { ageMin: a, ageMax: b, balanceBelow, amount, schools } = input;
+  const { ageMin: a, ageMax: b, minBalance, maxBalance, amount, schools, schooling } = input;
   const errors: string[] = [];
-  if (!Number.isInteger(a) || !Number.isInteger(b) || a < 0 || b > 120 || a > b) errors.push("Age range must be whole numbers, minimum not above maximum.");
-  if (!(balanceBelow > 0)) errors.push("Balance limit must be greater than S$0.");
+  if (!Number.isInteger(a) || !Number.isInteger(b) || a < 0 || b > 120 || a > b) errors.push("Age range must be whole numbers from 0 to 120, minimum not above maximum.");
+  if (!(minBalance >= 0) || !(maxBalance > minBalance)) errors.push("Balance range: minimum must be at least S$0 and maximum greater than minimum.");
   if (!(amount > 0)) errors.push("Top-up amount must be greater than S$0.");
-  if (!schools.length) errors.push("Select at least one school.");
+  if (!schooling) errors.push("Select a schooling status.");
   if (errors.length) return { errors, overlaps: [] };
   const overlaps = others
     .filter((r) => r.id !== selfId && r.status === "Active")
     .flatMap((r) => {
-      const shared = schools.filter((s) => r.schools.includes(s));
-      if (a > r.ageMax || b < r.ageMin || !shared.length) return [];
-      return [{ rule: r, ageMin: Math.max(a, r.ageMin), ageMax: Math.min(b, r.ageMax), schools: shared, balanceBelow: Math.min(balanceBelow, r.balanceBelow) }];
+      const shared = schools.length && r.schools.length ? schools.filter((s) => r.schools.includes(s)) : schools.length ? schools : r.schools;
+      const lo = Math.max(minBalance, r.minBalance);
+      const hi = Math.min(maxBalance, r.maxBalance);
+      const schoolsMeet = !schools.length || !r.schools.length || shared.length > 0;
+      const schoolingMeets = schooling === r.schooling;
+      if (a > r.ageMax || b < r.ageMin || !(lo < hi) || !schoolsMeet || !schoolingMeets) return [];
+      return [{ rule: r, ageMin: Math.max(a, r.ageMin), ageMax: Math.min(b, r.ageMax), minBalance: lo, maxBalance: hi, schools: shared }];
     });
   return { errors, overlaps };
 }

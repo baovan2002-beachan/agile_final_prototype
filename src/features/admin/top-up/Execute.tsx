@@ -5,10 +5,13 @@ import { Card } from "../../../components/ui/Card";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
 import { Segmented } from "../../../components/ui/Segmented";
-import { FUND_TAGS, type Account, type Execution, type FundRule, type Schedule } from "../../../data/topup";
+import { Badge } from "../../../components/ui/Badge";
+import type { Account, Execution, FundRule, Schedule } from "../../../data/topup";
 import { parseAmount } from "../../../lib/amount";
 import { formatSGD } from "../../../lib/format";
-import { eligibleForRule, nextExecutionId, totalFunds } from "../../../lib/topup";
+import { CLASSES } from "../../../data/students";
+import { SCHOOLS } from "../../../data/schools";
+import { balanceBand, eligibleForRule, nextExecutionId, totalFunds } from "../../../lib/topup";
 
 /** Today in Singapore (UTC+8), as YYYY-MM-DD, regardless of the browser time zone. */
 export const sgToday = () => new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Singapore" });
@@ -18,7 +21,7 @@ export const SCHEDULE_LABEL: Record<Schedule, string> = {
 };
 const LATER: Schedule[] = ["once", "weekly", "monthly", "quarterly", "yearly"];
 
-type Props = { rules: FundRule[]; accounts: Account[]; history: Execution[]; onDone: (x: Execution, creditedIds: string[]) => void };
+type Props = { rules: FundRule[]; accounts: Account[]; history: Execution[]; onDone: (x: Execution, creditedIds: string[]) => void; presetAccountId?: string };
 
 function Row({ k, v }: { k: string; v: ReactNode }) {
   return (
@@ -29,12 +32,17 @@ function Row({ k, v }: { k: string; v: ReactNode }) {
   );
 }
 
-export default function Execute({ rules, accounts, history, onDone }: Props) {
+export default function Execute({ rules, accounts, history, onDone, presetAccountId }: Props) {
   const [mode, setMode] = useState<"single" | "batch">("single");
-  const [accountId, setAccountId] = useState("");
+  const [accountId, setAccountId] = useState(presetAccountId ?? "");
   const [ruleId, setRuleId] = useState("");
   const [amount, setAmount] = useState("");
-  const [fundTag, setFundTag] = useState(FUND_TAGS[0]);
+  const [reason, setReason] = useState("");
+  const [school, setSchool] = useState("");
+  const [type, setType] = useState("");
+  const [cls, setCls] = useState("");
+  const [find, setFind] = useState(() => { const a = presetAccountId ? accounts.find((x) => x.id === presetAccountId) : undefined; return a ? `${a.name} (${a.id})` : ""; });
+  const [open, setOpen] = useState(false);
   const [timing, setTiming] = useState<"now" | "later">("now");
   const [date, setDate] = useState("");
   const [freq, setFreq] = useState<Schedule>("once");
@@ -52,22 +60,30 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
   const amt = parseAmount(amount);
   const per = "value" in amt ? amt.value : 0;
   const known = mode === "single" ? Boolean(account) : snapshot !== null;
+  const typeOf = (name: string) => SCHOOLS.find((s) => s.name === name)?.level;
+  const schools = useMemo(() => [...new Set(accounts.map((a) => a.school))].filter((n) => !type || typeOf(n) === type).sort(), [accounts, type]);
+  const classes = useMemo(() => Object.values(CLASSES).flat().filter((c) => !type || c.startsWith(type === "Primary" ? "P" : "Sec")).filter((c, i, l) => l.indexOf(c) === i), [type]);
+  const matches = useMemo(() => {
+    const q = find.trim().toLowerCase();
+    return accounts.filter((a) => (!type || typeOf(a.school) === type) && (!school || a.school === school) && (!cls || a.class === cls) && (!q || `${a.name} ${a.id}`.toLowerCase().includes(q)));
+  }, [accounts, type, school, cls, find]);
   const preview = useMemo(() => (snapshot ?? []).flatMap((id) => accounts.find((a) => a.id === id) ?? []), [snapshot, accounts]);
 
   const errors = {
     target:
       mode === "single"
-        ? account ? "" : "Select an Education Account."
+        ? !account ? "Select an Education Account." : account.status !== "Active" ? "This Education Account is not Active. Top-up cannot proceed." : ""
         : !rule ? "Select an active funding rule." : !snapshot ? "Preview the eligible accounts first." : snapshot.length ? "" : "No account matches this rule.",
     amount: "error" in amt ? amt.error : "",
+    reason: reason.trim() ? "" : "Enter a reason for this top-up.",
     date: later ? (!date ? "Choose the first execution date." : date < today ? "Choose today or a future date." : "") : "",
   };
   // Untouched fields stay quiet until the first Review attempt.
-  const show = attempted ? errors : { target: "", amount: amount !== "" ? errors.amount : "", date: "" };
-  const valid = !errors.target && !errors.amount && !errors.date;
+  const show = attempted ? errors : { target: account && account.status !== "Active" ? errors.target : "", amount: amount !== "" ? errors.amount : "", reason: "", date: "" };
+  const valid = !errors.target && !errors.amount && !errors.reason && !errors.date;
 
   const reset = () => {
-    setMode("single"); setAccountId(""); setRuleId(""); setAmount(""); setTiming("now"); setDate(""); setFreq("once"); setSnapshot(null); setAttempted(false);
+    setMode("single"); setAccountId(""); setType(""); setSchool(""); setCls(""); setFind(""); setOpen(false); setRuleId(""); setAmount(""); setReason(""); setTiming("now"); setDate(""); setFreq("once"); setSnapshot(null); setAttempted(false);
   };
   const pickRule = (id: string) => {
     setRuleId(id);
@@ -76,6 +92,8 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
     if (r) setAmount(String(r.amount));
   };
   const runPreview = () => { if (rule) setSnapshot(eligibleForRule(rule, accounts).map((a) => a.id)); };
+  const pickAccount = (a: Account) => { setAccountId(a.id); setFind(`${a.name} (${a.id})`); setOpen(false); };
+  const clearAccount = () => { setAccountId(""); setFind(""); };
   const review = () => { setAttempted(true); setMessage(""); if (valid) setConfirm(true); };
   const close = () => { setConfirm(false); setSigned(false); };
 
@@ -83,7 +101,7 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
     const x: Execution = {
       id: nextExecutionId(history),
       title: mode === "batch" ? rule!.name : `Single top-up: ${account!.name}`,
-      fundTag, schedule: later ? freq : "now", eligible: ids.length, amount: per, total: totalFunds(ids.length, per),
+      reason: reason.trim(), schedule: later ? freq : "now", eligible: ids.length, amount: per, total: totalFunds(ids.length, per),
       date: later ? date : today, by: "HQ Officer", status: later ? "Scheduled" : "Success",
     };
     onDone(x, later ? [] : ids);
@@ -107,15 +125,62 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
           </div>
 
           {mode === "single" ? (
-            <Field label="Education account" error={show.target}>
-              <select className={inputClass} value={accountId} onChange={(e) => setAccountId(e.target.value)}>
-                <option value="">Select an account...</option>
-                {accounts.map((a) => <option key={a.id} value={a.id}>{a.name} ({a.id})</option>)}
-              </select>
-            </Field>
+            <div className="space-y-3">
+              <div className="grid gap-4 sm:grid-cols-3">
+                <Field label="School type (optional)">
+                  <select className={inputClass} value={type} onChange={(e) => { setType(e.target.value); setSchool(""); setCls(""); clearAccount(); }}>
+                    <option value="">All types</option>
+                    <option>Primary</option>
+                    <option>Secondary</option>
+                  </select>
+                </Field>
+                <Field label="School (optional)">
+                  <select className={inputClass} value={school} onChange={(e) => { setSchool(e.target.value); clearAccount(); }}>
+                    <option value="">All schools</option>
+                    {schools.map((n) => <option key={n}>{n}</option>)}
+                  </select>
+                </Field>
+                <Field label="Class (optional)">
+                  <select className={inputClass} value={cls} onChange={(e) => { setCls(e.target.value); clearAccount(); }}>
+                    <option value="">All classes</option>
+                    {classes.map((n) => <option key={n}>{n}</option>)}
+                  </select>
+                </Field>
+              </div>
+              <div className="relative" onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false); }}>
+                <Field label="Find student by name or ID" required error={show.target} hint="Exact balances are restricted; a balance range is shown instead.">
+                  <input className={inputClass} role="combobox" aria-expanded={open} aria-controls="topup-student-results" autoComplete="off" placeholder="Select or search student name / ID..." value={find}
+                    onFocus={() => setOpen(true)}
+                    onChange={(e) => { setFind(e.target.value); if (accountId) setAccountId(""); setOpen(true); }}
+                    onKeyDown={(e) => { if (e.key === "Escape") setOpen(false); if (e.key === "Enter" && open && matches[0]) { e.preventDefault(); pickAccount(matches[0]); } }} />
+                </Field>
+                {open && (
+                  <ul id="topup-student-results" role="listbox" className="absolute inset-x-0 z-20 mt-1 max-h-64 divide-y divide-line overflow-auto rounded-control border border-line bg-surface-container-lowest shadow-lg">
+                    {matches.map((a) => (
+                      <li key={a.id} role="option" aria-selected={a.id === accountId}>
+                        <button type="button" onClick={() => pickAccount(a)} className="flex min-h-11 w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm hover:bg-surface-container-low focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary">
+                          <span><span className="font-semibold">{a.name}</span><span className="block text-[13px] text-on-surface-variant">{a.id} · {a.school} · {a.class}</span></span>
+                          <span className="text-right text-[13px]"><span className="block">{balanceBand(a.balance)}</span><Badge tone={a.status === "Active" ? "success" : "alert"}>{a.status}</Badge></span>
+                        </button>
+                      </li>
+                    ))}
+                    {!matches.length && <li className="px-3 py-3 text-sm text-on-surface-variant">No students found. Try another name, ID or school.</li>}
+                  </ul>
+                )}
+              </div>
+              {account && (
+                <dl className="rounded-control border border-line bg-surface-container-low px-3 text-sm">
+                  <div className="flex items-center justify-between gap-3 border-b border-line py-2"><dt className="font-semibold">Selected student</dt><dd><Button size="sm" variant="ghost" onClick={clearAccount}>Change student</Button></dd></div>
+                  <Row k="Student" v={account.name} />
+                  <Row k="Education account" v={account.id} />
+                  <Row k="Balance range" v={balanceBand(account.balance)} />
+                  <Row k="Account status" v={account.status} />
+                </dl>
+              )}
+            </div>
           ) : (
             <div className="space-y-3">
-              <Field label="Funding rule" hint="Rules are created in the Funding rules tab. Only Active rules appear here." error={show.target}>
+              <Field required label="Funding rule" hint="Rules are created in the Funding rules tab. Only Active rules appear here." error={show.target}>
                 <select className={inputClass} value={ruleId} onChange={(e) => pickRule(e.target.value)}>
                   <option value="">Select an active rule...</option>
                   {rules.filter((r) => r.status === "Active").map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
@@ -124,7 +189,7 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
               {rule && (
                 <div className="rounded-control border border-line bg-surface-container-low p-3 text-sm">
                   <p className="font-semibold">{rule.name}</p>
-                  <p className="mt-0.5 text-on-surface-variant">Age {rule.ageMin}-{rule.ageMax}, balance below {formatSGD(rule.balanceBelow)}, in one of {rule.schools.length} school(s).</p>
+                  <p className="mt-0.5 text-on-surface-variant">Age {rule.ageMin}-{rule.ageMax}, balance {formatSGD(rule.minBalance)} to under {formatSGD(rule.maxBalance)}, schooling: {rule.schooling}, {rule.schools.length ? `${rule.schools.length} selected school(s)` : "all schools"}. Active accounts only.</p>
                   <Button size="sm" variant="secondary" className="mt-3" icon={<Eye size={16} weight="bold" aria-hidden="true" />} onClick={runPreview}>Preview eligible accounts</Button>
                 </div>
               )}
@@ -136,7 +201,7 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
                       {preview.map((a) => (
                         <li key={a.id} className="flex justify-between gap-3 px-3 py-1.5">
                           <span>{a.name} <span className="text-on-surface-variant">({a.school}, age {a.age})</span></span>
-                          <span className="tabular-nums">{formatSGD(a.balance)}</span>
+                          <span className="text-[13px]">{balanceBand(a.balance)}</span>
                         </li>
                       ))}
                     </ul>
@@ -147,15 +212,13 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
           )}
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Amount per account (S$)" error={show.amount} hint={mode === "batch" ? "Filled from the rule; adjust for this run if needed." : undefined}>
+            <Field required label="Amount per account (S$)" error={show.amount} hint={mode === "batch" ? "Filled from the rule; adjust for this run if needed." : undefined}>
               <input className={inputClass} inputMode="decimal" placeholder="e.g. 200" value={amount} onChange={(e) => setAmount(e.target.value)} />
             </Field>
-            <Field label="Fund tag (reason)">
-              <select className={inputClass} value={fundTag} onChange={(e) => setFundTag(e.target.value)}>
-                {FUND_TAGS.map((t) => <option key={t}>{t}</option>)}
-              </select>
-            </Field>
           </div>
+          <Field label="Reason" required error={show.reason} hint="Required for single and batch top-ups. Max 500 characters. Kept in transaction history.">
+            <textarea className={`${inputClass} py-2`} rows={3} maxLength={500} placeholder="e.g. ad-hoc student assistance" value={reason} onChange={(e) => setReason(e.target.value)} />
+          </Field>
 
           <div>
             <p className="mb-1.5 text-[13px] font-semibold">Execution timing</p>
@@ -163,7 +226,7 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
           </div>
           {later && (
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="First execution date" error={show.date}>
+              <Field required label="First execution date" error={show.date}>
                 <input className={inputClass} type="date" min={today} value={date} onChange={(e) => setDate(e.target.value)} />
               </Field>
               <Field label="Frequency">
@@ -186,6 +249,7 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
           <Row k="Target" v={mode === "single" ? account?.name ?? "Not selected" : rule?.name ?? "Not selected"} />
           <Row k="Eligible accounts" v={known ? ids.length : mode === "batch" ? "Preview required" : "-"} />
           <Row k="Per account" v={formatSGD(per)} />
+          <Row k="Reason" v={<span className="break-words">{reason.trim() || "Not entered"}</span>} />
           <Row k="Execution" v={later ? `${SCHEDULE_LABEL[freq]}${date ? `, from ${date}` : ""}` : "Execute now"} />
           <Row k="Estimated total" v={<span className="text-lg text-primary">{known ? formatSGD(totalFunds(ids.length, per)) : "-"}</span>} />
         </dl>
@@ -202,6 +266,7 @@ export default function Execute({ rules, accounts, history, onDone }: Props) {
           <Row k="Accounts" v={ids.length} />
           <Row k="Per account" v={formatSGD(per)} />
           <Row k="Total funds" v={formatSGD(totalFunds(ids.length, per))} />
+          <Row k="Reason" v={<span className="break-words">{reason.trim()}</span>} />
           <Row k="Execution" v={later ? `${SCHEDULE_LABEL[freq]}, from ${date}` : "Now"} />
         </dl>
         {/* ASSUMPTION: dual sign-off is one confirmation checkbox; the real second-officer approval flow is undefined. */}

@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { useLocation } from "react-router";
 import { Badge } from "../../../components/ui/Badge";
 import { Card } from "../../../components/ui/Card";
 import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { inputClass } from "../../../components/ui/Field";
+import type { Student } from "../../../data/students";
+import { schoolOfLevel } from "../../../data/schoolMgmt";
+import { SCHOOLS } from "../../../data/schools";
+import { ageForLevel } from "../../../lib/accounts";
 import { ACCOUNTS, FUND_RULES, PAST_EXECUTIONS, type Account, type Execution, type FundRule } from "../../../data/topup";
 import { formatSGD } from "../../../lib/format";
 import Execute, { SCHEDULE_LABEL } from "./Execute";
@@ -18,7 +23,7 @@ type TabId = (typeof TABS)[number]["id"];
 
 const columns: Column<Execution>[] = [
   { key: "id", header: "Ref", sortable: true },
-  { key: "title", header: "Recipient / rule", sortable: true, render: (x) => (<><span className="font-semibold">{x.title}</span><span className="block text-[13px] text-on-surface-variant">{x.fundTag}</span></>) },
+  { key: "title", header: "Recipient / rule", sortable: true, render: (x) => (<><span className="font-semibold">{x.title}</span><span className="block text-[13px] text-on-surface-variant">{x.reason}</span></>) },
   { key: "date", header: "Date", sortable: true },
   { key: "schedule", header: "Schedule", render: (x) => SCHEDULE_LABEL[x.schedule] },
   { key: "eligible", header: "Accounts", sortable: true, align: "right" },
@@ -31,7 +36,7 @@ const columns: Column<Execution>[] = [
 function History({ rows }: { rows: Execution[] }) {
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("All");
-  const list = rows.filter((x) => `${x.id} ${x.title} ${x.fundTag}`.toLowerCase().includes(q.trim().toLowerCase()) && (status === "All" || (x.status ?? "Success") === status));
+  const list = rows.filter((x) => `${x.id} ${x.title} ${x.reason}`.toLowerCase().includes(q.trim().toLowerCase()) && (status === "All" || (x.status ?? "Success") === status));
   return (
     <Card title="Top-up transactions">
       <div className="mb-4 flex flex-wrap gap-3">
@@ -45,10 +50,17 @@ function History({ rows }: { rows: Execution[] }) {
   );
 }
 
+/** Student opened from an Education Account page; the top-up form is preset to them. */
+const accountOf = (s: Student): Account => ({
+  id: s.id, name: s.name, school: SCHOOLS.find((x) => x.code === schoolOfLevel(s.level))?.name ?? "", class: s.class, age: ageForLevel(s.level),
+  citizen: true, enrolled: s.status === "Enrolled", schooling: s.status, status: "Active", balance: s.balance,
+});
+
 export default function TopUp() {
+  const preset = (useLocation().state as { student?: Student } | null)?.student;
   const [tab, setTab] = useState<TabId>("run");
   const [rules, setRules] = useState<FundRule[]>(FUND_RULES);
-  const [accounts, setAccounts] = useState<Account[]>(ACCOUNTS);
+  const [accounts, setAccounts] = useState<Account[]>(() => (preset && !ACCOUNTS.some((a) => a.id === preset.id) ? [accountOf(preset), ...ACCOUNTS] : ACCOUNTS));
   const [history, setHistory] = useState<Execution[]>([...PAST_EXECUTIONS].reverse()); // newest first
 
   const done = (x: Execution, creditedIds: string[]) => {
@@ -78,7 +90,7 @@ export default function TopUp() {
         ))}
       </div>
       <div role="tabpanel" id="topup-panel" aria-labelledby={`topup-tab-${tab}`}>
-        {tab === "run" && <Execute rules={rules} accounts={accounts} history={history} onDone={done} />}
+        {tab === "run" && <Execute rules={rules} accounts={accounts} history={history} onDone={done} presetAccountId={preset?.id} />}
         {tab === "rules" && <Rules rules={rules} onChange={setRules} />}
         {tab === "history" && <History rows={history} />}
       </div>

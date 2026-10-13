@@ -63,24 +63,24 @@ export default function ClassFormModal({ fixedSchool, editing, all, enrolled, on
           </select>
         </Field>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Class name" error={errors.name}>
+          <Field required label="Class name" error={errors.name}>
             <input className={inputClass} value={v.name} onChange={set("name")} />
           </Field>
-          <Field label="Level" error={errors.level}>
+          <Field required label="Level" error={errors.level}>
             <select className={inputClass} value={v.level} onChange={set("level")} disabled={!!editing}>
               <option value="">Select level</option>
               {levelOptions.map((l) => <option key={l}>{l}</option>)}
             </select>
           </Field>
         </div>
-        <Field label="Form teacher" error={errors.teacher}>
+        <Field required label="Form teacher" error={errors.teacher}>
           <input className={inputClass} value={v.teacher} onChange={set("teacher")} />
         </Field>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Room" error={errors.room}>
+          <Field required label="Room" error={errors.room}>
             <input className={inputClass} value={v.room} onChange={set("room")} />
           </Field>
-          <Field label="Capacity" error={errors.capacity}>
+          <Field required label="Capacity" error={errors.capacity}>
             <input className={inputClass} inputMode="numeric" value={v.capacity} onChange={set("capacity")} />
           </Field>
         </div>

@@ -52,7 +52,7 @@ function Form({ onClose, targets, onSave }: Omit<Props, "open">) {
           </select>
         </Field>
       )}
-      <Field label="New budget (S$)" hint={`Current: ${formatSGD(current.budget)}`} error={error}>
+      <Field required label="New budget (S$)" hint={`Current: ${formatSGD(current.budget)}`} error={error}>
         <input
           className={inputClass}
           inputMode="decimal"

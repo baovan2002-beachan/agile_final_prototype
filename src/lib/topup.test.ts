@@ -3,7 +3,7 @@ import { parseAmount } from "./amount";
 import { checkRule, eligibleAccounts, eligibleForRule, nextExecutionId, nextRuleId, totalFunds, type TopUpRule } from "./topup";
 import { ACCOUNTS, FUND_RULES, type Account } from "../data/topup";
 
-const acc = (id: string, o: Partial<Account> = {}): Account => ({ id, name: id, school: "Riverbank Primary School", age: 10, citizen: true, enrolled: true, balance: 100, ...o });
+const acc = (id: string, o: Partial<Account> = {}): Account => ({ id, name: id, school: "Riverbank Primary School", class: "P4 Courage", age: 10, citizen: true, enrolled: true, schooling: "Enrolled", status: "Active", balance: 100, ...o });
 const rule: TopUpRule = { ageMin: 7, ageMax: 12, citizenOnly: false, enrolledOnly: false, balanceMin: 0, balanceMax: 500 };
 const ids = (r: Account[]) => r.map((a) => a.id);
 
@@ -78,24 +78,35 @@ describe("nextExecutionId", () => {
 });
 
 describe("eligibleForRule", () => {
-  const r = { ageMin: 7, ageMax: 12, balanceBelow: 500, schools: ["Riverbank Primary School"] };
-  test("balance is strictly below the limit; age inclusive; school must match", () => {
-    const list = [acc("eq", { balance: 500 }), acc("ok", { balance: 499.99 }), acc("old", { age: 13 }), acc("other", { school: "Elsewhere" })];
+  const r = { ageMin: 7, ageMax: 12, minBalance: 100, maxBalance: 500, schooling: "Enrolled" as const, schools: ["Riverbank Primary School"] };
+  test("balance in [min, max); age inclusive; school must match", () => {
+    const list = [acc("min", { balance: 100 }), acc("lo", { balance: 99.99 }), acc("eq", { balance: 500 }), acc("ok", { balance: 499.99 }), acc("old", { age: 13 }), acc("other", { school: "Elsewhere" })];
+    expect(ids(eligibleForRule(r, list))).toEqual(["min", "ok"]);
+  });
+  test("closed accounts and other schooling statuses are excluded; no schools means all schools", () => {
+    const list = [acc("closed", { status: "Closed" }), acc("gone", { schooling: "Not Enrolled" }), acc("ok")];
     expect(ids(eligibleForRule(r, list))).toEqual(["ok"]);
+    expect(ids(eligibleForRule({ ...r, schools: [] }, [acc("a", { school: "Elsewhere" }), acc("c", { status: "Closed" })]))).toEqual(["a"]);
   });
 });
 
 describe("checkRule", () => {
-  const base = { ageMin: 10, ageMax: 14, balanceBelow: 600, amount: 100, schools: ["Riverbank Primary School"] };
+  const base = { ageMin: 10, ageMax: 14, minBalance: 0, maxBalance: 400, schooling: "Enrolled" as const, amount: 100, schools: ["Riverbank Primary School"] };
   test("flags invalid input and skips the overlap check", () => {
     expect(checkRule({ ...base, ageMin: 15 }, FUND_RULES).errors).toHaveLength(1);
-    expect(checkRule({ ...base, schools: [] }, FUND_RULES).errors).toHaveLength(1);
-    expect(checkRule({ ...base, amount: 0, balanceBelow: 0 }, FUND_RULES).overlaps).toEqual([]);
+    expect(checkRule({ ...base, minBalance: 400 }, FUND_RULES).errors).toHaveLength(1);
+    expect(checkRule({ ...base, amount: 0, maxBalance: 0 }, FUND_RULES).overlaps).toEqual([]);
   });
-  test("warns only when age AND school overlap an Active rule", () => {
+  test("empty schools is valid (all schools) and overlaps everything on school", () => {
+    expect(checkRule({ ...base, schools: [] }, FUND_RULES).errors).toEqual([]);
+    expect(checkRule({ ...base, schools: [] }, FUND_RULES).overlaps.map((o) => o.rule.id)).toEqual(["R-1001", "R-1002"]);
+  });
+  test("warns only when age, balance, schooling AND school all overlap an Active rule", () => {
     expect(checkRule(base, FUND_RULES).overlaps.map((o) => o.rule.id)).toEqual(["R-1001"]);
     expect(checkRule({ ...base, ageMin: 13, ageMax: 15 }, FUND_RULES).overlaps).toEqual([]); // age only
     expect(checkRule({ ...base, schools: ["Sunrise Primary School"] }, FUND_RULES).overlaps).toEqual([]); // school only
+    expect(checkRule({ ...base, minBalance: 500, maxBalance: 900 }, FUND_RULES).overlaps).toEqual([]); // R-1001 max 500 is exclusive
+    expect(checkRule({ ...base, schooling: "Not Enrolled" }, FUND_RULES).overlaps).toEqual([]); // schooling differs
   });
   test("ignores Draft rules and the rule being edited", () => {
     expect(checkRule({ ...base, schools: ["Eastlake Secondary School"] }, FUND_RULES).overlaps.map((o) => o.rule.id)).toEqual(["R-1002"]); // R-1003 is Draft

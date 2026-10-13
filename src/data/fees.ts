@@ -1,43 +1,24 @@
-export type Cycle = "month" | "term" | "year";
-export const CYCLES: { value: Cycle; label: string }[] = [
-  { value: "month", label: "Per month" },
-  { value: "term", label: "Per term" },
-  { value: "year", label: "Per year" },
-];
-export const cycleLabel = (c: Cycle) => CYCLES.find((x) => x.value === c)!.label;
+import type { Level } from "./students";
 
-/** "/month", "/term", "/year" */
-export const per = (c: Cycle) => cycleLabel(c).replace("Per ", "/");
+export type FeeComponent = { name: string; amount: number };
+/** A school-defined fee: a named bundle of components, optionally for one level. `school` is the school code. */
+export type FeeType = { id: string; school: string; name: string; level?: Level; components: FeeComponent[]; updated: string };
 
-export type Ceiling = { citizen: number; pr: number; international: number };
-export type FeeType = { id: string; name: string; amount: number; cycle: Cycle; ceiling?: Ceiling };
+export type ChargeStatus = "outstanding" | "overdue" | "paid";
+export type ChargeComponent = FeeComponent & { subsidy?: number };
+/** One fee issued to one student for one term. Components are copied from the fee type when issued. */
+export type Charge = {
+  id: string; studentId: string; ftId: string; title: string; term: string;
+  issued: string; due: string; status: ChargeStatus; paidOn?: string; components: ChargeComponent[];
+};
 
-// ASSUMPTION: national ceilings and the "school rate may not exceed the citizen ceiling" rule are invented
-// (handoff open question); ceilings are in the same billing cycle as the fee. Enrichment is mocked above its ceiling.
+export const TERMS = ["2026 Term 4", "2027 Term 1", "2026 Term 3"];
+/** Default due date per term (no manual field). */
+export const TERM_DUE: Record<string, string> = { "2026 Term 4": "2026-11-13", "2027 Term 1": "2027-02-12", "2026 Term 3": "2026-09-18" };
+
+// ASSUMPTION: invented fee types and amounts (mock data). Schools define their own; HQ views them read-only.
 export const FEE_TYPES: FeeType[] = [
-  { id: "misc", name: "Miscellaneous", amount: 13, cycle: "month", ceiling: { citizen: 15, pr: 30, international: 60 } },
-  { id: "learning", name: "Learning Materials", amount: 55, cycle: "term", ceiling: { citizen: 60, pr: 120, international: 240 } },
-  { id: "enrichment", name: "Enrichment", amount: 65, cycle: "term", ceiling: { citizen: 60, pr: 120, international: 240 } },
-  { id: "insurance", name: "Student Insurance", amount: 8, cycle: "year", ceiling: { citizen: 10, pr: 20, international: 40 } },
+  { id: "FT-01", school: "S001", name: "School Fees (Secondary)", updated: "2026-09-28", components: [{ name: "Miscellaneous", amount: 13 }, { name: "Learning Materials", amount: 55 }, { name: "Enrichment", amount: 65 }, { name: "Student Insurance", amount: 8 }] },
+  { id: "FT-02", school: "S002", name: "School Fees (Primary)", updated: "2026-09-28", components: [{ name: "Miscellaneous", amount: 10 }, { name: "Learning Materials", amount: 45 }, { name: "Student Insurance", amount: 8 }] },
+  { id: "FT-03", school: "S001", name: "Supplementary Fees", level: "Sec 1", updated: "2026-08-20", components: [{ name: "Co-curricular Attire", amount: 70 }, { name: "Camp Fee", amount: 50 }] },
 ];
-
-export const exceedsCeiling = (f: FeeType) => !!f.ceiling && f.amount > f.ceiling.citizen;
-
-/** Positive number, at most 2 decimals, at most 9 integer digits. Returns the parsed value or an error message. */
-export function validateRate(raw: string): { value?: number; error?: string } {
-  const s = raw.trim();
-  if (!s) return { error: "Enter an amount." };
-  if (!/^\d{1,9}(\.\d{1,2})?$/.test(s)) return { error: "Use a positive number with at most 2 decimals." };
-  const value = Number(s);
-  if (!Number.isFinite(value) || value <= 0) return { error: "Amount must be greater than 0." };
-  return { value };
-}
-
-/** Trim and collapse inner whitespace. */
-export const normalizeName = (raw: string) => raw.trim().replace(/\s+/g, " ");
-
-export function validateName(raw: string, existing: FeeType[]): string | undefined {
-  const s = normalizeName(raw).toLowerCase();
-  if (!s) return "Enter a fee name.";
-  if (existing.some((f) => normalizeName(f.name).toLowerCase() === s)) return "A fee type with this name already exists.";
-}

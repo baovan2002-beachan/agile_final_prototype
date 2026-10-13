@@ -37,7 +37,7 @@ function Landing() {
 /** Dashboard is Sprint 2: /admin lands on the first Sprint 1 screen for the role. */
 function AdminHome() {
   const { role } = useSession();
-  return <Navigate to={role === "hq" ? "/admin/school-maintenance" : "/admin/levels"} replace />;
+  return <Navigate to={role === "hq" ? "/admin/school-maintenance" : "/admin/classes"} replace />;
 }
 
 // Dev galleries: only the files that exist in this branch get a route.
@@ -61,7 +61,6 @@ export const router = createBrowserRouter([
         path: "admin",
         children: [
           { index: true, Component: AdminHome },
-          { path: "levels", ...page(() => import("./features/admin/levels/Levels")) },
           { path: "classes", ...page(() => import("./features/admin/classes/Classes")) },
           { path: "school-maintenance", ...page(() => import("./features/admin/school-maintenance/SchoolMaintenance"), true) },
           { path: "students", ...page(() => import("./features/admin/students/Students")) },

@@ -32,10 +32,10 @@ export default function StaffPanel() {
             {error}
           </p>
         )}
-        <Field label="Email address">
+        <Field required label="Email address">
           <input name="email" type="email" required autoComplete="username" onChange={() => setError("")} className={inputClass} />
         </Field>
-        <Field label="Password">
+        <Field required label="Password">
           <input name="password" type="password" required autoComplete="current-password" onChange={() => setError("")} className={inputClass} />
         </Field>
         <button type="button" onClick={() => setForgot(true)} className={`-my-2 min-h-11 text-sm font-semibold text-primary underline ${focus}`}>
@@ -95,7 +95,7 @@ function ForgotModal({ open, onClose }: { open: boolean; onClose: () => void }) 
         </div>
       ) : (
         <form id="forgot-form" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
-          <Field label="Institutional email" hint="We will email you a link to set a new password.">
+          <Field required label="Institutional email" hint="We will email you a link to set a new password.">
             <input type="email" required autoComplete="email" className={inputClass} />
           </Field>
         </form>

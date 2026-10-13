@@ -5,9 +5,10 @@ import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { EmptyState } from "../../../components/ui/EmptyState";
-import { ProgressBar } from "../../../components/ui/ProgressBar";
-import { FEE_TYPES, cycleLabel } from "../../../data/fees";
-import { ACCOUNT_CLOSES_AT, ACCOUNT_OPENS_AT, accountStatus, ageForLevel, isFeePaid, ledgerFor } from "../../../lib/accounts";
+import { useFees } from "../../../data/feeStore";
+import { payableOf } from "../../../lib/fees";
+import { StatusBadge } from "../fee-types/parts";
+import { accountStatus, ledgerFor } from "../../../lib/accounts";
 import { formatSGD } from "../../../lib/format";
 import { useSession } from "../../../session";
 import { statusTone } from "./logic";
@@ -25,9 +26,10 @@ function Stat({ label, value, note, alert }: { label: string; value: ReactNode; 
   );
 }
 
-/** Req 1-4: one student's Education Account: summary, fees, ledger, lifecycle, FAS and actions. */
+/** Req 1-4: one student's Education Account: summary, fees, ledger, FAS and actions. */
 export default function EducationAccountPage() {
   const student = useStudent();
+  const allCharges = useFees().state.charges;
   const navigate = useNavigate();
   const { role } = useSession();
 
@@ -39,11 +41,11 @@ export default function EducationAccountPage() {
     );
   }
 
-  const fees = FEE_TYPES.map((f) => ({ ...f, paid: isFeePaid(f.name, student) }));
-  const due = fees.filter((f) => !f.paid).reduce((t, f) => t + f.amount, 0);
+  const charges = allCharges.filter((c) => c.studentId === student.id);
+  const unpaid = charges.filter((c) => c.status !== "paid");
+  const due = unpaid.reduce((t, c) => t + payableOf(c), 0);
   const left = student.balance - due;
   const entries = ledgerFor(student);
-  const age = ageForLevel(student.level);
   const initials = student.name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
   const feesPath = `/admin/students/${student.id}/fees`;
 
@@ -65,15 +67,15 @@ export default function EducationAccountPage() {
             </div>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button icon={<Receipt size={18} aria-hidden />} onClick={() => navigate(feesPath, { state: { student } })}>View fees</Button>
-            {role === "hq" && <Button variant="secondary" icon={<Bank size={18} aria-hidden />} onClick={() => navigate("/admin/top-up")}>Top up</Button>}
+            {role !== "hq" && <Button icon={<Receipt size={18} aria-hidden />} onClick={() => navigate(feesPath, { state: { student } })}>View all fees</Button>}
+            {role === "hq" && <Button icon={<Bank size={18} aria-hidden />} onClick={() => navigate("/admin/top-up", { state: { student } })}>Top up</Button>}
           </div>
         </div>
       </Card>
 
       <div className="grid divide-y divide-line rounded-card border border-line bg-surface-container-lowest sm:grid-cols-3 sm:divide-x sm:divide-y-0">
         <Stat label="Account balance" value={formatSGD(student.balance)} />
-        <Stat label="Outstanding fees" value={formatSGD(due)} note={`${fees.filter((f) => !f.paid).length} unpaid`} />
+        <Stat label="Outstanding fees" value={formatSGD(due)} note={`${unpaid.length} unpaid`} />
         <Stat label="Balance after fees" value={formatSGD(left)} alert={left < 0} note={left < 0 ? "Balance does not cover the fees" : "Balance covers the fees"} />
       </div>
 
@@ -102,31 +104,22 @@ export default function EducationAccountPage() {
         </Card>
 
         <div className="grid content-start gap-6">
-          <Card title="Fees" action={<Link to={feesPath} state={{ student }} className="text-[13px] font-medium text-primary">All fees</Link>}>
+          <Card title="Fees" action={role !== "hq" ? <Link to={feesPath} state={{ student }} className="text-[13px] font-medium text-primary">All fees</Link> : undefined}>
             <ul className="grid gap-3">
-              {fees.map((f) => (
-                <li key={f.id} className="flex items-center justify-between gap-3 text-sm">
+              {charges.map((c) => (
+                <li key={c.id} className="flex items-center justify-between gap-3 text-sm">
                   <div>
-                    <div className="font-medium text-on-surface">{f.name}</div>
-                    <div className="text-[13px] text-on-surface-variant">{cycleLabel(f.cycle)}</div>
+                    <div className="font-medium text-on-surface">{c.title}</div>
+                    <div className="text-[13px] text-on-surface-variant">{c.term}, due {c.due}</div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-on-surface">{formatSGD(f.amount)}</span>
-                    <Badge tone={f.paid ? "success" : "warning"}>{f.paid ? "Paid" : "Unpaid"}</Badge>
+                    <span className="font-medium text-on-surface">{formatSGD(payableOf(c))}</span>
+                    <StatusBadge status={c.status} />
                   </div>
                 </li>
               ))}
+              {!charges.length && <li className="text-sm text-on-surface-variant">No charges yet.</li>}
             </ul>
-          </Card>
-
-          <Card title="Account lifecycle">
-            <ProgressBar
-              label={`Age ${age} of ${ACCOUNT_CLOSES_AT}`}
-              pct={((age - ACCOUNT_OPENS_AT) / (ACCOUNT_CLOSES_AT - ACCOUNT_OPENS_AT)) * 100}
-            />
-            <p className="mt-3 text-[13px] text-on-surface-variant">
-              Opens at {ACCOUNT_OPENS_AT}, closes at {ACCOUNT_CLOSES_AT}. The balance then goes to the CPF account by default.
-            </p>
           </Card>
 
           {role === "school" && (

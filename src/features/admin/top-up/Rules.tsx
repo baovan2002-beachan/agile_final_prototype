@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { ArrowLeft, Plus, WarningCircle } from "@phosphor-icons/react";
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
@@ -7,7 +7,7 @@ import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { SCHOOLS } from "../../../data/schools";
-import type { FundRule, RuleStatus } from "../../../data/topup";
+import { SCHOOLING, type FundRule, type RuleSchooling, type RuleStatus } from "../../../data/topup";
 import { formatSGD } from "../../../lib/format";
 import { checkRule, nextRuleId } from "../../../lib/topup";
 
@@ -15,30 +15,37 @@ const TONE: Record<RuleStatus, BadgeTone> = { Active: "success", Draft: "warning
 const num = (s: string) => (s.trim() === "" ? NaN : Number(s));
 
 type Props = { rules: FundRule[]; onChange: (next: FundRule[]) => void };
-type Draft = { id: string; name: string; amount: string; ageMin: string; ageMax: string; balanceBelow: string; schools: string[] };
-const BLANK: Draft = { id: "", name: "", amount: "200", ageMin: "7", ageMax: "16", balanceBelow: "500", schools: [] };
+type Draft = { id: string; name: string; amount: string; ageMin: string; ageMax: string; minBalance: string; maxBalance: string; schooling: RuleSchooling | ""; schools: string[] };
+const BLANK: Draft = { id: "", name: "", amount: "200", ageMin: "7", ageMax: "16", minBalance: "0", maxBalance: "500", schooling: "", schools: [] };
+const range = (r: Pick<FundRule, "minBalance" | "maxBalance">) => `${formatSGD(r.minBalance)} to under ${formatSGD(r.maxBalance)}`;
+const scope = (schools: string[]) => (schools.length ? `${schools.length} selected` : "All schools");
 
 export default function Rules({ rules, onChange }: Props) {
   const [draft, setDraft] = useState<Draft | null>(null);
+  const [viewId, setViewId] = useState<string | null>(null);
+  const viewed = rules.find((r) => r.id === viewId);
+  if (viewed) return <RuleView rule={viewed} onBack={() => setViewId(null)} />;
   if (draft) return <RuleForm draft={draft} rules={rules} onCancel={() => setDraft(null)} onSave={(r) => { onChange(r.id && rules.some((x) => x.id === r.id) ? rules.map((x) => (x.id === r.id ? r : x)) : [r, ...rules]); setDraft(null); }} />;
-  return <RuleList rules={rules} onNew={() => setDraft(BLANK)} onEdit={(r) => setDraft({ id: r.id, name: r.name, amount: String(r.amount), ageMin: String(r.ageMin), ageMax: String(r.ageMax), balanceBelow: String(r.balanceBelow), schools: [...r.schools] })} onToggle={(id) => onChange(rules.map((r) => (r.id === id ? { ...r, status: r.status === "Active" ? "Paused" : "Active" } : r)))} />;
+  return <RuleList rules={rules} onView={(r) => setViewId(r.id)} onNew={() => setDraft(BLANK)} onEdit={(r) => setDraft({ id: r.id, name: r.name, amount: String(r.amount), ageMin: String(r.ageMin), ageMax: String(r.ageMax), minBalance: String(r.minBalance), maxBalance: String(r.maxBalance), schooling: r.schooling, schools: [...r.schools] })} onToggle={(id) => onChange(rules.map((r) => (r.id === id ? { ...r, status: r.status === "Active" ? "Paused" : "Active" } : r)))} />;
 }
 
-function RuleList({ rules, onNew, onEdit, onToggle }: { rules: FundRule[]; onNew: () => void; onEdit: (r: FundRule) => void; onToggle: (id: string) => void }) {
+function RuleList({ rules, onView, onNew, onEdit, onToggle }: { rules: FundRule[]; onView: (r: FundRule) => void; onNew: () => void; onEdit: (r: FundRule) => void; onToggle: (id: string) => void }) {
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("All");
   const rows = rules.filter((r) => `${r.name} ${r.id}`.toLowerCase().includes(q.trim().toLowerCase()) && (status === "All" || r.status === status));
   const columns: Column<FundRule>[] = [
     { key: "name", header: "Rule", sortable: true, render: (r) => (<><span className="font-semibold">{r.name}</span><span className="block text-[13px] text-on-surface-variant">{r.id}</span></>) },
     { key: "ageMin", header: "Age range", render: (r) => `${r.ageMin}-${r.ageMax} yrs` },
-    { key: "balanceBelow", header: "Balance", sortable: true, render: (r) => `below ${formatSGD(r.balanceBelow)}` },
-    { key: "schools", header: "Schools", render: (r) => `${r.schools.length} selected` },
+    { key: "minBalance", header: "Balance range", sortable: true, render: (r) => range(r) },
+    { key: "schooling", header: "Schooling status" },
+    { key: "schools", header: "Schools", render: (r) => scope(r.schools) },
     { key: "amount", header: "Top-up", sortable: true, align: "right", render: (r) => formatSGD(r.amount) },
     { key: "status", header: "Status", render: (r) => <Badge tone={TONE[r.status]}>{r.status}</Badge> },
     {
       key: "actions", header: "Actions",
       render: (r) => (
         <span className="flex gap-2">
+          <Button size="sm" variant="secondary" onClick={() => onView(r)} aria-label={`View ${r.name}`}>View</Button>
           <Button size="sm" variant="secondary" onClick={() => onEdit(r)} aria-label={`Edit ${r.name}`}>Edit</Button>
           <Button size="sm" variant="ghost" onClick={() => onToggle(r.id)} aria-label={`${r.status === "Active" ? "Pause" : "Activate"} ${r.name}`}>{r.status === "Active" ? "Pause" : "Activate"}</Button>
         </span>
@@ -65,7 +72,7 @@ function RuleForm({ draft, rules, onCancel, onSave }: { draft: Draft; rules: Fun
   const [find, setFind] = useState("");
   const [tried, setTried] = useState(false);
   const set = <K extends keyof Draft>(k: K, v: Draft[K]) => setD((x) => ({ ...x, [k]: v }));
-  const input = { ageMin: num(d.ageMin), ageMax: num(d.ageMax), balanceBelow: num(d.balanceBelow), amount: num(d.amount), schools: d.schools };
+  const input = { ageMin: num(d.ageMin), ageMax: num(d.ageMax), minBalance: num(d.minBalance), maxBalance: num(d.maxBalance), schooling: d.schooling as RuleSchooling, amount: num(d.amount), schools: d.schools };
   const { errors, overlaps } = checkRule(input, rules, d.id || undefined);
   const nameError = tried && !d.name.trim() ? "Enter a rule name." : "";
   const toggle = (name: string, on: boolean) => set("schools", on ? [...d.schools, name] : d.schools.filter((s) => s !== name));
@@ -73,11 +80,11 @@ function RuleForm({ draft, rules, onCancel, onSave }: { draft: Draft; rules: Fun
 
   const save = (status: RuleStatus) => {
     setTried(true);
-    if (!d.name.trim() || errors.length) return;
-    onSave({ id: d.id || nextRuleId(rules), name: d.name.trim(), ageMin: input.ageMin, ageMax: input.ageMax, balanceBelow: input.balanceBelow, amount: input.amount, schools: d.schools, status });
+    if (!d.name.trim() || !d.schooling || errors.length) return;
+    onSave({ id: d.id || nextRuleId(rules), name: d.name.trim(), ...input, status });
   };
   const age = (k: "ageMin" | "ageMax", label: string) => (
-    <Field label={label}><input className={inputClass} type="number" min={0} max={120} step={1} value={d[k]} onChange={(e) => set(k, e.target.value)} /></Field>
+    <Field required label={label}><input className={inputClass} type="number" min={0} max={120} step={1} value={d[k]} onChange={(e) => set(k, e.target.value)} /></Field>
   );
 
   return (
@@ -90,19 +97,25 @@ function RuleForm({ draft, rules, onCancel, onSave }: { draft: Draft; rules: Fun
           <form noValidate onSubmit={(e) => e.preventDefault()} className="space-y-6">
             <fieldset className="grid gap-4 sm:grid-cols-2">
               <legend className="mb-3 text-[13px] font-semibold uppercase tracking-wide text-on-surface-variant">1. Rule details</legend>
-              <Field label="Rule name" error={nameError}><input className={inputClass} maxLength={80} placeholder="e.g. Primary Student Support" value={d.name} onChange={(e) => set("name", e.target.value)} /></Field>
-              <Field label="Top-up per account (S$)"><input className={inputClass} type="number" min={0.01} step={0.01} value={d.amount} onChange={(e) => set("amount", e.target.value)} /></Field>
+              <Field label="Rule ID" hint={d.id ? undefined : "Generated automatically on save"}><input className={`${inputClass} cursor-not-allowed bg-surface-container-high text-on-surface-variant`} value={d.id || nextRuleId(rules)} readOnly disabled /></Field>
+              <Field required label="Rule name" error={nameError}><input className={inputClass} maxLength={80} placeholder="e.g. Primary Student Support" value={d.name} onChange={(e) => set("name", e.target.value)} /></Field>
+              <Field required label="Top-up per account (S$)"><input className={inputClass} type="number" min={0.01} step={0.01} value={d.amount} onChange={(e) => set("amount", e.target.value)} /></Field>
             </fieldset>
             <fieldset className="grid gap-4 sm:grid-cols-2">
               <legend className="mb-3 text-[13px] font-semibold uppercase tracking-wide text-on-surface-variant">2. Recipient criteria (all must match)</legend>
               {age("ageMin", "Minimum age (inclusive)")}
               {age("ageMax", "Maximum age (inclusive)")}
-              <Field label="Current balance below (S$)" hint="Strictly less than: a balance exactly at the limit does not qualify." className="sm:col-span-2">
-                <input className={inputClass} type="number" min={0.01} step={0.01} value={d.balanceBelow} onChange={(e) => set("balanceBelow", e.target.value)} />
+              <Field required label="Minimum balance, inclusive (S$)"><input className={inputClass} type="number" min={0} step={0.01} value={d.minBalance} onChange={(e) => set("minBalance", e.target.value)} /></Field>
+              <Field required label="Maximum balance, exclusive (S$)" hint="Min <= balance < Max, so S$0-300 and S$300-500 never overlap at S$300."><input className={inputClass} type="number" min={0.01} step={0.01} value={d.maxBalance} onChange={(e) => set("maxBalance", e.target.value)} /></Field>
+              <Field label="Schooling status" required error={tried && !d.schooling ? "Select a schooling status." : ""} hint="Status options are illustrative, pending MOE confirmation." className="sm:col-span-2">
+                <select className={inputClass} value={d.schooling} onChange={(e) => set("schooling", e.target.value as RuleSchooling)}>
+                  <option value="">Select schooling status...</option>
+                  {SCHOOLING.map((o) => <option key={o}>{o}</option>)}
+                </select>
               </Field>
             </fieldset>
             <fieldset>
-              <legend className="mb-3 text-[13px] font-semibold uppercase tracking-wide text-on-surface-variant">3. Schools</legend>
+              <legend className="mb-3 text-[13px] font-semibold uppercase tracking-wide text-on-surface-variant">3. Schools (optional)</legend>
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <input aria-label="Search schools" className={inputClass.replace("w-full", "min-w-48 max-w-xs flex-1")} placeholder="Search school name..." value={find} onChange={(e) => setFind(e.target.value)} />
                 <Button size="sm" variant="secondary" onClick={() => set("schools", [...new Set([...d.schools, ...shown.map((s) => s.name)])])}>Select shown</Button>
@@ -119,7 +132,7 @@ function RuleForm({ draft, rules, onCancel, onSave }: { draft: Draft; rules: Fun
                 ))}
                 {!shown.length && <li className="px-3 py-3 text-sm text-on-surface-variant">No matching schools.</li>}
               </ul>
-              <p className="mt-1.5 text-[13px] text-on-surface-variant">{d.schools.length} selected</p>
+              <p className="mt-1.5 text-[13px] text-on-surface-variant">{d.schools.length ? `${d.schools.length} selected` : "None selected: applies to all schools."}</p>
             </fieldset>
             <div className="flex flex-wrap justify-end gap-3">
               <Button variant="secondary" onClick={onCancel}>Cancel</Button>
@@ -132,7 +145,7 @@ function RuleForm({ draft, rules, onCancel, onSave }: { draft: Draft; rules: Fun
         <Card title="Live rule summary" className="lg:sticky lg:top-6">
           <div className="rounded-control bg-surface-container-low p-3 text-sm leading-relaxed">
             <p className="font-semibold">{d.name || "Unnamed rule"}</p>
-            <p>Age {d.ageMin || "?"}-{d.ageMax || "?"} <b>AND</b> balance below {formatSGD(input.balanceBelow || 0)} <b>AND</b> {d.schools.length} school(s)</p>
+            <p>Age {d.ageMin || "?"}-{d.ageMax || "?"} <b>AND</b> balance {formatSGD(input.minBalance || 0)} to under {formatSGD(input.maxBalance || 0)} <b>AND</b> schooling: {d.schooling || "not selected"} <b>AND</b> schools: {scope(d.schools)}</p>
             <p className="mt-1 font-semibold text-primary">Top-up per account: {formatSGD(input.amount || 0)}</p>
           </div>
           <div className="mt-5 flex items-center justify-between gap-3">
@@ -150,14 +163,42 @@ function RuleForm({ draft, rules, onCancel, onSave }: { draft: Draft; rules: Fun
             {overlaps.map((o) => (
               <div key={o.rule.id} className="rounded-control border border-line bg-warning-container p-3 text-warning">
                 <p className="font-semibold">Potential overlap: {o.rule.name} ({o.rule.id})</p>
-                <p>Common age {o.ageMin}-{o.ageMax}. Shared: {o.schools.join(", ")}.</p>
-                <p>Both rules may include accounts below {formatSGD(o.balanceBelow)}, so the same account could be paid twice if both run.</p>
+                <p>Common age {o.ageMin}-{o.ageMax}. Common balance {range(o)}. Shared schools: {o.schools.length ? o.schools.join(", ") : "all"}.</p>
+                <p>The same account could be paid twice if both rules run. This is a warning, not a block.</p>
               </div>
             ))}
-            {!errors.length && !overlaps.length && <p className="rounded-control bg-success-container p-3 font-medium text-success">No Active rule shares this age range and school selection.</p>}
+            {!d.schooling && !errors.length && <p className="text-on-surface-variant">Select a schooling status to complete the clash check.</p>}
+            {!errors.length && !overlaps.length && <p className="rounded-control bg-success-container p-3 font-medium text-success">No Active rule overlaps on age, balance range, schooling status and school scope.</p>}
           </div>
         </Card>
       </div>
+    </div>
+  );
+}
+
+function RuleView({ rule: r, onBack }: { rule: FundRule; onBack: () => void }) {
+  const item = (k: string, v: ReactNode) => (
+    <div className="border-b border-line py-2.5 last:border-0"><dt className="text-[13px] text-on-surface-variant">{k}</dt><dd className="font-semibold text-on-surface">{v}</dd></div>
+  );
+  return (
+    <div>
+      <button type="button" onClick={onBack} className="mb-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+        <ArrowLeft size={16} weight="bold" aria-hidden="true" /> Back to funding rules
+      </button>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card title="Rule information" action={<Badge tone={TONE[r.status]}>{r.status}</Badge>}>
+          <dl>{item("Rule ID", r.id)}{item("Rule name", r.name)}{item("Top-up per account", formatSGD(r.amount))}</dl>
+        </Card>
+        <Card title="Recipient eligibility criteria">
+          <dl>
+            {item("Age range", `${r.ageMin}-${r.ageMax} years (inclusive)`)}
+            {item("Balance range", `${range(r)} (min inclusive, max exclusive)`)}
+            {item("Schooling status", r.schooling)}
+            {item("Applicable schools", r.schools.length ? r.schools.join(", ") : "All schools (no restriction)")}
+          </dl>
+        </Card>
+      </div>
+      <p className="mt-4 text-[13px] text-on-surface-variant">Read-only. Viewing a rule does not change it or run a top-up. To change it, go back and choose Edit.</p>
     </div>
   );
 }

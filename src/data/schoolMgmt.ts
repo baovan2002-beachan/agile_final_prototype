@@ -15,10 +15,6 @@ export const SCHOOL_RECORDS: SchoolRecord[] = SCHOOLS.map((s, i) => ({
   user: STAFF.find((u) => u.schoolCode === s.code)?.name,
 }));
 
-export type LevelRecord = { level: Level; head: string };
-const HEADS = ["Mrs Lim Siew Hoon", "Mr Kumar Raj", "Ms Tan Pei Shan", "Mr Ismail Yusof", "Mrs Chua Lay Cheng", "Mr Brandon Ho", "Ms Nadia Hamid", "Mr Peter Ong", "Mrs Sharon Yeo", "Mr Alan Pang"];
-export const LEVEL_RECORDS: LevelRecord[] = LEVELS.map((level, i) => ({ level, head: HEADS[i] }));
-
 // ASSUMPTION: the mock students and classes belong to two schools: P1-P6 to Riverbank Primary (S002), Sec 1-4 to Greenfield Secondary (S001).
 export const schoolOfLevel = (l: Level) => (l.startsWith("P") ? "S002" : "S001");
 

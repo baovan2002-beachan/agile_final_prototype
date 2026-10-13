@@ -53,11 +53,8 @@ export default function Classes() {
       header: "Students",
       sortable: true,
       align: "right",
-      render: (c) => (
-        <Badge tone={c.students >= c.capacity ? "warning" : "neutral"}>
-          {c.students} / {c.capacity}{c.students >= c.capacity ? " full" : ""}
-        </Badge>
-      ),
+      render: (c) =>
+        c.students >= c.capacity ? <Badge tone="warning">{c.students} / {c.capacity} full</Badge> : <span className="tabular-nums">{c.students} / {c.capacity}</span>,
     },
     {
       key: "actions",
@@ -65,7 +62,7 @@ export default function Classes() {
       render: (c) => (
         <div className="flex gap-1">
           <Button variant="ghost" size="sm" icon={<UsersThree size={16} aria-hidden />} aria-label={`Show students in ${c.name}`} onClick={() => navigate(`/admin/students?class=${encodeURIComponent(c.name)}`)}>Students</Button>
-          <Button variant="ghost" size="sm" icon={<PencilSimple size={16} aria-hidden />} aria-label={`Edit ${c.name}`} onClick={() => setForm({ editing: c })}>Edit</Button>
+          {!hq && <Button variant="ghost" size="sm" icon={<PencilSimple size={16} aria-hidden />} aria-label={`Edit ${c.name}`} onClick={() => setForm({ editing: c })}>Edit</Button>}
         </div>
       ),
     },
@@ -73,13 +70,15 @@ export default function Classes() {
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
-      <HeaderActions>
-        <Button icon={<Plus size={18} aria-hidden />} onClick={() => setForm({ editing: null })}>Add class</Button>
-      </HeaderActions>
+      {!hq && (
+        <HeaderActions>
+          <Button icon={<Plus size={18} aria-hidden />} onClick={() => setForm({ editing: null })}>Add class</Button>
+        </HeaderActions>
+      )}
       <div role="status" className="empty:hidden">
         {notice && <p className="rounded-control border border-line bg-surface-container-lowest px-4 py-3 text-sm font-medium">{notice}</p>}
       </div>
-      <Card title="Classes">
+      <Card>
         <div className="grid gap-4 sm:grid-cols-[repeat(2,minmax(0,16rem))_auto] sm:items-end">
           {hq && (
             <Field label="School">
@@ -99,12 +98,12 @@ export default function Classes() {
         </div>
         <p aria-live="polite" className="mt-4 text-[13px] text-on-surface-variant">Showing {rows.length} of {classes.length} classes</p>
         <div className="mt-2">
-          <DataTable columns={columns} rows={rows} rowKey={(c) => c.name} pageSize={10} large empty={<EmptyState title="No classes found" hint="Add a class or change the school or level." />} />
+          <DataTable columns={columns} rows={rows} rowKey={(c) => c.name} pageSize={10} large empty={<EmptyState title="No classes found" hint={hq ? "Change the school or level." : "Add a class or change the school or level."} />} />
         </div>
       </Card>
-      {form && (
+      {form && !hq && (
         <ClassFormModal
-          fixedSchool={hq ? undefined : mySchool}
+          fixedSchool={mySchool}
           key={form.editing?.name ?? "new"}
           editing={form.editing}
           all={classes}

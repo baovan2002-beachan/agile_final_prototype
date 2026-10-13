@@ -42,13 +42,13 @@ export function ApplicationForm({ values, onChange, filledNote, onAskAi }: Props
       </p>
       <p role="status" className={filledNote ? "mt-3 rounded-control bg-primary-fixed px-3 py-2 text-[13px] font-medium text-on-primary-fixed" : ""}>{filledNote}</p>
       <form ref={formRef} noValidate onSubmit={submit} className="mt-4 space-y-4">
-        <Field label="Contact number" error={errors.contact} hint="Singapore number, e.g. +65 9123 4567">
+        <Field required label="Contact number" error={errors.contact} hint="Singapore number, e.g. +65 9123 4567">
           <input name="contact" type="tel" autoComplete="tel" className={inputClass} value={values.contact} onChange={set("contact")} />
         </Field>
-        <Field label="Mailing address" error={errors.mailingAddress}>
+        <Field required label="Mailing address" error={errors.mailingAddress}>
           <input name="mailingAddress" autoComplete="street-address" className={inputClass} value={values.mailingAddress} onChange={set("mailingAddress")} />
         </Field>
-        <Field label="What best describes your situation?" error={errors.circumstance}>
+        <Field required label="What best describes your situation?" error={errors.circumstance}>
           <select name="circumstance" className={inputClass} value={values.circumstance} onChange={set("circumstance")}>
             <option value="">Choose one</option>
             {circumstances.map((c) => <option key={c}>{c}</option>)}
@@ -68,7 +68,7 @@ export function ApplicationForm({ values, onChange, filledNote, onAskAi }: Props
               onChange={(e) => { setConsent(e.target.checked); setSentOn(null); }}
               className="mt-0.5 size-5 shrink-0 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             />
-            I consent to MOE retrieving my household income band from SingPass and sharing this application with my children's schools.
+            I consent to MOE retrieving my household income band from SingPass and sharing this application with my children's schools. <span aria-hidden className="text-alert">*</span>
           </label>
           {errors.consent && <p id="consent-err" role="alert" className="mt-1.5 text-[13px] font-medium text-alert">{errors.consent}</p>}
         </div>

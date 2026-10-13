@@ -37,13 +37,13 @@ function EditModal({ profile, onClose, onSave }: { profile: Profile; onClose: ()
           <AssumptionTag />
           <span>Only address, mailing address and contact number can be changed. Name and NRIC come from SingPass.</span>
         </p>
-        <Field label="Residential address" error={errors.address} hint="Include the 6-digit postal code.">
+        <Field required label="Residential address" error={errors.address} hint="Include the 6-digit postal code.">
           <textarea rows={2} value={form.address} onChange={set("address")} className={`${inputClass} py-2`} autoComplete="street-address" />
         </Field>
-        <Field label="Mailing address" error={errors.mailingAddress}>
+        <Field required label="Mailing address" error={errors.mailingAddress}>
           <textarea rows={2} value={form.mailingAddress} onChange={set("mailingAddress")} className={`${inputClass} py-2`} />
         </Field>
-        <Field label="Contact number" error={errors.contact}>
+        <Field required label="Contact number" error={errors.contact}>
           <input type="tel" value={form.contact} onChange={set("contact")} className={inputClass} autoComplete="tel" />
         </Field>
       </form>

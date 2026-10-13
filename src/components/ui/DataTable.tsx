@@ -16,7 +16,7 @@ type Props<T> = {
   empty: ReactNode;
   pageSize?: number;
   /** Roomier rows with larger text, for tables that show only a few rows. */
-  large?: boolean;
+  large?: boolean | "md";
 };
 
 const val = <T,>(row: T, key: string) => (row as Record<string, unknown>)[key];
@@ -102,7 +102,7 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10, larg
             {visible.map((row) => (
               <tr key={rowKey(row)} className="border-b border-line last:border-0">
                 {columns.map((c) => (
-                  <td key={String(c.key)} className={`px-3 ${large ? "py-5" : "py-3"} text-on-surface ${c.align === "right" ? "text-right tabular-nums" : ""}`}>
+                  <td key={String(c.key)} className={`px-3 ${large === "md" ? "py-3.5" : large ? "py-5" : "py-3"} text-on-surface ${c.align === "right" ? "text-right tabular-nums" : ""}`}>
                     {c.render ? c.render(row) : String(val(row, String(c.key)) ?? "")}
                   </td>
                 ))}
