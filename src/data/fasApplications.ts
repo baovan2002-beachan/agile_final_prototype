@@ -54,7 +54,7 @@ export const FAS_APPLICATIONS: FasApplication[] = [
     "Income band is higher and the Education Account covers the full year of fees. Risk is low; the application may be better suited to a school-level discretionary decision."),
   p("FAS-2050", "Ethan Goh Yi Heng", "Primary 1", B4, 18, "Tier 4", 8,
     "Income band is the highest in this queue and the account balance exceeds this year's fees. Predicted difficulty meeting fees is low."),
-  p("FAS-2051", "Rachel Lim Shu Ting", "Secondary 2", B4, 12, "Tier 4", 9,
+  p("FAS-2051", "Natalie Teo Shu Ting", "Secondary 2", B4, 12, "Tier 4", 9,
     "No arrears, healthy balance, and a recent top-up. Very low predicted difficulty; kept in the queue only because the family applied."),
   p("FAS-2052", "Tharun Kumar s/o Selvam", "Primary 5", B2, 63, "Tier 2", 2,
     "Low income band with a recent medical expense flagged by the family. Balance is low. The model is less confident because the income band was updated this month."),

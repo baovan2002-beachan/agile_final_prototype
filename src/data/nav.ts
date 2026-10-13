@@ -3,6 +3,10 @@ import {
   GraduationCap, HandHeart, House, Receipt, Stack, Tag, UsersThree, Wallet, type Icon,
 } from "@phosphor-icons/react";
 import type { Role } from "../session";
+import { FAS_APPLICATIONS } from "./fasApplications";
+import { children } from "./parent";
+
+const PENDING_FAS = FAS_APPLICATIONS.filter((a) => a.status === "Pending").length;
 
 export type NavItem = { to: string; label: string; icon: Icon; badge?: number; title?: string };
 
@@ -18,7 +22,7 @@ const HQ: NavItem[] = [
   { to: "/admin/accounts", label: "Education Accounts", icon: Wallet },
   { to: "/admin/top-up", label: "Top-Up Management", icon: Bank },
   { to: "/admin/fee-types", label: "Fee Types", icon: Tag },
-  { to: "/admin/fas", label: "FAS Schemes & Budgets", icon: HandHeart },
+  { to: "/admin/budgets", label: "FAS Schemes & Budgets", icon: HandHeart },
   { to: "/admin/audit", label: "Audit Log", icon: ClipboardText },
   { to: "/admin/settings", label: "Settings", icon: Gear },
 ];
@@ -29,8 +33,8 @@ const SCHOOL: NavItem[] = [
   { to: "/admin/classes", label: "Classes", icon: ChalkboardTeacher },
   { to: "/admin/students", label: "Students", icon: GraduationCap },
   { to: "/admin/fee-types", label: "Fee Types", icon: Tag },
-  // ASSUMPTION: badge count is mock (handoff shows 14).
-  { to: "/admin/fas", label: "FAS Applications", icon: HandHeart, badge: 14 },
+  // Badge = pending items in the review queue at load (the badge does not update as decisions are made in this session).
+  { to: "/admin/fas", label: "FAS Applications", icon: HandHeart, badge: PENDING_FAS },
   { to: "/admin/budgets", label: "Budgets & Stats", icon: ChartBar },
   { to: "/admin/audit", label: "Audit Log", icon: ClipboardText },
   { to: "/admin/settings", label: "Settings", icon: Gear },
@@ -38,7 +42,7 @@ const SCHOOL: NavItem[] = [
 
 const PARENT: NavItem[] = [
   { to: "/parent", label: "Overview", icon: House },
-  { to: "/parent/students", label: "Students", icon: UsersThree, badge: 2 },
+  { to: "/parent/students", label: "Students", icon: UsersThree, badge: children.length },
   { to: "/parent/payments", label: "Payments", icon: CreditCard },
   { to: "/parent/transactions", label: "Transactions", icon: Receipt },
   { to: "/parent/fas", label: "Financial Aid (FAS)", icon: HandHeart },

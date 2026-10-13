@@ -11,7 +11,7 @@ const LAST = ["Tan", "Lim", "Wong", "Rahman", "Chua", "Nair", "Ong", "Goh", "Lee
 export const ACCOUNTS: Account[] = Array.from({ length: 60 }, (_, i) => ({
   id: `EA-${String(2001 + i).padStart(5, "0")}`,
   name: `${FIRST[i % FIRST.length]} ${LAST[(i * 7) % LAST.length]}`,
-  age: 5 + ((i * 5) % 13), // 5..17
+  age: 7 + ((i * 7) % 10), // 7..16 only: accounts open at 7 and close at 16 (Req 1)
   citizen: i % 6 !== 5, // about 1 in 6 is non-citizen
   enrolled: i % 8 !== 3, // 1 in 8 is not enrolled
   balance: 20 + ((i * 137) % 1481) + (i % 4) * 0.5, // S$20 .. ~S$1,500

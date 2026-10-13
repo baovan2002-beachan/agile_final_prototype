@@ -6,7 +6,7 @@ export type Member = { id: string; name: string; role: "Applicant" | "Spouse" | 
 // ASSUMPTION: the spouse is invented; MOE would read household members from SingPass / MyInfo.
 export const household: Member[] = [
   { id: "m1", name: profile.name, role: "Applicant", detail: `NRIC ${profile.nric}` },
-  { id: "m2", name: "David Tan", role: "Spouse", detail: "NRIC S****214C" },
+  { id: "m2", name: "David Lim", role: "Spouse", detail: "NRIC S****214C" },
   ...children.map((c: Child): Member => ({ id: c.id, name: c.name, role: "Child", detail: `${c.level}, ${c.school}` })),
 ];
 

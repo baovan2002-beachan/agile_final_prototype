@@ -68,7 +68,7 @@ export function GatewayModal({ open, summary, onClose, onPaid }: Props) {
         )}
         {phase === "processing" && (
           <p role="status" className="flex items-center gap-3 py-4 font-medium text-on-surface">
-            <CircleNotch size={24} className="animate-spin text-primary motion-reduce:animate-none" aria-hidden="true" /> Processing payment, please wait...
+            <CircleNotch size={24} className="motion-safe:animate-spin text-primary" aria-hidden="true" /> Processing payment, please wait...
           </p>
         )}
         {phase === "success" && (

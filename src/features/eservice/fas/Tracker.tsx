@@ -3,7 +3,8 @@ import { Badge } from "../../../components/ui/Badge";
 import { fmtDate } from "../overview/shared";
 import { application } from "../../../data/familyFas";
 import type { Step } from "./logic";
-import { AssumptionTag, stateTone } from "./shared";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
+import { stateTone } from "./shared";
 
 export function Tracker({ steps }: { steps: Step[] }) {
   return (

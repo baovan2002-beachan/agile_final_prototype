@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Badge } from "../../../components/ui/Badge";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Button } from "../../../components/ui/Button";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
@@ -64,7 +64,7 @@ export default function ImportCsvModal({ open, onClose, onImport }: Props) {
         />
       </Field>
       <p className="mt-3 flex flex-wrap items-center gap-2 text-[13px]">
-        <Badge tone="primary">Assumption</Badge>
+        <AssumptionTag />
         Header row with name, level, class. Rows with a missing or invalid name, unknown level or a class not in that level are skipped.
       </p>
       {/* Live region is always mounted (empty first) so screen readers announce the result when it fills. */}

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { Eye, UsersThree } from "@phosphor-icons/react";
-import { Badge } from "../../../components/ui/Badge";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { DataTable, type Column } from "../../../components/ui/DataTable";
@@ -46,7 +46,7 @@ export default function SchoolRegistry() {
           View the system exactly as a School user or a Parent sees it. Simulation is read-only: nothing you do is saved.
         </p>
         <div className="flex items-center gap-3">
-          <Badge tone="warning">Assumption (open question)</Badge>
+          <AssumptionTag>open question</AssumptionTag>
           <Button icon={<UsersThree size={18} aria-hidden />} onClick={() => simulate("parent")}>
             Simulate as Parent
           </Button>

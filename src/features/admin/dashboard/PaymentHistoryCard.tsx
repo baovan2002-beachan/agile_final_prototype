@@ -5,7 +5,8 @@ import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { payments, type Payment, type PaymentStatus } from "../../../data/dashboard";
 import { formatSGD } from "../../../lib/format";
-import { AssumptionTag, DashCard, Loadable, Skeleton, useDashQuery } from "./DashCard";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
+import { DashCard, Loadable, Skeleton, useDashQuery } from "./DashCard";
 
 const tone: Record<PaymentStatus, BadgeTone> = { Paid: "success", Upcoming: "primary", Overdue: "alert" };
 // ASSUMPTION: no invoice detail screen yet; the invoice link opens the accounts area.

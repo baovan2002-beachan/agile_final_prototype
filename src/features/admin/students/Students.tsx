@@ -9,6 +9,7 @@ import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
 import { CLASSES, LEVELS, STATUSES, STUDENTS, type SbfasStatus, type Student } from "../../../data/students";
 import { formatSGD } from "../../../lib/format";
+import HqPermissionNote from "../HqPermissionNote";
 import AddStudentModal from "./AddStudentModal";
 import ImportCsvModal from "./ImportCsvModal";
 import { filterStudents, newStudent, NO_FILTERS, plural, statusTone, type Filters } from "./logic";
@@ -51,6 +52,7 @@ export default function Students() {
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
+      <HqPermissionNote />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-on-surface-variant">
           {plural(students.length, "student")} enrolled. Education Account balances and SBFAS status are shown per student.

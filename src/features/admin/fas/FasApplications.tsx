@@ -7,6 +7,7 @@ import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { FAS_APPLICATIONS, type FasApplication, type FasStatus } from "../../../data/fasApplications";
 import { useMockQuery } from "../../../lib/useMockQuery";
+import HqPermissionNote from "../HqPermissionNote";
 import { ReviewModal, RiskBadge } from "./ReviewModal";
 import { applyDecision, sortQueue, type Action, type Draft } from "./review";
 
@@ -67,6 +68,7 @@ export default function FasApplications() {
 
   return (
     <div className="space-y-4">
+      <HqPermissionNote />
       <Card
         title="SBFAS review queue"
         action={
@@ -89,7 +91,7 @@ export default function FasApplications() {
             </p>
           )}
         </div>
-        {query.status === "loading" && <div aria-busy="true" aria-label="Loading applications" className="space-y-3">{[0, 1, 2, 3].map((i) => <div key={i} className="h-12 animate-pulse rounded-control bg-track" />)}</div>}
+        {query.status === "loading" && <div aria-busy="true" aria-label="Loading applications" className="space-y-3">{[0, 1, 2, 3].map((i) => <div key={i} className="h-12 motion-safe:animate-pulse rounded-control bg-track" />)}</div>}
         {query.status === "error" && <EmptyState title="Could not load applications" hint="Check your connection and try again." action={<Button onClick={query.retry}>Retry</Button>} />}
         {query.status === "ready" && (
           <DataTable

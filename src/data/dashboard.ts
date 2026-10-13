@@ -1,4 +1,5 @@
 // Mock figures for the Admin dashboard (handoff section 6). All values are invented.
+import { MOEFAS_BY_LEVEL, SBFAS } from "./budgets";
 
 export type Trend = { dir: "up" | "flat" | "down"; pct: number };
 export type Stat = { key: "students" | "accounts" | "schools" | "pendingFas"; label: string; value: number; trend: Trend };
@@ -32,9 +33,11 @@ export const payments: Payment[] = [
 // ASSUMPTION: the 80% alert threshold is a mock rule; budget-exceeded behaviour is an open question.
 export const BUDGET_ALERT_PCT = 80;
 
+// Derived from data/budgets.ts so the dashboard and the Budgets screen agree.
+const sum = (xs: number[]) => xs.reduce((s, x) => s + x, 0);
 export const budgets = [
-  { name: "MOEFAS", owner: "MOE HQ", used: 2_400_000, budget: 3_000_000 },
-  { name: "SBFAS", owner: "School", used: 310_000, budget: 500_000 },
+  { name: "MOEFAS", owner: "MOE HQ", used: sum(MOEFAS_BY_LEVEL.map((l) => l.used)), budget: sum(MOEFAS_BY_LEVEL.map((l) => l.budget)) },
+  { name: "SBFAS", owner: "School", used: SBFAS.absorbed, budget: SBFAS.budget },
 ];
 export const budgetsUpdated = "1 hour ago";
 

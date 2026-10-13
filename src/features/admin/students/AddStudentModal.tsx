@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Badge } from "../../../components/ui/Badge";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Button } from "../../../components/ui/Button";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
@@ -62,7 +62,7 @@ export default function AddStudentModal({ open, onClose, onAdd }: Props) {
             <input type="date" className={inputClass} value={v.dob} max={new Date().toLocaleDateString("en-CA")} onChange={set("dob")} />
           </Field>
           <p className="mt-1.5 flex flex-wrap items-center gap-2 text-[13px]">
-            <Badge tone="primary">Assumption</Badge>
+            <AssumptionTag />
             Student age must be 6 to 16.
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function AddStudentModal({ open, onClose, onAdd }: Props) {
           </Field>
         </div>
         <p className="flex flex-wrap items-center gap-2 text-[13px]">
-          <Badge tone="primary">Assumption</Badge>
+          <AssumptionTag />
           New students start as Active with a S$0.00 balance and SBFAS "Not applied".
         </p>
       </form>

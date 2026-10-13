@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { SCHOOLS } from "../../../data/schools";
-import { effectiveRole, filterSchools, newSessionId, parseSimulating, simulationFor } from "./logic";
+import { effectiveRole, filterSchools, guardRedirect, newSessionId, parseSimulating, simulationFor } from "./logic";
 
 const sim = { as: "school", sessionId: "SIM-ABC123", schoolName: "X" } as const;
 
@@ -27,6 +27,20 @@ describe("parseSimulating", () => {
     expect(parseSimulating({ as: "parent", sessionId: "s", extra: 1 })).toEqual({ as: "parent", sessionId: "s" });
     for (const bad of [null, "x", {}, { as: "hq", sessionId: "s" }, { as: "school", sessionId: "" }, { as: "school" }])
       expect(parseSimulating(bad)).toBeNull();
+  });
+});
+
+describe("guardRedirect (AppShell role-prefix guard)", () => {
+  it("signed out goes to sign-in", () => expect(guardRedirect(null, "/admin")).toBe("/signin"));
+  it("a role may open its own prefix and sub-paths", () => {
+    expect(guardRedirect("hq", "/admin")).toBeNull();
+    expect(guardRedirect("school", "/admin/fas")).toBeNull();
+    expect(guardRedirect("parent", "/parent/payments")).toBeNull();
+  });
+  it("a role is sent home from another role's prefix and from look-alike prefixes", () => {
+    expect(guardRedirect("parent", "/admin/fas")).toBe("/parent");
+    expect(guardRedirect("hq", "/parent")).toBe("/admin");
+    expect(guardRedirect("school", "/administrator")).toBe("/admin");
   });
 });
 

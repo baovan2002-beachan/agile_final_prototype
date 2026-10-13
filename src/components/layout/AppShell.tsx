@@ -4,7 +4,8 @@ import { homeFor, navFor } from "../../data/nav";
 import { useSession, type Role } from "../../session";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import SimulationBanner, { READ_ONLY_HINT } from "../../features/admin/simulation/SimulationBanner";
+import { guardRedirect } from "../../features/admin/simulation/logic";
+import SimulationBanner from "../../features/admin/simulation/SimulationBanner";
 
 const SUBTITLE: Record<Role, string> = {
   hq: "MOE HQ - Education Account & FAS",
@@ -30,14 +31,18 @@ export default function AppShell() {
     if (state?.focusMain) mainRef.current?.focus();
   }, [key, state]);
 
-  if (!role) return <Navigate to="/signin" replace />;
-  // A role cannot open another role's prefix.
-  const prefix = role === "parent" ? "/parent" : "/admin";
-  if (pathname !== prefix && !pathname.startsWith(prefix + "/")) {
-    return <Navigate to={homeFor(role)} replace />;
-  }
+  const current = role ? navFor(role).find((n) => n.to === pathname) : undefined;
+  const pageTitle = current?.title ?? current?.label ?? "MOE";
+  useEffect(() => {
+    if (!role) return;
+    const prev = document.title;
+    document.title = `${pageTitle} - MOE Education Account`;
+    return () => { document.title = prev; };
+  }, [role, pageTitle]);
 
-  const current = navFor(role).find((n) => n.to === pathname);
+  const redirect = guardRedirect(role, pathname);
+  if (redirect) return <Navigate to={redirect} replace />;
+  if (!role) return null;
 
   return (
     <div className="flex min-h-screen">
@@ -51,7 +56,7 @@ export default function AppShell() {
       <div className="min-w-0 flex-1 p-6">
         <SimulationBanner />
         <Header
-          title={current?.title ?? current?.label ?? "MOE"}
+          title={pageTitle}
           subtitle={simulating?.schoolName ?? SUBTITLE[role]}
           showFilter={role !== "parent"}
         />
@@ -60,7 +65,7 @@ export default function AppShell() {
             // Read-only simulation: a disabled fieldset natively disables every button, input and select inside it
             // (dialogs included), so simulated screens need no per-screen gating. Links stay clickable.
             // ponytail: sort headers, pagination and filters are disabled too; no way to whitelist inside a disabled fieldset.
-            <fieldset disabled title={READ_ONLY_HINT} className="m-0 min-w-0 border-0 p-0">
+            <fieldset disabled className="m-0 min-w-0 border-0 p-0">
               <legend className="sr-only">Simulated screen, read-only</legend>
               <Outlet />
             </fieldset>

@@ -1,7 +1,6 @@
 import { useId, type ReactNode } from "react";
 import { Link, useSearchParams } from "react-router";
 import { ArrowUpRight, type Icon } from "@phosphor-icons/react";
-import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { useMockQuery } from "../../../lib/useMockQuery";
@@ -19,16 +18,6 @@ export function useDashQuery<T>(data: T): Query<T> {
 /** Grey placeholder block; pulses only when motion is allowed. */
 export function Skeleton({ className = "" }: { className?: string }) {
   return <div className={`rounded-control bg-track motion-safe:animate-pulse ${className}`} />;
-}
-
-/** "Assumption" badge for invented behaviour; the note is in the tooltip and read by screen readers. */
-export function AssumptionTag({ note }: { note: string }) {
-  return (
-    <span title={note} className="shrink-0">
-      <Badge tone="neutral">Assumption</Badge>
-      <span className="sr-only">: {note}</span>
-    </span>
-  );
 }
 
 type CardProps = { title: string; icon: Icon; to?: string; tag?: ReactNode; children: ReactNode; className?: string };

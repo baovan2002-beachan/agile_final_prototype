@@ -10,7 +10,7 @@ export function PayLink({ label }: { label: string }) {
     <Link
       to="/parent/payments"
       aria-label={label}
-      className="inline-flex min-h-9 min-w-11 items-center justify-center rounded-control border border-primary bg-primary px-3 text-[13px] font-semibold text-on-primary transition-colors hover:border-primary-container hover:bg-primary-container focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary pointer-coarse:min-h-11"
+      className="inline-flex min-h-9 min-w-11 items-center justify-center rounded-control border border-primary bg-primary px-3 text-[13px] font-semibold text-on-primary motion-safe:transition-colors hover:border-primary-container hover:bg-primary-container focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary pointer-coarse:min-h-11"
     >
       Pay now
     </Link>

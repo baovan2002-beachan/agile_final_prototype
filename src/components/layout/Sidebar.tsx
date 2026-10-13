@@ -44,7 +44,7 @@ export default function Sidebar({ pinned, onTogglePin }: { pinned: boolean; onTo
 
         <ul className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto overflow-x-hidden">
           {items.map(({ to, label, icon: Icon, badge }) => (
-            <li key={to} className="shrink-0">
+            <li key={label} className="shrink-0">
               <NavLink
                 to={to}
                 end={to === "/admin" || to === "/parent"}
@@ -112,7 +112,7 @@ export default function Sidebar({ pinned, onTogglePin }: { pinned: boolean; onTo
         <span
           role="tooltip"
           style={{ top: tip.top, left: 108 + 8 }}
-          className="pointer-events-none fixed z-50 -translate-y-1/2 whitespace-nowrap rounded-[10px] bg-inverse-surface px-3 py-1.5 text-xs font-medium text-inverse-on-surface"
+          className="pointer-events-none fixed z-50 -translate-y-1/2 whitespace-nowrap rounded-control bg-inverse-surface px-3 py-1.5 text-xs font-medium text-inverse-on-surface"
         >
           {tip.label}
         </span>

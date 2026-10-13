@@ -1,6 +1,6 @@
 import { CheckCircle, PencilSimple } from "@phosphor-icons/react";
 import { useState } from "react";
-import { Badge } from "../../../components/ui/Badge";
+import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { Field, inputClass } from "../../../components/ui/Field";
@@ -34,7 +34,7 @@ function EditModal({ profile, onClose, onSave }: { profile: Profile; onClose: ()
     >
       <form id={FORM_ID} onSubmit={submit} noValidate className="space-y-4">
         <p className="flex flex-wrap items-center gap-2">
-          <Badge tone="neutral">Assumption</Badge>
+          <AssumptionTag />
           <span>Only address, mailing address and contact number can be changed. Name and NRIC come from SingPass.</span>
         </p>
         <Field label="Residential address" error={errors.address} hint="Include the 6-digit postal code.">

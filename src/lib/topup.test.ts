@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { parseAmount } from "./amount";
 import { eligibleAccounts, nextExecutionId, totalFunds, type TopUpRule } from "./topup";
-import type { Account } from "../data/topup";
+import { ACCOUNTS, type Account } from "../data/topup";
 
 const acc = (id: string, o: Partial<Account> = {}): Account => ({ id, name: id, age: 10, citizen: true, enrolled: true, balance: 100, ...o });
 const rule: TopUpRule = { ageMin: 7, ageMax: 12, citizenOnly: false, enrolledOnly: false, balanceMin: 0, balanceMax: 500 };
@@ -43,6 +43,12 @@ describe("eligibleAccounts", () => {
     eligibleAccounts(rule, list);
     expect(list).toEqual(copy);
   });
+});
+
+test("mock accounts are aged 7 to 16 only (Req 1)", () => {
+  const ages = ACCOUNTS.map((a) => a.age);
+  expect(Math.min(...ages)).toBe(7);
+  expect(Math.max(...ages)).toBe(16);
 });
 
 describe("totalFunds", () => {
