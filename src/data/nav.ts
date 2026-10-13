@@ -1,5 +1,5 @@
 import {
-  Bank, Buildings, ChalkboardTeacher, ChartBar, CreditCard, FileText, Gear,
+  Bank, Buildings, ChalkboardTeacher, CreditCard, FileText, Gear,
   GraduationCap, HandHeart, House, Receipt, Tag, UsersThree, type Icon,
 } from "@phosphor-icons/react";
 import type { Role } from "../session";
@@ -9,14 +9,13 @@ export type NavItem = { to: string; label: string; icon: Icon; badge?: number; t
 
 export const homeFor = (role: Role) => (role === "parent" ? "/parent" : "/admin");
 
-// Sprint 1 scope: School, Class, Student, Top-up, Budget, Fee. Dashboard, Education Accounts, FAS,
-// Audit, Settings and Simulation (/admin/schools) are Sprint 2: routes still exist, but they are not in the menu.
+// Sprint 1 scope: School, Class, Student, Top-up, Fee. Dashboard, Education Accounts, FAS,
+// Budget, Audit, Settings and Simulation (/admin/schools) are Sprint 2: routes still exist, but they are not in the menu.
 const HQ: NavItem[] = [
   { to: "/admin/school-maintenance", label: "School", desc: "Maintain the school master list.", icon: Buildings },
   { to: "/admin/classes", label: "Class", desc: "Classes and their rosters.", icon: ChalkboardTeacher },
   { to: "/admin/students", label: "Student", desc: "Student records and Education Accounts.", icon: GraduationCap },
   { to: "/admin/top-up", label: "Top-up", desc: "Credit accounts one by one or in batches by rule.", icon: Bank },
-  { to: "/admin/budgets", label: "Budget", desc: "MOEFAS allocation and usage by level.", icon: ChartBar },
   { to: "/admin/fee-types", label: "Fee", desc: "Fee rates against the national ceilings.", icon: Tag },
 ];
 
