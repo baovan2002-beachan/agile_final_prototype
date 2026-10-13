@@ -1,8 +1,7 @@
-import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Badge } from "../../../components/ui/Badge";
 import type { Student } from "../../../data/students";
 import { formatSGD } from "../../../lib/format";
-import { ACCOUNT_CLOSES_AT, ACCOUNT_OPENS_AT, accountStatus, ageForLevel, ledgerFor } from "../../../lib/accounts";
+import { ACCOUNT_CLOSES_AT, ACCOUNT_OPENS_AT, accountStatus, ledgerFor } from "../../../lib/accounts";
 
 /** Req 1: Education Account of a student (opens at 7, closes at 16; balance goes to CPF by default). */
 export default function EducationAccount({ student }: { student: Student }) {
@@ -17,9 +16,6 @@ export default function EducationAccount({ student }: { student: Student }) {
       <p className="mt-2 text-sm">
         Balance <strong className="text-on-surface">{formatSGD(student.balance)}</strong>. Opens when the child turns {ACCOUNT_OPENS_AT} and
         closes at {ACCOUNT_CLOSES_AT}; the balance then goes to the CPF account by default.
-      </p>
-      <p className="mt-1 flex flex-wrap items-center gap-2 text-[13px]">
-        <AssumptionTag>Age is inferred from level ({student.level} = {ageForLevel(student.level)}); the ledger is sample data.</AssumptionTag>
       </p>
       <table className="mt-3 w-full text-left text-sm">
         <caption className="sr-only">Education Account transactions for {student.name}</caption>

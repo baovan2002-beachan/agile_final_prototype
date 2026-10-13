@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
-import { Eye, FileCsv, Plus } from "@phosphor-icons/react";
+import { HeaderActions } from "../../../components/layout/HeaderActions";
+import { Eye, Plus, Receipt } from "@phosphor-icons/react";
+import { useNavigate } from "react-router";
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
@@ -7,13 +9,11 @@ import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
-import { CLASSES, LEVELS, STATUSES, STUDENTS, type SbfasStatus, type Student } from "../../../data/students";
+import { CLASSES, LEVELS, STATUSES, STUDENTS, UNASSIGNED_ACCOUNTS, type SbfasStatus, type Student } from "../../../data/students";
 import { formatSGD } from "../../../lib/format";
-import HqPermissionNote from "../HqPermissionNote";
-import AddStudentModal from "./AddStudentModal";
+import AssignStudentModal from "./AddStudentModal";
 import EducationAccount from "./EducationAccount";
-import ImportCsvModal from "./ImportCsvModal";
-import { filterStudents, newStudent, NO_FILTERS, plural, statusTone, type Filters } from "./logic";
+import { assignStudent, filterStudents, NO_FILTERS, plural, statusTone, type Filters } from "./logic";
 
 const sbfasTone: Record<SbfasStatus, BadgeTone> = { Approved: "success", Pending: "warning", Rejected: "alert", "Not applied": "neutral" };
 const ALL_CLASSES = LEVELS.flatMap((l) => CLASSES[l]);
@@ -22,7 +22,7 @@ export default function Students() {
   const [students, setStudents] = useState(STUDENTS);
   const [filters, setFilters] = useState<Filters>(NO_FILTERS);
   const [adding, setAdding] = useState(false);
-  const [importing, setImporting] = useState(false);
+  const navigate = useNavigate();
   const [viewing, setViewing] = useState<Student | null>(null);
   const [notice, setNotice] = useState("");
 
@@ -53,19 +53,12 @@ export default function Students() {
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
-      <HqPermissionNote />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-on-surface-variant">
-          {plural(students.length, "student")} enrolled. Education Account balances and SBFAS status are shown per student.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Button variant="secondary" icon={<FileCsv size={18} aria-hidden />} onClick={() => setImporting(true)}>Import CSV</Button>
-          <Button icon={<Plus size={18} aria-hidden />} onClick={() => setAdding(true)}>Add student</Button>
-        </div>
-      </div>
+      <HeaderActions>
+        <Button icon={<Plus size={18} aria-hidden />} onClick={() => setAdding(true)}>Assign student</Button>
+      </HeaderActions>
 
       {/* Always mounted (empty first) so screen readers announce the text when it appears; -mt-6 cancels the grid gap while empty. */}
-      <div role="status" className={notice ? undefined : "-mt-6"}>
+      <div role="status" className="empty:hidden">
         {notice && (
           <p className="rounded-control border border-line bg-surface-container-lowest px-4 py-3 text-sm font-medium text-on-surface">
             {notice}
@@ -114,31 +107,29 @@ export default function Students() {
         </div>
       </Card>
 
-      <AddStudentModal
+      <AssignStudentModal
         open={adding}
+        available={UNASSIGNED_ACCOUNTS.filter((a) => !students.some((s) => s.id === a.id))}
         onClose={() => setAdding(false)}
-        onAdd={(p) => {
-          setStudents((all) => [newStudent(all, p), ...all]);
-          setNotice(`${p.name.trim()} was added to ${p.class}.`);
-        }}
-      />
-      <ImportCsvModal
-        open={importing}
-        onClose={() => setImporting(false)}
-        onImport={(imported) => {
-          setStudents((all) => {
-            const added: Student[] = [];
-            for (const r of imported) added.push(newStudent([...all, ...added], r));
-            return [...added.reverse(), ...all];
-          });
-          setNotice(`Imported ${plural(imported.length, "student")} from CSV.`);
+        onAssign={(a, p) => {
+          setStudents((all) => [assignStudent(a, p), ...all]);
+          setNotice(`${a.name} was assigned to ${p.class}.`);
         }}
       />
       <Modal
         open={viewing !== null}
         onClose={() => setViewing(null)}
         title={viewing?.name ?? "Student"}
-        footer={<Button variant="secondary" onClick={() => setViewing(null)}>Close</Button>}
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setViewing(null)}>Close</Button>
+            {viewing && (
+              <Button icon={<Receipt size={18} aria-hidden />} onClick={() => navigate(`/admin/students/${viewing.id}/fees`, { state: { student: viewing } })}>
+                View fees
+              </Button>
+            )}
+          </>
+        }
       >
         {viewing && (
           <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2">

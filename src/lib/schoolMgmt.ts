@@ -3,7 +3,7 @@ import { LEVELS } from "../data/students";
 type Errors<K extends string> = Partial<Record<K, string>>;
 const clean = (s: string) => s.trim().replace(/\s+/g, " ");
 
-export type SchoolInput = { code: string; name: string; level: string; address: string; principal: string };
+export type SchoolInput = { code: string; name: string; level: string; address: string; principal: string; email: string; phone: string };
 /** `others` = the other records (exclude the one being edited) for uniqueness checks. */
 export function validateSchool(v: SchoolInput, others: { code: string; name: string }[]): Errors<keyof SchoolInput> {
   const e: Errors<keyof SchoolInput> = {};
@@ -15,6 +15,8 @@ export function validateSchool(v: SchoolInput, others: { code: string; name: str
   else if (others.some((o) => clean(o.name).toLowerCase() === name.toLowerCase())) e.name = "A school with this name already exists.";
   if (!v.level) e.level = "Select a school type.";
   if (!clean(v.address)) e.address = "Enter the address.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email.trim())) e.email = "Enter a valid email address.";
+  if (!/^(\+65)?[689]\d{7}$/.test(v.phone.replace(/\s/g, ""))) e.phone = "Enter an 8-digit Singapore number starting 6, 8 or 9.";
   if (!clean(v.principal)) e.principal = "Enter the principal's name.";
   return e;
 }

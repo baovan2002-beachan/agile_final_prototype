@@ -1,45 +1,32 @@
 import {
-  Bank, Buildings, ChalkboardTeacher, ChartBar, ClipboardText, CreditCard, FileText, Gear,
-  GraduationCap, HandHeart, House, Receipt, Stack, Tag, UsersThree, Wallet, type Icon,
+  Bank, Buildings, ChalkboardTeacher, ChartBar, CreditCard, FileText, Gear,
+  GraduationCap, HandHeart, House, Receipt, Stack, Tag, UsersThree, type Icon,
 } from "@phosphor-icons/react";
 import type { Role } from "../session";
-import { FAS_APPLICATIONS } from "./fasApplications";
 import { children } from "./parent";
 
-const PENDING_FAS = FAS_APPLICATIONS.filter((a) => a.status === "Pending").length;
-
-export type NavItem = { to: string; label: string; icon: Icon; badge?: number; title?: string };
+export type NavItem = { to: string; label: string; icon: Icon; badge?: number; title?: string; desc?: string };
 
 export const homeFor = (role: Role) => (role === "parent" ? "/parent" : "/admin");
 
-// Handoff section 7: C (HQ), B (School), D (Parent).
+// Sprint 1 scope: School, Level, Class, Student, Top-up, Budget, Fee. Dashboard, Education Accounts, FAS,
+// Audit, Settings and Simulation (/admin/schools) are Sprint 2: routes still exist, but they are not in the menu.
 const HQ: NavItem[] = [
-  { to: "/admin", label: "Overview", title: "Dashboard", icon: House },
-  { to: "/admin/schools", label: "Schools", icon: Buildings },
-  { to: "/admin/school-maintenance", label: "Manage Schools", icon: Gear },
-  { to: "/admin/levels", label: "Levels & Cohorts", icon: Stack },
-  { to: "/admin/budgets", label: "Budget allocation", icon: ChartBar },
-  { to: "/admin/classes", label: "Classes", icon: ChalkboardTeacher },
-  { to: "/admin/students", label: "Students", icon: GraduationCap },
-  { to: "/admin/accounts", label: "Education Accounts", icon: Wallet },
-  { to: "/admin/top-up", label: "Top-Up Management", icon: Bank },
-  { to: "/admin/fee-types", label: "Fee Types", icon: Tag },
-  { to: "/admin/budgets", label: "FAS Schemes & Budgets", icon: HandHeart },
-  { to: "/admin/audit", label: "Audit Log", icon: ClipboardText },
-  { to: "/admin/settings", label: "Settings", icon: Gear },
+  { to: "/admin/school-maintenance", label: "School", desc: "Maintain the school master list.", icon: Buildings },
+  { to: "/admin/levels", label: "Level", desc: "Fixed levels; head of level and enrolment.", icon: Stack },
+  { to: "/admin/classes", label: "Class", desc: "Classes and their rosters.", icon: ChalkboardTeacher },
+  { to: "/admin/students", label: "Student", desc: "Student records and Education Accounts.", icon: GraduationCap },
+  { to: "/admin/top-up", label: "Top-up", desc: "Credit accounts one by one or in batches by rule.", icon: Bank },
+  { to: "/admin/budgets", label: "Budget", desc: "MOEFAS allocation and usage by level.", icon: ChartBar },
+  { to: "/admin/fee-types", label: "Fee", desc: "Fee rates against the national ceilings.", icon: Tag },
 ];
 
+// School users: SBFAS budget and FAS queue are Sprint 2, so Budget is HQ-only for now.
 const SCHOOL: NavItem[] = [
-  { to: "/admin", label: "Overview", title: "Dashboard", icon: House },
-  { to: "/admin/levels", label: "Education Levels", icon: Stack },
-  { to: "/admin/classes", label: "Classes", icon: ChalkboardTeacher },
-  { to: "/admin/students", label: "Students", icon: GraduationCap },
-  { to: "/admin/fee-types", label: "Fee Types", icon: Tag },
-  // Badge = pending items in the review queue at load (the badge does not update as decisions are made in this session).
-  { to: "/admin/fas", label: "FAS Applications", icon: HandHeart, badge: PENDING_FAS },
-  { to: "/admin/budgets", label: "Budgets & Stats", icon: ChartBar },
-  { to: "/admin/audit", label: "Audit Log", icon: ClipboardText },
-  { to: "/admin/settings", label: "Settings", icon: Gear },
+  { to: "/admin/levels", label: "Level", desc: "Fixed levels; head of level and enrolment.", icon: Stack },
+  { to: "/admin/classes", label: "Class", desc: "Classes and their rosters.", icon: ChalkboardTeacher },
+  { to: "/admin/students", label: "Student", desc: "Student records and Education Accounts.", icon: GraduationCap },
+  { to: "/admin/fee-types", label: "Fee", desc: "Fee rates against the national ceilings.", icon: Tag },
 ];
 
 const PARENT: NavItem[] = [

@@ -34,6 +34,12 @@ function Landing() {
   return <Navigate to={role ? homeFor(role) : "/signin"} replace />;
 }
 
+/** Dashboard is Sprint 2: /admin lands on the first Sprint 1 screen for the role. */
+function AdminHome() {
+  const { role } = useSession();
+  return <Navigate to={role === "hq" ? "/admin/school-maintenance" : "/admin/levels"} replace />;
+}
+
 // Dev galleries: only the files that exist in this branch get a route.
 const devRoutes: RouteObject[] = [];
 if (import.meta.env.DEV) {
@@ -54,14 +60,15 @@ export const router = createBrowserRouter([
       {
         path: "admin",
         children: [
-          { index: true, ...page(() => import("./features/admin/dashboard/Dashboard")) },
+          { index: true, Component: AdminHome },
           { path: "levels", ...page(() => import("./features/admin/levels/Levels")) },
           { path: "classes", ...page(() => import("./features/admin/classes/Classes")) },
           { path: "school-maintenance", ...page(() => import("./features/admin/school-maintenance/SchoolMaintenance"), true) },
           { path: "students", ...page(() => import("./features/admin/students/Students")) },
+          { path: "students/:id/fees", ...page(() => import("./features/admin/students/StudentFees")) },
           { path: "fee-types", ...page(() => import("./features/admin/fee-types/FeeTypes")) },
           { path: "fas", ...page(() => import("./features/admin/fas/FasApplications")) },
-          { path: "budgets", ...page(() => import("./features/admin/budgets/Budgets")) },
+          { path: "budgets", ...page(() => import("./features/admin/budgets/Budgets"), true) },
           { path: "top-up", ...page(() => import("./features/admin/top-up/TopUp"), true) },
           { path: "schools", ...page(() => import("./features/admin/simulation/SchoolRegistry"), true) },
           { path: "*", Component: ComingSoon },

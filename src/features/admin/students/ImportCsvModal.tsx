@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Button } from "../../../components/ui/Button";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
@@ -63,10 +62,7 @@ export default function ImportCsvModal({ open, onClose, onImport }: Props) {
           className={`${inputClass} py-2 file:mr-3 file:rounded-control file:border-0 file:bg-primary-fixed file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-primary`}
         />
       </Field>
-      <p className="mt-3 flex flex-wrap items-center gap-2 text-[13px]">
-        <AssumptionTag />
-        Header row with name, level, class. Rows with a missing or invalid name, unknown level or a class not in that level are skipped.
-      </p>
+      <p className="mt-3 text-[13px] text-on-surface-variant">Header row: name, level, class. Invalid rows are skipped.</p>
       {/* Live region is always mounted (empty first) so screen readers announce the result when it fills. */}
       <div role="status" className={ok ? "mt-4" : undefined}>
         {ok && (

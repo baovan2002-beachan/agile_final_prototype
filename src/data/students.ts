@@ -83,3 +83,13 @@ export const STUDENTS: Student[] = ROWS.map(([name, level, c, status, balance, s
   balance,
   sbfas,
 }));
+
+/** Existing Education Accounts (created by MOE at age 7) that are not yet assigned to this school. */
+export type UnassignedAccount = { id: string; name: string; balance: number };
+export const UNASSIGNED_ACCOUNTS: UnassignedAccount[] = [
+  { id: "S20260101", name: "Wong Jia Wen", balance: 120.5 },
+  { id: "S20260102", name: "Abdul Hakim bin Omar", balance: 845.0 },
+  { id: "S20260103", name: "Devi d/o Muthu", balance: 1320.25 },
+  { id: "S20260104", name: "Lucas Ho Zhi Kai", balance: 2210.8 },
+  { id: "S20260105", name: "Siew Ling Tan", balance: 3105.4 },
+];

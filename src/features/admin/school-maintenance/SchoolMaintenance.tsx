@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
+import { HeaderActions } from "../../../components/layout/HeaderActions";
 import { PencilSimple, Plus } from "@phosphor-icons/react";
-import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
@@ -8,6 +8,7 @@ import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { SCHOOL_RECORDS, type SchoolRecord } from "../../../data/schoolMgmt";
+import StatusGuide from "./StatusGuide";
 import SchoolFormModal, { SCHOOL_TYPES } from "./SchoolFormModal";
 
 export default function SchoolMaintenance() {
@@ -20,7 +21,7 @@ export default function SchoolMaintenance() {
   // Memoised: DataTable goes back to page 1 whenever the rows reference changes.
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return schools.filter((s) => (!type || s.level === type) && (!needle || `${s.code} ${s.name}`.toLowerCase().includes(needle)));
+    return schools.filter((s) => (!type || s.level === type) && (!needle || `${s.code} ${s.name} ${s.email}`.toLowerCase().includes(needle)));
   }, [schools, type, q]);
   const reset = () => { setType(""); setQ(""); };
   const save = (s: SchoolRecord) => {
@@ -34,6 +35,8 @@ export default function SchoolMaintenance() {
     { key: "name", header: "School", sortable: true, render: (s) => <span className="font-medium">{s.name}</span> },
     { key: "level", header: "Type", sortable: true },
     { key: "principal", header: "Principal", sortable: true },
+    { key: "email", header: "Email", sortable: true },
+    { key: "phone", header: "Phone", sortable: true },
     { key: "students", header: "Students", sortable: true, align: "right", render: (s) => s.students.toLocaleString("en-SG") },
     { key: "active", header: "Status", sortable: true, render: (s) => <Badge tone={s.active ? "success" : "neutral"}>{s.active ? "Active" : "Inactive"}</Badge> },
     {
@@ -49,14 +52,10 @@ export default function SchoolMaintenance() {
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="flex flex-wrap items-center gap-2 text-sm text-on-surface-variant">
-          Maintain the school master list.
-          <AssumptionTag>Deactivating a school only changes its status here.</AssumptionTag>
-        </p>
+      <HeaderActions>
         <Button icon={<Plus size={18} aria-hidden />} onClick={() => setForm({ editing: null })}>Add school</Button>
-      </div>
-      <div role="status">
+      </HeaderActions>
+      <div role="status" className="empty:hidden">
         {notice && <p className="rounded-control border border-line bg-surface-container-lowest px-4 py-3 text-sm font-medium">{notice}</p>}
       </div>
       <Card title="Schools">
@@ -83,6 +82,9 @@ export default function SchoolMaintenance() {
             empty={<EmptyState title="No schools match" hint="Change the search or type filter." action={<Button variant="secondary" onClick={reset}>Reset filters</Button>} />}
           />
         </div>
+      </Card>
+      <Card title="School status">
+        <StatusGuide />
       </Card>
       {form && <SchoolFormModal key={form.editing?.code ?? "new"} open editing={form.editing} all={schools} onClose={() => setForm(null)} onSave={save} />}
     </div>

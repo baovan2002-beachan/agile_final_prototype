@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { HeaderActions } from "../../../components/layout/HeaderActions";
 import { Lock, PencilSimple, Plus, WarningCircle } from "@phosphor-icons/react";
-import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
@@ -11,7 +11,6 @@ import { formatSGD } from "../../../lib/format";
 import { useMockQuery } from "../../../lib/useMockQuery";
 import { useSession } from "../../../session";
 import { FEE_TYPES, cycleLabel, exceedsCeiling, per, type FeeType } from "../../../data/fees";
-import HqPermissionNote from "../HqPermissionNote";
 import { CeilingWarning } from "./CeilingWarning";
 import { EDIT_FORM_ID, EditRateForm, NewFeeForm } from "./RateForms";
 
@@ -56,23 +55,18 @@ export default function FeeTypes() {
 
   return (
     <div className="grid gap-6">
-      <HqPermissionNote />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="max-w-xl text-sm text-on-surface-variant">
-          {hq ? "Review school fee rates against the national ceilings." : "Set the fee rates your school charges per billing cycle."}
-        </p>
+      <HeaderActions>
         <Button icon={<Plus size={18} weight="bold" aria-hidden="true" />} onClick={() => setCreating(true)}>
-          Configure new fee type
+          New fee type
         </Button>
-      </div>
+      </HeaderActions>
 
-      <div role="status">{notice && <p className="text-sm font-medium text-success">{notice}</p>}</div>
+      <div role="status" className="empty:hidden">{notice && <p className="text-sm font-medium text-success">{notice}</p>}</div>
 
       {flagged.length > 0 && (
         <div role="alert" className="flex flex-wrap items-center gap-2 rounded-card border border-alert bg-error-container px-4 py-3 text-sm text-on-error-container">
           <WarningCircle size={18} weight="bold" aria-hidden="true" />
           {flagged.length} fee {flagged.length > 1 ? "types are" : "type is"} above the national ceiling: {flagged.map((f) => f.name).join(", ")}.
-          <AssumptionTag />
         </div>
       )}
 
@@ -121,7 +115,7 @@ export default function FeeTypes() {
         >
           <p className="mb-3 flex items-center gap-1.5 text-[13px] text-on-surface-variant">
             <Lock size={14} weight="bold" aria-hidden="true" />
-            Set nationally by MOE HQ; schools cannot charge above them. <AssumptionTag>ceiling rule</AssumptionTag>
+            Set nationally by MOE HQ; schools cannot charge above them.
           </p>
           <DataTable
             columns={ceilingCols}

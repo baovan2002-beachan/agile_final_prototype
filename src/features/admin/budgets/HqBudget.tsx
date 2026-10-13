@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Coins, Receipt, WarningOctagon } from "@phosphor-icons/react";
-import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { ProgressBar } from "../../../components/ui/ProgressBar";
 import { StatCard } from "../../../components/ui/StatCard";
-import { MOEFAS_BY_LEVEL, OVER_BUDGET_NOTE } from "../../../data/budgets";
+import { MOEFAS_BY_LEVEL } from "../../../data/budgets";
 import { formatSGD } from "../../../lib/format";
 import { SetBudgetModal } from "./SetBudgetModal";
 
@@ -52,10 +51,6 @@ export function HqBudget() {
             );
           })}
         </ul>
-        <p className="mt-4 flex items-center gap-2 text-[13px] text-on-surface-variant">
-          <AssumptionTag />
-          {OVER_BUDGET_NOTE}
-        </p>
       </Card>
       <SetBudgetModal
         open={modal}

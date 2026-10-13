@@ -1,8 +1,10 @@
-export type Account = { id: string; name: string; age: number; citizen: boolean; enrolled: boolean; balance: number };
+import { SCHOOLS } from "./schools";
 
-export type Schedule = "now" | "monthly" | "quarterly" | "yearly";
+export type Account = { id: string; name: string; school: string; age: number; citizen: boolean; enrolled: boolean; balance: number };
 
-export type Execution = { id: string; title: string; fundTag: string; schedule: Schedule; eligible: number; amount: number; total: number; date: string; by: string };
+export type Schedule = "now" | "once" | "weekly" | "monthly" | "quarterly" | "yearly";
+
+export type Execution = { id: string; title: string; fundTag: string; schedule: Schedule; eligible: number; amount: number; total: number; date: string; by: string; status?: "Success" | "Scheduled" };
 
 const FIRST = ["Ethan", "Chloe", "Marcus", "Aisha", "Jun Wei", "Priya", "Daniel", "Siti", "Isaac", "Mei Ling", "Arjun", "Hannah", "Wei Jie", "Nur", "Caleb", "Sophia", "Ryan", "Keerthi", "Zhi Hao", "Olivia"];
 const LAST = ["Tan", "Lim", "Wong", "Rahman", "Chua", "Nair", "Ong", "Goh", "Lee", "Ng", "Koh", "Teo"];
@@ -10,6 +12,7 @@ const LAST = ["Tan", "Lim", "Wong", "Rahman", "Chua", "Nair", "Ong", "Goh", "Lee
 /** 60 deterministic mock accounts (no randomness so tests and screenshots are stable). */
 export const ACCOUNTS: Account[] = Array.from({ length: 60 }, (_, i) => ({
   id: `EA-${String(2001 + i).padStart(5, "0")}`,
+  school: SCHOOLS[i % 4].name,
   name: `${FIRST[i % FIRST.length]} ${LAST[(i * 7) % LAST.length]}`,
   age: 7 + ((i * 7) % 10), // 7..16 only: accounts open at 7 and close at 16 (Req 1)
   citizen: i % 6 !== 5, // about 1 in 6 is non-citizen
@@ -18,9 +21,19 @@ export const ACCOUNTS: Account[] = Array.from({ length: 60 }, (_, i) => ({
 }));
 
 export const PAST_EXECUTIONS: Execution[] = [
-  { id: "TU-0005", title: "Primary cohort annual top-up", fundTag: "Annual Education Top-Up", schedule: "yearly", eligible: 21, amount: 200, total: 4200, date: "2026-01-05", by: "HQ Officer" },
+  { id: "TU-0005", title: "Primary level annual top-up", fundTag: "Annual Education Top-Up", schedule: "yearly", eligible: 21, amount: 200, total: 4200, date: "2026-01-05", by: "HQ Officer" },
   { id: "TU-0006", title: "Edusave Contribution Q3", fundTag: "Edusave Contribution", schedule: "quarterly", eligible: 34, amount: 150, total: 5100, date: "2026-07-01", by: "HQ Officer" },
-  { id: "TU-0007", title: "Pioneer cohort ad-hoc grant", fundTag: "Ad-hoc Grant", schedule: "now", eligible: 12, amount: 500, total: 6000, date: "2026-08-14", by: "HQ Officer" },
+  { id: "TU-0007", title: "Pioneer ad-hoc grant", fundTag: "Ad-hoc Grant", schedule: "now", eligible: 12, amount: 500, total: 6000, date: "2026-08-14", by: "HQ Officer" },
 ];
 
 export const FUND_TAGS = ["Annual Education Top-Up", "Edusave Contribution", "Ad-hoc Grant", "Bursary Supplement"];
+
+export type RuleStatus = "Active" | "Draft" | "Paused";
+export type FundRule = { id: string; name: string; ageMin: number; ageMax: number; balanceBelow: number; amount: number; schools: string[]; status: RuleStatus };
+
+/** Saved funding rules (Top-up team's model). A saved rule never moves money; batch top-ups pick an Active one. */
+export const FUND_RULES: FundRule[] = [
+  { id: "R-1001", name: "Primary Student Support 2026", ageMin: 7, ageMax: 12, balanceBelow: 500, amount: 150, schools: ["Riverbank Primary School", "Maple Grove Primary School"], status: "Active" },
+  { id: "R-1002", name: "Secondary Education Assistance", ageMin: 13, ageMax: 16, balanceBelow: 400, amount: 250, schools: ["Greenfield Secondary School", "Eastlake Secondary School"], status: "Active" },
+  { id: "R-1003", name: "Mid-year top-up", ageMin: 10, ageMax: 14, balanceBelow: 600, amount: 80, schools: ["Maple Grove Primary School", "Eastlake Secondary School"], status: "Draft" },
+];

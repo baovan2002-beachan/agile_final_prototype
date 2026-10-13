@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { validateClass, validateSchool } from "./schoolMgmt";
 
-const school = { code: "S020", name: "Pine Ridge Primary", level: "Primary", address: "1 Pine Road", principal: "Ms Tan" };
+const school = { code: "S020", name: "Pine Ridge Primary", level: "Primary", address: "1 Pine Road", principal: "Ms Tan", email: "a@b.sg", phone: "61234567" };
 describe("validateSchool", () => {
   it("accepts a valid school", () => expect(validateSchool(school, [])).toEqual({}));
   it("rejects bad or duplicate code and duplicate name", () => {
@@ -9,6 +9,10 @@ describe("validateSchool", () => {
     expect(validateSchool(school, [{ code: "S020", name: "x" }]).code).toBeTruthy();
     expect(validateSchool(school, [{ code: "S001", name: "pine  ridge primary" }]).name).toBeTruthy();
   });
+});
+it("rejects bad email and phone", () => {
+  expect(validateSchool({ ...school, email: "x" }, []).email).toBeTruthy();
+  expect(validateSchool({ ...school, phone: "12345678" }, []).phone).toBeTruthy();
 });
 describe("validateClass", () => {
   const c = { name: "P1 Grace", level: "P1", teacher: "Mr Lee", room: "A1-01", capacity: "40" };

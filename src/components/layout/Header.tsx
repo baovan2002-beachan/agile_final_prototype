@@ -1,4 +1,4 @@
-import { Bell, FunnelSimple, SignOut } from "@phosphor-icons/react";
+import { Bell } from "@phosphor-icons/react";
 import { useSession } from "../../session";
 
 const focus =
@@ -8,21 +8,16 @@ const pill =
 
 type Props = { title: string; subtitle?: string; showFilter?: boolean };
 
-export default function Header({ title, subtitle, showFilter = true }: Props) {
-  const { user, signOut } = useSession();
+export default function Header({ title, subtitle }: Props) {
+  const { user } = useSession();
   return (
     <header className="flex flex-wrap items-center justify-between gap-4 pb-6">
       <div className="min-w-0">
-        <h1 className="truncate text-3xl font-bold tracking-tight text-on-surface">{title}</h1>
-        {subtitle && <p className="truncate text-sm text-on-surface-variant">{subtitle}</p>}
+        <h1 className="truncate text-4xl font-semibold leading-tight tracking-tight text-on-surface">{title}</h1>
+        {subtitle && <p className="mt-1.5 truncate text-base text-on-surface-variant">{subtitle}</p>}
       </div>
       <div className="flex shrink-0 items-center gap-3">
-        {showFilter && (
-          <button type="button" className={`${pill} ${focus} gap-2 px-5 text-sm font-medium`}>
-            <FunnelSimple size={18} className="text-primary" />
-            Filter A - Z
-          </button>
-        )}
+        <div id="header-actions" className="flex items-center gap-3" />
         <button
           type="button"
           aria-label="Notifications, 1 unread"
@@ -39,9 +34,6 @@ export default function Header({ title, subtitle, showFilter = true }: Props) {
         >
           {user.initials}
         </span>
-        <button type="button" onClick={signOut} aria-label="Sign out" title="Sign out" className={`${pill} ${focus} w-11`}>
-          <SignOut size={20} />
-        </button>
       </div>
     </header>
   );

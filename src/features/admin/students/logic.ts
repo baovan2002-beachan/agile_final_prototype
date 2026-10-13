@@ -1,4 +1,4 @@
-import { CLASSES, LEVELS, type Level, type Student, type StudentStatus } from "../../../data/students";
+import { CLASSES, LEVELS, type Level, type Student, type StudentStatus, type UnassignedAccount } from "../../../data/students";
 
 export type Filters = { level: string; class: string; status: string };
 export const NO_FILTERS: Filters = { level: "", class: "", status: "" };
@@ -16,6 +16,11 @@ export function filterStudents(rows: Student[], f: Filters): Student[] {
 export function nextId(rows: Student[]): string {
   const max = rows.reduce((m, s) => Math.max(m, Number(s.id.slice(1)) || 0), 0);
   return `S${max + 1}`;
+}
+
+/** Assign an existing Education Account to this school: keeps the account's id and balance. */
+export function assignStudent(a: UnassignedAccount, p: { level: Level; class: string }): Student {
+  return { id: a.id, name: a.name, level: p.level, class: p.class, status: "Active", balance: a.balance, sbfas: "Not applied" };
 }
 
 export function newStudent(rows: Student[], p: { name: string; level: Level; class: string }): Student {

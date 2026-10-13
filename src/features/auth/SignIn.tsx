@@ -16,19 +16,22 @@ const TABS = [
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
 
+// Sprint 1 is admin-only: the parent tab (e-Service Portal, Req 8-10) is hidden until Sprint 2.
+const VISIBLE = TABS.filter((t) => t.id === "staff");
+
 const focus = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
 export default function SignIn() {
-  const [tab, setTab] = useState<TabId>("parent");
+  const [tab, setTab] = useState<TabId>("staff");
   const refs = useRef<Record<TabId, HTMLButtonElement | null>>({ parent: null, staff: null });
 
   // Automatic activation: arrow keys move focus and select, Home/End jump to the ends.
   const onKeyDown = (e: KeyboardEvent) => {
-    const i = TABS.findIndex((t) => t.id === tab);
-    const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: TABS.length - 1 }[e.key];
+    const i = VISIBLE.findIndex((t) => t.id === tab);
+    const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: VISIBLE.length - 1 }[e.key];
     if (next === undefined) return;
     e.preventDefault();
-    const id = TABS[(next + TABS.length) % TABS.length].id;
+    const id = VISIBLE[(next + VISIBLE.length) % VISIBLE.length].id;
     setTab(id);
     refs.current[id]?.focus();
   };
@@ -58,8 +61,8 @@ export default function SignIn() {
 
       <Card className="w-full">
         <h2 className="text-xl font-bold text-on-surface">Sign in</h2>
-        <div role="tablist" aria-label="Account type" onKeyDown={onKeyDown} className="mt-4 grid grid-cols-2 rounded-control border border-line p-1">
-          {TABS.map((t) => (
+        <div role="tablist" aria-label="Account type" onKeyDown={onKeyDown} className={`mt-4 grid rounded-control border border-line p-1 ${VISIBLE.length > 1 ? "grid-cols-2" : "hidden"}`}>
+          {VISIBLE.map((t) => (
             <button
               key={t.id}
               ref={(el) => {

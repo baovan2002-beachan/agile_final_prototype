@@ -1,89 +1,76 @@
-import { useEffect, useRef, useState } from "react";
-import { AssumptionTag } from "../../../components/ui/AssumptionTag";
+import { useState } from "react";
 import { Button } from "../../../components/ui/Button";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
-import { CLASSES, LEVELS, type Level } from "../../../data/students";
-import { validateNewStudent, type NewStudentInput } from "./logic";
+import { CLASSES, LEVELS, type Level, type UnassignedAccount } from "../../../data/students";
+import { formatSGD } from "../../../lib/format";
 
-const EMPTY: NewStudentInput = { name: "", dob: "", level: "", class: "" };
-const FORM_ID = "add-student-form";
+const EMPTY = { id: "", level: "", class: "" };
+const FORM_ID = "assign-student-form";
 
-type Props = { open: boolean; onClose: () => void; onAdd: (s: { name: string; level: Level; class: string }) => void };
+type Props = {
+  open: boolean;
+  available: UnassignedAccount[];
+  onClose: () => void;
+  onAssign: (a: UnassignedAccount, p: { level: Level; class: string }) => void;
+};
 
-export default function AddStudentModal({ open, onClose, onAdd }: Props) {
+/** Req 3: student accounts already exist, so the school only assigns one to a level and class. */
+export default function AssignStudentModal({ open, available, onClose, onAssign }: Props) {
   const [v, setV] = useState(EMPTY);
   const [submitted, setSubmitted] = useState(false);
-  const [failedTick, setFailedTick] = useState(0);
-  const formRef = useRef<HTMLFormElement>(null);
-  // Errors are shown only after the first submit attempt, then update live.
-  const errors = submitted ? validateNewStudent(v) : {};
-  const set = (k: keyof NewStudentInput) => (e: { target: { value: string } }) =>
-    setV((p) => ({ ...p, [k]: e.target.value, ...(k === "level" ? { class: "" } : {}) }));
-
-  // After a failed submit, move focus to the first invalid field (runs once errors have rendered).
-  useEffect(() => {
-    if (failedTick) formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
-  }, [failedTick]);
+  const account = available.find((a) => a.id === v.id);
+  const errors = submitted
+    ? { id: account ? "" : "Select an account.", level: v.level ? "" : "Select a level.", class: v.class ? "" : "Select a class." }
+    : { id: "", level: "", class: "" };
+  const classes = LEVELS.includes(v.level as Level) ? CLASSES[v.level as Level] : [];
 
   const close = () => {
     setV(EMPTY);
     setSubmitted(false);
-    setFailedTick(0);
     onClose();
   };
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    if (Object.keys(validateNewStudent(v)).length) return setFailedTick((t) => t + 1);
-    onAdd({ name: v.name, level: v.level as Level, class: v.class });
+    if (!account || !v.level || !v.class) return;
+    onAssign(account, { level: v.level as Level, class: v.class });
     close();
   };
-  const classes = LEVELS.includes(v.level as Level) ? CLASSES[v.level as Level] : [];
 
   return (
     <Modal
       open={open}
       onClose={close}
-      title="Add student"
+      title="Assign student"
       footer={
         <>
           <Button variant="secondary" onClick={close}>Cancel</Button>
-          <Button type="submit" form={FORM_ID}>Add student</Button>
+          <Button type="submit" form={FORM_ID}>Assign student</Button>
         </>
       }
     >
-      <form ref={formRef} id={FORM_ID} onSubmit={submit} noValidate className="grid gap-4">
-        <Field label="Full name" error={errors.name}>
-          <input className={inputClass} value={v.name} onChange={set("name")} autoComplete="off" />
+      <form id={FORM_ID} onSubmit={submit} noValidate className="grid gap-4">
+        <Field required label="Education Account" error={errors.id} hint="Accounts already exist; this only assigns one to your school.">
+          <select className={inputClass} value={v.id} onChange={(e) => setV({ ...v, id: e.target.value })}>
+            <option value="">{available.length ? "Select account" : "No unassigned accounts"}</option>
+            {available.map((a) => <option key={a.id} value={a.id}>{a.id} - {a.name} ({formatSGD(a.balance)})</option>)}
+          </select>
         </Field>
-        <div>
-          <Field label="Date of birth" error={errors.dob}>
-            <input type="date" className={inputClass} value={v.dob} max={new Date().toLocaleDateString("en-CA")} onChange={set("dob")} />
-          </Field>
-          <p className="mt-1.5 flex flex-wrap items-center gap-2 text-[13px]">
-            <AssumptionTag />
-            Student age must be 6 to 16.
-          </p>
-        </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Level" error={errors.level}>
-            <select className={inputClass} value={v.level} onChange={set("level")}>
+          <Field required label="Level" error={errors.level}>
+            <select className={inputClass} value={v.level} onChange={(e) => setV({ ...v, level: e.target.value, class: "" })}>
               <option value="">Select level</option>
               {LEVELS.map((l) => <option key={l}>{l}</option>)}
             </select>
           </Field>
-          <Field label="Class" error={errors.class}>
-            <select className={inputClass} value={v.class} onChange={set("class")}>
+          <Field required label="Class" error={errors.class}>
+            <select className={inputClass} value={v.class} onChange={(e) => setV({ ...v, class: e.target.value })}>
               <option value="">Select class</option>
               {classes.map((c) => <option key={c}>{c}</option>)}
             </select>
           </Field>
         </div>
-        <p className="flex flex-wrap items-center gap-2 text-[13px]">
-          <AssumptionTag />
-          New students start as Active with a S$0.00 balance and SBFAS "Not applied".
-        </p>
       </form>
     </Modal>
   );

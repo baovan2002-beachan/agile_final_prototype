@@ -57,7 +57,7 @@ export default function AppShell() {
         <SimulationBanner />
         <Header
           title={pageTitle}
-          subtitle={simulating?.schoolName ?? SUBTITLE[role]}
+          subtitle={simulating?.schoolName ?? current?.desc ?? SUBTITLE[role]}
           showFilter={role !== "parent"}
         />
         <main ref={mainRef} id="main" tabIndex={-1} className="outline-none">

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
+import { HeaderActions } from "../../../components/layout/HeaderActions";
 import { PencilSimple, Plus, UsersThree } from "@phosphor-icons/react";
-import { AssumptionTag } from "../../../components/ui/AssumptionTag";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
@@ -10,7 +10,6 @@ import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
 import { CLASS_RECORDS, type ClassRecord } from "../../../data/schoolMgmt";
 import { LEVELS, STUDENTS } from "../../../data/students";
-import HqPermissionNote from "../HqPermissionNote";
 import ClassFormModal from "./ClassFormModal";
 
 type Row = ClassRecord & { students: number };
@@ -64,15 +63,10 @@ export default function Classes() {
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
-      <HqPermissionNote />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="flex flex-wrap items-center gap-2 text-sm text-on-surface-variant">
-          Classes for Greenfield Secondary School.
-          <AssumptionTag>Student counts come from the sample student list, so they are lower than real class sizes.</AssumptionTag>
-        </p>
+      <HeaderActions>
         <Button icon={<Plus size={18} aria-hidden />} onClick={() => setForm({ editing: null })}>Add class</Button>
-      </div>
-      <div role="status">
+      </HeaderActions>
+      <div role="status" className="empty:hidden">
         {notice && <p className="rounded-control border border-line bg-surface-container-lowest px-4 py-3 text-sm font-medium">{notice}</p>}
       </div>
       <Card title="Classes">
