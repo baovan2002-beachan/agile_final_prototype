@@ -65,6 +65,7 @@ export const router = createBrowserRouter([
           { path: "classes", ...page(() => import("./features/admin/classes/Classes")) },
           { path: "school-maintenance", ...page(() => import("./features/admin/school-maintenance/SchoolMaintenance"), true) },
           { path: "students", ...page(() => import("./features/admin/students/Students")) },
+          { path: "students/:id/account", ...page(() => import("./features/admin/students/EducationAccountPage")) },
           { path: "students/:id/fees", ...page(() => import("./features/admin/students/StudentFees")) },
           { path: "fee-types", ...page(() => import("./features/admin/fee-types/FeeTypes")) },
           { path: "fas", ...page(() => import("./features/admin/fas/FasApplications")) },

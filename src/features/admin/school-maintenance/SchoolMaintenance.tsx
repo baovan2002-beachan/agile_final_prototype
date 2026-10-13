@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 import { HeaderActions } from "../../../components/layout/HeaderActions";
-import { PencilSimple, Plus } from "@phosphor-icons/react";
+import { ChalkboardTeacher, PencilSimple, Plus } from "@phosphor-icons/react";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
@@ -8,10 +9,11 @@ import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { SCHOOL_RECORDS, type SchoolRecord } from "../../../data/schoolMgmt";
-import StatusGuide from "./StatusGuide";
+import { createSchoolUser } from "../../../data/users";
 import SchoolFormModal, { SCHOOL_TYPES } from "./SchoolFormModal";
 
 export default function SchoolMaintenance() {
+  const navigate = useNavigate();
   const [schools, setSchools] = useState(SCHOOL_RECORDS);
   const [type, setType] = useState("");
   const [q, setQ] = useState("");
@@ -24,17 +26,19 @@ export default function SchoolMaintenance() {
     return schools.filter((s) => (!type || s.level === type) && (!needle || `${s.code} ${s.name} ${s.email}`.toLowerCase().includes(needle)));
   }, [schools, type, q]);
   const reset = () => { setType(""); setQ(""); };
-  const save = (s: SchoolRecord) => {
+  const save = (s: SchoolRecord, u?: { name: string; email: string }) => {
     const exists = schools.some((x) => x.code === s.code);
     setSchools((all) => (exists ? all.map((x) => (x.code === s.code ? s : x)) : [s, ...all]));
-    setNotice(`${s.name} was ${exists ? "updated" : "added"}.`);
+    const acct = u && createSchoolUser(s.code, u.name, u.email);
+    setNotice(`${s.name} was ${exists ? "updated" : "added"}.${acct ? ` School user login: ${acct.email}, one-time password ${acct.password} (shown once).` : ""}`);
   };
 
   const columns: Column<SchoolRecord>[] = [
-    { key: "code", header: "Code", sortable: true },
+    { key: "code", header: "ID", sortable: true },
     { key: "name", header: "School", sortable: true, render: (s) => <span className="font-medium">{s.name}</span> },
     { key: "level", header: "Type", sortable: true },
     { key: "principal", header: "Principal", sortable: true },
+    { key: "user", header: "School user", sortable: true, render: (s) => s.user ?? "Not assigned" },
     { key: "email", header: "Email", sortable: true },
     { key: "phone", header: "Phone", sortable: true },
     { key: "students", header: "Students", sortable: true, align: "right", render: (s) => s.students.toLocaleString("en-SG") },
@@ -43,9 +47,14 @@ export default function SchoolMaintenance() {
       key: "actions",
       header: "Actions",
       render: (s) => (
-        <Button variant="ghost" size="sm" icon={<PencilSimple size={16} aria-hidden />} aria-label={`Edit ${s.name}`} onClick={() => setForm({ editing: s })}>
-          Edit
-        </Button>
+        <div className="flex gap-1">
+          <Button variant="ghost" size="sm" icon={<ChalkboardTeacher size={16} aria-hidden />} aria-label={`Show classes of ${s.name}`} onClick={() => navigate(`/admin/classes?school=${s.code}`)}>
+            Show detail
+          </Button>
+          <Button variant="ghost" size="sm" icon={<PencilSimple size={16} aria-hidden />} aria-label={`Edit ${s.name}`} onClick={() => setForm({ editing: s })}>
+            Edit
+          </Button>
+        </div>
       ),
     },
   ];
@@ -60,7 +69,7 @@ export default function SchoolMaintenance() {
       </div>
       <Card title="Schools">
         <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
-          <Field label="Search by code or name">
+          <Field label="Search by ID or name">
             <input className={inputClass} value={q} onChange={(e) => setQ(e.target.value)} />
           </Field>
           <Field label="School type">
@@ -79,12 +88,11 @@ export default function SchoolMaintenance() {
             columns={columns}
             rows={rows}
             rowKey={(s) => s.code}
+            pageSize={5}
+            large
             empty={<EmptyState title="No schools match" hint="Change the search or type filter." action={<Button variant="secondary" onClick={reset}>Reset filters</Button>} />}
           />
         </div>
-      </Card>
-      <Card title="School status">
-        <StatusGuide />
       </Card>
       {form && <SchoolFormModal key={form.editing?.code ?? "new"} open editing={form.editing} all={schools} onClose={() => setForm(null)} onSave={save} />}
     </div>

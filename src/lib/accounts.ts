@@ -28,3 +28,7 @@ export function ledgerFor(s: Pick<Student, "id" | "balance">): LedgerEntry[] {
     ...fees.map((f) => ({ date: f.date, description: f.description, amount: -f.cents / 100 })),
   ];
 }
+
+/** ASSUMPTION: one current charge per fee type; it counts as paid when the ledger has a matching debit. */
+export const isFeePaid = (feeName: string, s: Pick<Student, "id" | "balance">) =>
+  ledgerFor(s).some((e) => e.amount < 0 && e.description.toLowerCase().startsWith(feeName.split(" ")[0].toLowerCase()));

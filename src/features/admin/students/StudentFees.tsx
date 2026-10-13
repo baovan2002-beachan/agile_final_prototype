@@ -1,25 +1,19 @@
 import { ArrowLeft } from "@phosphor-icons/react";
-import { Link, useLocation, useParams } from "react-router";
+import { Link } from "react-router";
 import { Badge } from "../../../components/ui/Badge";
 import { Card } from "../../../components/ui/Card";
 import { DataTable, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { FEE_TYPES, cycleLabel, type FeeType } from "../../../data/fees";
-import { STUDENTS, type Student } from "../../../data/students";
 import { formatSGD } from "../../../lib/format";
-import { ledgerFor } from "../../../lib/accounts";
+import { isFeePaid } from "../../../lib/accounts";
+import { useStudent } from "./useStudent";
 
 type Row = FeeType & { paid: boolean };
 
-/** ASSUMPTION: one current charge per fee type; it counts as paid when the student's ledger has a matching debit. */
-const isPaid = (f: FeeType, student: Student) =>
-  ledgerFor(student).some((e) => e.amount < 0 && e.description.toLowerCase().startsWith(f.name.split(" ")[0].toLowerCase()));
-
 /** Req 3: a school views each fee type charged to one student. */
 export default function StudentFees() {
-  const { id } = useParams();
-  const { state } = useLocation() as { state: { student?: Student } | null };
-  const student = state?.student?.id === id ? state?.student : STUDENTS.find((s) => s.id === id);
+  const student = useStudent();
 
   if (!student) {
     return (
@@ -28,7 +22,7 @@ export default function StudentFees() {
       </Card>
     );
   }
-  const rows: Row[] = FEE_TYPES.map((f) => ({ ...f, paid: isPaid(f, student) }));
+  const rows: Row[] = FEE_TYPES.map((f) => ({ ...f, paid: isFeePaid(f.name, student) }));
   const total = rows.filter((r) => !r.paid).reduce((t, r) => t + r.amount, 0);
   const columns: Column<Row>[] = [
     { key: "name", header: "Fee type", sortable: true, render: (f) => <span className="font-medium">{f.name}</span> },
@@ -39,8 +33,8 @@ export default function StudentFees() {
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
-      <Link to="/admin/students" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-        <ArrowLeft size={16} aria-hidden /> Back to students
+      <Link to={`/admin/students/${student.id}/account`} state={{ student }} className="inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+        <ArrowLeft size={16} aria-hidden /> Back to Education Account
       </Link>
       <Card title={`Fees for ${student.name}`}>
         <p className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">

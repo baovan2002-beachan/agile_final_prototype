@@ -3,26 +3,27 @@ import { Button } from "../../../components/ui/Button";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { Modal } from "../../../components/ui/Modal";
 import type { SchoolRecord } from "../../../data/schoolMgmt";
-import { validateSchool, type SchoolInput } from "../../../lib/schoolMgmt";
+import { nextSchoolId, validateSchool, type SchoolInput } from "../../../lib/schoolMgmt";
 
-const EMPTY: SchoolInput = { code: "", name: "", level: "", address: "", principal: "", email: "", phone: "" };
-export const SCHOOL_TYPES = ["Primary", "Secondary", "Junior College"] as const;
-type Props = { open: boolean; editing: SchoolRecord | null; all: SchoolRecord[]; onClose: () => void; onSave: (s: SchoolRecord) => void };
+const EMPTY: SchoolInput = { code: "", name: "", level: "", address: "", principal: "", email: "", phone: "", userName: "", userEmail: "" };
+export const SCHOOL_TYPES = ["Primary", "Secondary"] as const;
+type Props = { open: boolean; editing: SchoolRecord | null; all: SchoolRecord[]; onClose: () => void; onSave: (s: SchoolRecord, user?: { name: string; email: string }) => void };
 
 export default function SchoolFormModal({ open, editing, all, onClose, onSave }: Props) {
   const [v, setV] = useState<SchoolInput>(editing ?? EMPTY);
   const [active, setActive] = useState(editing?.active ?? true);
   const [submitted, setSubmitted] = useState(false);
+  const code = editing?.code ?? nextSchoolId(all);
   const others = all.filter((s) => s.code !== editing?.code);
-  const errors = submitted ? validateSchool(v, others) : {};
+  const errors = submitted ? validateSchool({ ...v, code }, others, !editing) : {};
   const set = (k: keyof SchoolInput) => (e: { target: { value: string } }) => setV((p) => ({ ...p, [k]: e.target.value }));
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    if (Object.keys(validateSchool(v, others)).length) return;
+    if (Object.keys(validateSchool({ ...v, code }, others, !editing)).length) return;
     onSave({
-      code: v.code.trim().toUpperCase(),
+      code,
       name: v.name.trim().replace(/\s+/g, " "),
       level: v.level as SchoolRecord["level"],
       address: v.address.trim(),
@@ -31,7 +32,8 @@ export default function SchoolFormModal({ open, editing, all, onClose, onSave }:
       phone: v.phone.replace(/\s/g, ""),
       students: editing?.students ?? 0,
       active,
-    });
+      user: editing?.user ?? v.userName?.trim(),
+    }, editing ? undefined : { name: v.userName!.trim(), email: v.userEmail!.trim() });
     onClose();
   };
 
@@ -49,8 +51,8 @@ export default function SchoolFormModal({ open, editing, all, onClose, onSave }:
     >
       <form id="school-form" onSubmit={submit} noValidate className="grid gap-4">
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field required label="School code" error={errors.code} hint="Format S001">
-            <input className={inputClass} value={v.code} onChange={set("code")} disabled={!!editing} />
+          <Field label="School ID" hint={editing ? undefined : "Generated automatically on save"}>
+            <input className={inputClass} value={code} readOnly disabled />
           </Field>
           <Field required label="School type" error={errors.level}>
             <select className={inputClass} value={v.level} onChange={set("level")}>
@@ -76,6 +78,18 @@ export default function SchoolFormModal({ open, editing, all, onClose, onSave }:
             <input type="tel" className={inputClass} value={v.phone} onChange={set("phone")} />
           </Field>
         </div>
+        {!editing && (
+          <fieldset className="grid gap-4 rounded-control border border-line p-4 sm:grid-cols-2">
+            <legend className="px-1 text-[13px] font-semibold">School user (responsible for this school)</legend>
+            <Field required label="Name" error={errors.userName}>
+              <input className={inputClass} value={v.userName} onChange={set("userName")} />
+            </Field>
+            <Field required label="Email (login)" error={errors.userEmail} hint="A one-time password is generated after saving.">
+              <input type="email" className={inputClass} value={v.userEmail} onChange={set("userEmail")} />
+            </Field>
+          </fieldset>
+        )}
+        {editing && <p className="text-sm">School user: <strong className="text-on-surface">{editing.user ?? "Not assigned"}</strong></p>}
         <p className="text-[13px] text-on-surface-variant"><span className="text-alert">*</span> Mandatory</p>
         {editing && (
           <label className="flex min-h-11 items-center gap-3 text-sm">
@@ -85,7 +99,7 @@ export default function SchoolFormModal({ open, editing, all, onClose, onSave }:
         )}
         {editing && editing.active && !active && (
           <p role="status" className="rounded-control border border-line bg-surface-container-lowest px-3 py-2 text-[13px]">
-            Inactive blocks new student assignment, top-ups and new fee charges. See the School status table on this page.
+            Inactive blocks new student assignment, top-ups and new fee charges.
           </p>
         )}
       </form>

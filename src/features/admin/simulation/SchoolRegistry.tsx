@@ -24,7 +24,7 @@ export default function SchoolRegistry() {
   };
 
   const columns: Column<School>[] = [
-    { key: "code", header: "Code", sortable: true },
+    { key: "code", header: "ID", sortable: true },
     { key: "name", header: "School", sortable: true, render: (s) => <span className="font-medium">{s.name}</span> },
     { key: "level", header: "Level", sortable: true },
     { key: "students", header: "Students", sortable: true, align: "right", render: (s) => s.students.toLocaleString("en-SG") },
@@ -74,7 +74,7 @@ export default function SchoolRegistry() {
             empty={
               <EmptyState
                 title="No schools match this search"
-                hint="Check the spelling or search by school code instead."
+                hint="Check the spelling or search by school ID instead."
                 action={<Button variant="secondary" onClick={() => setQ("")}>Clear search</Button>}
               />
             }

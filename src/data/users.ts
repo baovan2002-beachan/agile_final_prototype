@@ -1,13 +1,13 @@
 import type { Role } from "../session";
 
 export type User = { name: string; initials: string };
-export type StaffAccount = User & { role: "hq" | "school"; title: string; email: string; password: string };
+export type StaffAccount = User & { role: "hq" | "school"; title: string; email: string; password: string; schoolCode?: string };
 
 // ASSUMPTION: mock identities and test-only credentials; real auth is out of scope (SingPass and staff SSO are simulated).
 export const PARENT: User = { name: "Rachel Lim", initials: "RL" };
 
 export const STAFF: StaffAccount[] = [
-  { role: "school", name: "Alicia Tan", initials: "AT", title: "School Admin", email: "alicia.tan@school.example", password: "Sch00l-Demo-26" },
+  { role: "school", name: "Alicia Tan", initials: "AT", title: "School Admin", email: "alicia.tan@school.example", password: "Sch00l-Demo-26", schoolCode: "S001" },
   { role: "hq", name: "Daniel Lim", initials: "DL", title: "MOE HQ Officer", email: "daniel.lim@moe.example", password: "HqOfficer-Demo-26" },
 ];
 
@@ -16,3 +16,14 @@ export const userFor = (role: Role): User => (role === "parent" ? PARENT : STAFF
 
 export const findStaff = (email: string, password: string) =>
   STAFF.find((s) => s.email === email.trim().toLowerCase() && s.password === password);
+
+/** Req 3 (assumed): HQ creates the School User together with the school; the app generates a one-time password. */
+export function createSchoolUser(schoolCode: string, name: string, email: string): StaffAccount {
+  const initials = name.trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+  const acct: StaffAccount = { role: "school", name: name.trim(), initials, title: "School Admin", email: email.trim().toLowerCase(), password: `Tmp-${crypto.randomUUID().slice(0, 8)}`, schoolCode };
+  STAFF.push(acct);
+  return acct;
+}
+
+/** School of the (single mock) School user; undefined for HQ. */
+export const schoolCodeFor = (role: Role | null) => STAFF.find((s) => s.role === role)?.schoolCode;

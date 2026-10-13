@@ -13,7 +13,7 @@ export const homeFor = (role: Role) => (role === "parent" ? "/parent" : "/admin"
 // Audit, Settings and Simulation (/admin/schools) are Sprint 2: routes still exist, but they are not in the menu.
 const HQ: NavItem[] = [
   { to: "/admin/school-maintenance", label: "School", desc: "Maintain the school master list.", icon: Buildings },
-  { to: "/admin/levels", label: "Level", desc: "Fixed levels; head of level and enrolment.", icon: Stack },
+  { to: "/admin/levels", label: "Level", desc: "Fixed levels; level head and enrolment.", icon: Stack },
   { to: "/admin/classes", label: "Class", desc: "Classes and their rosters.", icon: ChalkboardTeacher },
   { to: "/admin/students", label: "Student", desc: "Student records and Education Accounts.", icon: GraduationCap },
   { to: "/admin/top-up", label: "Top-up", desc: "Credit accounts one by one or in batches by rule.", icon: Bank },
@@ -23,7 +23,7 @@ const HQ: NavItem[] = [
 
 // School users: SBFAS budget and FAS queue are Sprint 2, so Budget is HQ-only for now.
 const SCHOOL: NavItem[] = [
-  { to: "/admin/levels", label: "Level", desc: "Fixed levels; head of level and enrolment.", icon: Stack },
+  { to: "/admin/levels", label: "Level", desc: "Fixed levels; level head and enrolment.", icon: Stack },
   { to: "/admin/classes", label: "Class", desc: "Classes and their rosters.", icon: ChalkboardTeacher },
   { to: "/admin/students", label: "Student", desc: "Student records and Education Accounts.", icon: GraduationCap },
   { to: "/admin/fee-types", label: "Fee", desc: "Fee rates against the national ceilings.", icon: Tag },

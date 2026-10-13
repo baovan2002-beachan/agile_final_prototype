@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { validateClass, validateSchool } from "./schoolMgmt";
+import { nextSchoolId, validateClass, validateSchool } from "./schoolMgmt";
 
 const school = { code: "S020", name: "Pine Ridge Primary", level: "Primary", address: "1 Pine Road", principal: "Ms Tan", email: "a@b.sg", phone: "61234567" };
 describe("validateSchool", () => {
@@ -14,6 +14,11 @@ it("rejects bad email and phone", () => {
   expect(validateSchool({ ...school, email: "x" }, []).email).toBeTruthy();
   expect(validateSchool({ ...school, phone: "12345678" }, []).phone).toBeTruthy();
 });
+it("requires the school user only when asked", () => {
+  expect(validateSchool(school, [])).toEqual({});
+  expect(Object.keys(validateSchool(school, [], true)).sort()).toEqual(["userEmail", "userName"]);
+});
+it("generates the next school ID", () => expect(nextSchoolId([{ code: "S003" }, { code: "S012" }])).toBe("S013"));
 describe("validateClass", () => {
   const c = { name: "P1 Grace", level: "P1", teacher: "Mr Lee", room: "A1-01", capacity: "40" };
   it("accepts a valid class", () => expect(validateClass(c, [])).toEqual({}));
@@ -21,6 +26,7 @@ describe("validateClass", () => {
     for (const capacity of ["0", "46", "4.5", ""]) expect(validateClass({ ...c, capacity }, []).capacity).toBeTruthy();
     expect(validateClass({ ...c, capacity: "2" }, [], 3).capacity).toBeTruthy();
   });
+  it("requires a school when one is asked for", () => expect(validateClass({ ...c, school: "" }, []).school).toBeTruthy());
   it("rejects duplicate name and unknown level", () => {
     expect(validateClass(c, [{ name: "p1 grace" }]).name).toBeTruthy();
     expect(validateClass({ ...c, level: "P9" }, []).level).toBeTruthy();

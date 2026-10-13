@@ -15,13 +15,15 @@ type Props<T> = {
   rowKey: (row: T) => string;
   empty: ReactNode;
   pageSize?: number;
+  /** Roomier rows with larger text, for tables that show only a few rows. */
+  large?: boolean;
 };
 
 const val = <T,>(row: T, key: string) => (row as Record<string, unknown>)[key];
 
 const focus = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
-export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10 }: Props<T>) {
+export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10, large }: Props<T>) {
   const [sort, setSort] = useState<{ key: string; dir: "asc" | "desc" } | null>(null);
   const [page, setPage] = useState(0);
   const size = Math.max(1, Math.floor(pageSize) || 1);
@@ -60,7 +62,7 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10 }: Pr
   return (
     <div>
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
+        <table className={`w-full text-left ${large ? "text-base" : "text-sm"}`}>
           <thead>
             <tr className="border-b border-line">
               {columns.map((c) => {
@@ -100,7 +102,7 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10 }: Pr
             {visible.map((row) => (
               <tr key={rowKey(row)} className="border-b border-line last:border-0">
                 {columns.map((c) => (
-                  <td key={String(c.key)} className={`px-3 py-3 text-on-surface ${c.align === "right" ? "text-right tabular-nums" : ""}`}>
+                  <td key={String(c.key)} className={`px-3 ${large ? "py-5" : "py-3"} text-on-surface ${c.align === "right" ? "text-right tabular-nums" : ""}`}>
                     {c.render ? c.render(row) : String(val(row, String(c.key)) ?? "")}
                   </td>
                 ))}
