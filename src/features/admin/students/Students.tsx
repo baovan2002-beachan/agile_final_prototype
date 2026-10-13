@@ -11,6 +11,7 @@ import { CLASSES, LEVELS, STATUSES, STUDENTS, type SbfasStatus, type Student } f
 import { formatSGD } from "../../../lib/format";
 import HqPermissionNote from "../HqPermissionNote";
 import AddStudentModal from "./AddStudentModal";
+import EducationAccount from "./EducationAccount";
 import ImportCsvModal from "./ImportCsvModal";
 import { filterStudents, newStudent, NO_FILTERS, plural, statusTone, type Filters } from "./logic";
 
@@ -156,6 +157,7 @@ export default function Students() {
             ))}
           </dl>
         )}
+        {viewing && <EducationAccount student={viewing} />}
       </Modal>
     </div>
   );

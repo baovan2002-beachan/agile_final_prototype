@@ -55,6 +55,9 @@ export const router = createBrowserRouter([
         path: "admin",
         children: [
           { index: true, ...page(() => import("./features/admin/dashboard/Dashboard")) },
+          { path: "levels", ...page(() => import("./features/admin/levels/Levels")) },
+          { path: "classes", ...page(() => import("./features/admin/classes/Classes")) },
+          { path: "school-maintenance", ...page(() => import("./features/admin/school-maintenance/SchoolMaintenance"), true) },
           { path: "students", ...page(() => import("./features/admin/students/Students")) },
           { path: "fee-types", ...page(() => import("./features/admin/fee-types/FeeTypes")) },
           { path: "fas", ...page(() => import("./features/admin/fas/FasApplications")) },

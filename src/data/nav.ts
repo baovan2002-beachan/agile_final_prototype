@@ -16,6 +16,8 @@ export const homeFor = (role: Role) => (role === "parent" ? "/parent" : "/admin"
 const HQ: NavItem[] = [
   { to: "/admin", label: "Overview", title: "Dashboard", icon: House },
   { to: "/admin/schools", label: "Schools", icon: Buildings },
+  { to: "/admin/school-maintenance", label: "Manage Schools", icon: Gear },
+  { to: "/admin/levels", label: "Levels & Cohorts", icon: Stack },
   { to: "/admin/budgets", label: "Budget allocation", icon: ChartBar },
   { to: "/admin/classes", label: "Classes", icon: ChalkboardTeacher },
   { to: "/admin/students", label: "Students", icon: GraduationCap },
