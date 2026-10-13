@@ -34,8 +34,11 @@ export default function AppShell() {
   const current = role ? navFor(role).find((n) => n.to === pathname) : undefined;
   const pageTitle = current?.title ?? current?.label ?? "MOE";
   useEffect(() => {
+    if (!role) return;
+    const prev = document.title;
     document.title = `${pageTitle} - MOE Education Account`;
-  }, [pageTitle]);
+    return () => { document.title = prev; };
+  }, [role, pageTitle]);
 
   const redirect = guardRedirect(role, pathname);
   if (redirect) return <Navigate to={redirect} replace />;

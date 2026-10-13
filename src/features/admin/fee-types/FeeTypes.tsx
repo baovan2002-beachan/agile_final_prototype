@@ -59,7 +59,7 @@ export default function FeeTypes() {
       <HqPermissionNote />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="max-w-xl text-sm text-on-surface-variant">
-          {hq ? "Review school fee rates against the locked national ceilings." : "Set the fee rates your school charges per billing cycle."}
+          {hq ? "Review school fee rates against the national ceilings." : "Set the fee rates your school charges per billing cycle."}
         </p>
         <Button icon={<Plus size={18} weight="bold" aria-hidden="true" />} onClick={() => setCreating(true)}>
           Configure new fee type
