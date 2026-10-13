@@ -83,7 +83,7 @@ export default function Classes() {
               {LEVELS.map((l) => <option key={l}>{l}</option>)}
             </select>
           </Field>
-          <Button variant="secondary" disabled={!level} onClick={() => setLevel("")}>Reset filters</Button>
+          <Button className="justify-self-start" variant="secondary" disabled={!level} onClick={() => setLevel("")}>Reset filters</Button>
         </div>
         <p aria-live="polite" className="mt-4 text-[13px] text-on-surface-variant">Showing {rows.length} of {classes.length} classes</p>
         <div className="mt-2">
