@@ -32,7 +32,7 @@ export default function AppShell() {
   }, [key, state]);
 
   const current = role ? navFor(role).find((n) => n.to === pathname) : undefined;
-  const pageTitle = current?.title ?? current?.label ?? "MOE";
+  const pageTitle = current?.title ?? current?.label ?? (pathname.endsWith("/account") ? "Education Account" : pathname.endsWith("/fees") ? "Student fees" : "MOE");
   useEffect(() => {
     if (!role) return;
     const prev = document.title;

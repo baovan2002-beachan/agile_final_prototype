@@ -9,8 +9,6 @@ import { Badge } from "../../../components/ui/Badge";
 import type { Account, Execution, FundRule, Schedule } from "../../../data/topup";
 import { parseAmount } from "../../../lib/amount";
 import { formatSGD } from "../../../lib/format";
-import { CLASSES } from "../../../data/students";
-import { SCHOOLS } from "../../../data/schools";
 import { balanceBand, eligibleForRule, nextExecutionId, totalFunds } from "../../../lib/topup";
 
 /** Today in Singapore (UTC+8), as YYYY-MM-DD, regardless of the browser time zone. */
@@ -38,9 +36,6 @@ export default function Execute({ rules, accounts, history, onDone, presetAccoun
   const [ruleId, setRuleId] = useState("");
   const [amount, setAmount] = useState("");
   const [reason, setReason] = useState("");
-  const [school, setSchool] = useState("");
-  const [type, setType] = useState("");
-  const [cls, setCls] = useState("");
   const [find, setFind] = useState(() => { const a = presetAccountId ? accounts.find((x) => x.id === presetAccountId) : undefined; return a ? `${a.name} (${a.id})` : ""; });
   const [open, setOpen] = useState(false);
   const [timing, setTiming] = useState<"now" | "later">("now");
@@ -60,13 +55,10 @@ export default function Execute({ rules, accounts, history, onDone, presetAccoun
   const amt = parseAmount(amount);
   const per = "value" in amt ? amt.value : 0;
   const known = mode === "single" ? Boolean(account) : snapshot !== null;
-  const typeOf = (name: string) => SCHOOLS.find((s) => s.name === name)?.level;
-  const schools = useMemo(() => [...new Set(accounts.map((a) => a.school))].filter((n) => !type || typeOf(n) === type).sort(), [accounts, type]);
-  const classes = useMemo(() => Object.values(CLASSES).flat().filter((c) => !type || c.startsWith(type === "Primary" ? "P" : "Sec")).filter((c, i, l) => l.indexOf(c) === i), [type]);
   const matches = useMemo(() => {
     const q = find.trim().toLowerCase();
-    return accounts.filter((a) => (!type || typeOf(a.school) === type) && (!school || a.school === school) && (!cls || a.class === cls) && (!q || `${a.name} ${a.id}`.toLowerCase().includes(q)));
-  }, [accounts, type, school, cls, find]);
+    return accounts.filter((a) => (!q || `${a.name} ${a.id}`.toLowerCase().includes(q)));
+  }, [accounts, find]);
   const preview = useMemo(() => (snapshot ?? []).flatMap((id) => accounts.find((a) => a.id === id) ?? []), [snapshot, accounts]);
 
   const errors = {
@@ -83,7 +75,7 @@ export default function Execute({ rules, accounts, history, onDone, presetAccoun
   const valid = !errors.target && !errors.amount && !errors.reason && !errors.date;
 
   const reset = () => {
-    setMode("single"); setAccountId(""); setType(""); setSchool(""); setCls(""); setFind(""); setOpen(false); setRuleId(""); setAmount(""); setReason(""); setTiming("now"); setDate(""); setFreq("once"); setSnapshot(null); setAttempted(false);
+    setMode("single"); setAccountId(""); setFind(""); setOpen(false); setRuleId(""); setAmount(""); setReason(""); setTiming("now"); setDate(""); setFreq("once"); setSnapshot(null); setAttempted(false);
   };
   const pickRule = (id: string) => {
     setRuleId(id);
@@ -126,27 +118,6 @@ export default function Execute({ rules, accounts, history, onDone, presetAccoun
 
           {mode === "single" ? (
             <div className="space-y-3">
-              <div className="grid gap-4 sm:grid-cols-3">
-                <Field label="School type (optional)">
-                  <select className={inputClass} value={type} onChange={(e) => { setType(e.target.value); setSchool(""); setCls(""); clearAccount(); }}>
-                    <option value="">All types</option>
-                    <option>Primary</option>
-                    <option>Secondary</option>
-                  </select>
-                </Field>
-                <Field label="School (optional)">
-                  <select className={inputClass} value={school} onChange={(e) => { setSchool(e.target.value); clearAccount(); }}>
-                    <option value="">All schools</option>
-                    {schools.map((n) => <option key={n}>{n}</option>)}
-                  </select>
-                </Field>
-                <Field label="Class (optional)">
-                  <select className={inputClass} value={cls} onChange={(e) => { setCls(e.target.value); clearAccount(); }}>
-                    <option value="">All classes</option>
-                    {classes.map((n) => <option key={n}>{n}</option>)}
-                  </select>
-                </Field>
-              </div>
               <div className="relative" onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false); }}>
                 <Field label="Find student by name or ID" required error={show.target} hint="Exact balances are restricted; a balance range is shown instead.">
                   <input className={inputClass} role="combobox" aria-expanded={open} aria-controls="topup-student-results" autoComplete="off" placeholder="Select or search student name / ID..." value={find}

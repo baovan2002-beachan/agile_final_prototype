@@ -3,6 +3,7 @@ import { HeaderActions } from "../../../components/layout/HeaderActions";
 import { Plus, Wallet } from "@phosphor-icons/react";
 import { useNavigate, useSearchParams } from "react-router";
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
+import { ActionBar } from "../../../components/ui/ActionBar";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { DataTable, type Column } from "../../../components/ui/DataTable";
@@ -13,7 +14,7 @@ import { schoolOfLevel } from "../../../data/schoolMgmt";
 import { schoolCodeFor } from "../../../data/users";
 import { useSession } from "../../../session";
 import AssignStudentModal from "./AddStudentModal";
-import { assignStudent, filterStudents, plural, statusTone } from "./logic";
+import { assignStudent, filterStudents, statusTone } from "./logic";
 
 const sbfasTone: Record<SbfasStatus, BadgeTone> = { Approved: "success", Pending: "warning", Rejected: "alert", "Not applied": "neutral" };
 
@@ -30,6 +31,7 @@ export default function Students() {
   const [adding, setAdding] = useState(false);
   const navigate = useNavigate();
   const [notice, setNotice] = useState("");
+  const [sel, setSel] = useState<string[]>([]);
 
   // Memoised: DataTable resets to page 1 whenever the rows reference changes.
   const rows = useMemo(() => {
@@ -46,16 +48,9 @@ export default function Students() {
     { key: "name", header: "Name", sortable: true, render: (s) => <span className="font-medium">{s.name}</span> },
     { key: "status", header: "Schooling status", sortable: true, render: (s) => <Badge tone={statusTone[s.status]}>{s.status}</Badge> },
     ...(role === "school" ? [{ key: "sbfas", header: "SBFAS", sortable: true, render: (s: Student) => <Badge tone={sbfasTone[s.sbfas]}>{s.sbfas}</Badge> } as Column<Student>] : []),
-    {
-      key: "actions",
-      header: "Actions",
-      render: (s) => (
-        <Button variant="ghost" size="sm" icon={<Wallet size={16} aria-hidden />} aria-label={`View Education Account of ${s.name}`} onClick={() => navigate(`/admin/students/${s.id}/account`, { state: { student: s } })}>
-          View Education Account
-        </Button>
-      ),
-    },
   ];
+  const picked = sel.length === 1 ? rows.find((s) => s.id === sel[0]) : undefined;
+  const toggleAll = () => setSel(sel.length === rows.length ? [] : rows.map((s) => s.id));
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
@@ -73,7 +68,7 @@ export default function Students() {
       </div>
 
       <Card>
-        <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_auto] lg:items-end">
+        <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_auto_auto] lg:items-end">
           <Field label="Search by ID or name">
             <input type="search" className={inputClass} value={q} onChange={(e) => setQ(e.target.value)} />
           </Field>
@@ -96,15 +91,18 @@ export default function Students() {
             </select>
           </Field>
           <Button variant="secondary" disabled={!q && !level && !cls && !status} onClick={reset}>Reset filters</Button>
+          <ActionBar count={sel.length} total={rows.length} onToggleAll={toggleAll}>
+            <Button variant="secondary" disabled={!picked} icon={<Wallet size={18} aria-hidden />} onClick={() => navigate(`/admin/students/${picked!.id}/account`, { state: { student: picked } })}>
+              View Education Account
+            </Button>
+          </ActionBar>
         </div>
-        <p aria-live="polite" className="mt-4 text-[13px] text-on-surface-variant">
-          Showing {rows.length} of {plural(students.length, "student")}
-        </p>
         <div className="mt-2">
           <DataTable
             columns={columns}
             rows={rows}
             rowKey={(s) => s.id}
+            selection={{ selected: sel, onChange: setSel, label: (s) => `Select ${s.name}` }}
             pageSize={20}
             large
             empty={

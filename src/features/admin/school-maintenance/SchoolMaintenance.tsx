@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { HeaderActions } from "../../../components/layout/HeaderActions";
 import { ChalkboardTeacher, PencilSimple, Plus } from "@phosphor-icons/react";
+import { ActionBar } from "../../../components/ui/ActionBar";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
@@ -20,6 +21,7 @@ export default function SchoolMaintenance() {
   const [q, setQ] = useState("");
   const [form, setForm] = useState<{ editing: SchoolRecord | null } | null>(null);
   const [notice, setNotice] = useState("");
+  const [sel, setSel] = useState<string[]>([]);
   const [creds, setCreds] = useState<{ school: string; email: string; password: string } | null>(null);
 
   // Memoised: DataTable goes back to page 1 whenever the rows reference changes.
@@ -47,21 +49,9 @@ export default function SchoolMaintenance() {
     { key: "phone", header: "Phone", sortable: true },
     { key: "students", header: "Students", sortable: true, align: "right", render: (s) => s.students.toLocaleString("en-SG") },
     { key: "active", header: "Status", sortable: true, render: (s) => <Badge tone={s.active ? "success" : "neutral"}>{s.active ? "Active" : "Inactive"}</Badge> },
-    {
-      key: "actions",
-      header: "Actions",
-      render: (s) => (
-        <div className="flex gap-1">
-          <Button variant="ghost" size="sm" icon={<ChalkboardTeacher size={16} aria-hidden />} aria-label={`Show classes of ${s.name}`} onClick={() => navigate(`/admin/classes?school=${s.code}`)}>
-            Show detail
-          </Button>
-          <Button variant="ghost" size="sm" icon={<PencilSimple size={16} aria-hidden />} aria-label={`Edit ${s.name}`} onClick={() => setForm({ editing: s })}>
-            Edit
-          </Button>
-        </div>
-      ),
-    },
   ];
+  const picked = sel.length === 1 ? rows.find((s) => s.code === sel[0]) : undefined;
+  const toggleAll = () => setSel(sel.length === rows.length ? [] : rows.map((s) => s.code));
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
@@ -72,7 +62,7 @@ export default function SchoolMaintenance() {
         {notice && <p className="rounded-control border border-line bg-surface-container-lowest px-4 py-3 text-sm font-medium">{notice}</p>}
       </div>
       <Card>
-        <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+        <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-[1fr_1fr_auto_auto] sm:items-end">
           <Field label="Search by ID or name">
             <input className={inputClass} value={q} onChange={(e) => setQ(e.target.value)} />
           </Field>
@@ -83,15 +73,17 @@ export default function SchoolMaintenance() {
             </select>
           </Field>
           <Button variant="secondary" disabled={!type && !q} onClick={reset}>Reset filters</Button>
+          <ActionBar count={sel.length} total={rows.length} onToggleAll={toggleAll}>
+            <Button variant="secondary" disabled={!picked} icon={<ChalkboardTeacher size={18} aria-hidden />} onClick={() => navigate(`/admin/classes?school=${picked!.code}`)}>Show detail</Button>
+            <Button variant="secondary" disabled={!picked} icon={<PencilSimple size={18} aria-hidden />} onClick={() => setForm({ editing: picked! })}>Edit</Button>
+          </ActionBar>
         </div>
-        <p aria-live="polite" className="mt-4 text-[13px] text-on-surface-variant">
-          Showing {rows.length} of {schools.length} schools
-        </p>
         <div className="mt-2">
           <DataTable
             columns={columns}
             rows={rows}
             rowKey={(s) => s.code}
+            selection={{ selected: sel, onChange: setSel, label: (s) => `Select ${s.name}` }}
             pageSize={5}
             large
             empty={<EmptyState title="No schools match" hint="Change the search or type filter." action={<Button variant="secondary" onClick={reset}>Reset filters</Button>} />}

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { Eye, UsersThree } from "@phosphor-icons/react";
 import { AssumptionTag } from "../../../components/ui/AssumptionTag";
+import { ActionBar } from "../../../components/ui/ActionBar";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { DataTable, type Column } from "../../../components/ui/DataTable";
@@ -15,6 +16,7 @@ export default function SchoolRegistry() {
   const { startSimulation } = useSession();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
+  const [sel, setSel] = useState<string[]>([]);
   // Memoised: DataTable resets to page 1 whenever the rows reference changes.
   const rows = useMemo(() => filterSchools(SCHOOLS, q), [q]);
 
@@ -28,16 +30,9 @@ export default function SchoolRegistry() {
     { key: "name", header: "School", sortable: true, render: (s) => <span className="font-medium">{s.name}</span> },
     { key: "level", header: "Level", sortable: true },
     { key: "students", header: "Students", sortable: true, align: "right", render: (s) => s.students.toLocaleString("en-SG") },
-    {
-      key: "actions",
-      header: "Actions",
-      render: (s) => (
-        <Button variant="secondary" size="sm" icon={<Eye size={16} aria-hidden />} aria-label={`Simulate as School: ${s.name}`} onClick={() => simulate("school", s.name)}>
-          Simulate as School
-        </Button>
-      ),
-    },
   ];
+  const picked = sel.length === 1 ? rows.find((s) => s.code === sel[0]) : undefined;
+  const toggleAll = () => setSel(sel.length === rows.length ? [] : rows.map((s) => s.code));
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
@@ -54,23 +49,26 @@ export default function SchoolRegistry() {
       </div>
 
       <Card title="School registry">
-        <Field label="Search schools" className="max-w-sm">
-          <input
-            type="search"
-            className={inputClass}
-            placeholder="School name or code"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-          />
-        </Field>
-        <p aria-live="polite" className="mt-4 text-[13px] text-on-surface-variant">
-          Showing {rows.length} of {SCHOOLS.length} schools
-        </p>
-        <div className="mt-2">
+        <div className="flex flex-wrap items-end gap-4">
+          <Field label="Search schools" className="w-full max-w-sm">
+            <input
+              type="search"
+              className={inputClass}
+              placeholder="School name or code"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+            />
+          </Field>
+          <ActionBar count={sel.length} total={rows.length} onToggleAll={toggleAll}>
+            <Button variant="secondary" disabled={!picked} icon={<Eye size={18} aria-hidden />} onClick={() => simulate("school", picked!.name)}>Simulate as School</Button>
+          </ActionBar>
+        </div>
+        <div className="mt-4">
           <DataTable
             columns={columns}
             rows={rows}
             rowKey={(s) => s.code}
+            selection={{ selected: sel, onChange: setSel, label: (s) => `Select ${s.name}` }}
             empty={
               <EmptyState
                 title="No schools match this search"
