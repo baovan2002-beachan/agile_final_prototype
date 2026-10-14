@@ -17,13 +17,18 @@ type Props<T> = {
   pageSize?: number;
   /** Roomier rows with larger text, for tables that show only a few rows. */
   large?: boolean | "md";
-  /** Row actions (<RowAction>s): a red panel slides out from the right edge when the row is hovered or focused. */
+  /** Row actions (<RowAction>s), shown in a trailing "Actions" column. */
   rowActions?: (row: T) => ReactNode;
 };
 
+/** Last cell of a row: the "Actions" column, buttons always visible. */
+export function ActionCell({ children }: { children: ReactNode }) {
+  return <td className="whitespace-nowrap px-3"><div className="flex gap-1">{children}</div></td>;
+}
+
 export function RowAction({ icon, children, onClick }: { icon?: ReactNode; children: ReactNode; onClick: () => void }) {
   return (
-    <button type="button" onClick={onClick} className="inline-flex min-h-9 items-center gap-1.5 whitespace-nowrap rounded-control px-3 text-sm font-semibold text-on-primary hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white">
+    <button type="button" onClick={onClick} className="inline-flex min-h-9 items-center gap-1.5 whitespace-nowrap rounded-control px-3 text-sm font-semibold text-primary hover:bg-primary-fixed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
       {icon}
       {children}
     </button>
@@ -113,29 +118,18 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10, larg
                   </th>
                 );
               })}
-              {rowActions && <th scope="col"><span className="sr-only">Actions</span></th>}
+              {rowActions && <th scope="col" className="whitespace-nowrap px-3 py-2.5 font-medium text-on-surface-variant">Actions</th>}
             </tr>
           </thead>
           <tbody>
             {visible.map((row) => (
-              <tr key={rowKey(row)} className="border-b border-line last:border-0 has-[.group\/act:hover]:bg-primary-fixed/30 focus-within:bg-primary-fixed/30">
+              <tr key={rowKey(row)} className="border-b border-line last:border-0 hover:bg-primary-fixed/30 focus-within:bg-primary-fixed/30">
                 {columns.map((c) => (
                   <td key={String(c.key)} className={`px-3 ${large === "md" ? "py-3.5" : large ? "py-5" : "py-3"} text-on-surface ${c.align === "right" ? "text-right tabular-nums" : ""}`}>
                     {c.render ? c.render(row) : String(val(row, String(c.key)) ?? "")}
                   </td>
                 ))}
-                {rowActions && (
-                  <td className="group/act w-px p-0">
-                    {/* Only an arrow takes space at rest; on hover / focus the red panel grows in place and the columns shift left to make room. */}
-                    <div className="flex min-h-10 items-center justify-end">
-                      <CaretLeft size={18} weight="bold" aria-hidden className="mx-2 shrink-0 text-primary motion-safe:animate-pulse group-hover/act:hidden group-focus-within/act:hidden" />
-                      <div className="flex max-w-0 items-center gap-1 overflow-hidden whitespace-nowrap rounded-l-control bg-primary py-1 text-on-primary opacity-0 motion-safe:transition-all motion-safe:duration-300 group-hover/act:max-w-[28rem] group-hover/act:pl-2 group-hover/act:pr-1 group-hover/act:opacity-100 group-focus-within/act:max-w-[28rem] group-focus-within/act:pl-2 group-focus-within/act:pr-1 group-focus-within/act:opacity-100">
-                        <CaretRight size={16} weight="bold" aria-hidden className="shrink-0" />
-                        {rowActions(row)}
-                      </div>
-                    </div>
-                  </td>
-                )}
+                {rowActions && <ActionCell>{rowActions(row)}</ActionCell>}
               </tr>
             ))}
           </tbody>

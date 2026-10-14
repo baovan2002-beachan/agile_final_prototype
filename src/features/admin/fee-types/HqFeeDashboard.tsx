@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { useNavigate } from "react-router";
 import { ArrowLeft } from "@phosphor-icons/react";
-import { Button } from "../../../components/ui/Button";
+import { ActionCell, RowAction } from "../../../components/ui/DataTable";
 import { Card } from "../../../components/ui/Card";
 import { SCHOOLS } from "../../../data/schools";
 import { useFees } from "../../../data/feeStore";
@@ -31,14 +31,14 @@ function AggTable({ label, groups, extra }: { label: string; groups: [string, Ch
           <tr className="border-b border-line text-left text-[13px] text-on-surface-variant">
             <th className="py-2 font-semibold">{label}</th>
             {["Charges", "Fee value", "Subsidy", "Payable", "Collected", "Outstanding"].map((h) => <th key={h} className="text-right font-semibold">{h}</th>)}
-            {extra && <th />}
+            {extra && <th className="px-3 text-left font-semibold">Actions</th>}
           </tr>
         </thead>
         <tbody>
           {groups.map(([k, rows]) => {
             const a = aggregate(rows);
             return (
-              <tr key={k} className="border-b border-line">
+              <tr key={k} className="border-b border-line hover:bg-primary-fixed/30 focus-within:bg-primary-fixed/30">
                 <td className="py-2 font-medium">{k}</td>
                 <td className="text-right tabular-nums">{rows.length}</td>
                 <td className="text-right tabular-nums">{formatSGD(a.fee)}</td>
@@ -46,7 +46,7 @@ function AggTable({ label, groups, extra }: { label: string; groups: [string, Ch
                 <td className="text-right tabular-nums font-semibold">{formatSGD(a.payable)}</td>
                 <td className="text-right tabular-nums text-success">{formatSGD(a.collected)}</td>
                 <td className={`text-right tabular-nums ${a.outstanding ? "text-alert" : ""}`}>{formatSGD(a.outstanding)}</td>
-                {extra && <td className="text-right">{extra(k, rows)}</td>}
+                {extra && <ActionCell>{extra(k, rows)}</ActionCell>}
               </tr>
             );
           })}
@@ -83,7 +83,7 @@ export default function HqFeeDashboard() {
           <AggTable
             label="School"
             groups={SCHOOLS.map((s) => [s.name, inSchool(s.code)] as [string, Charge[]]).filter(([, r]) => r.length)}
-            extra={(k) => <Button size="sm" variant="ghost" onClick={() => { setSchool(SCHOOLS.find((s) => s.name === k)?.code ?? ""); setLevel(""); setFtId(""); }}>View fees</Button>}
+            extra={(k) => <RowAction onClick={() => { setSchool(SCHOOLS.find((s) => s.name === k)?.code ?? ""); setLevel(""); setFtId(""); }}>View fees</RowAction>}
           />
         </Card>
       </div>
@@ -121,13 +121,13 @@ export default function HqFeeDashboard() {
       <Card title="By fee type">
         <AggTable label="Fee type" groups={group(rows, (c) => state.types.find((f) => f.id === c.ftId)?.name ?? c.title)} extra={(_, rs) => {
           const f = state.types.find((x) => x.id === rs[0].ftId);
-          return f ? <Button size="sm" variant="ghost" onClick={() => setTypeOpen(f)}>Components</Button> : null;
+          return f ? <RowAction onClick={() => setTypeOpen(f)}>Components</RowAction> : null;
         }} />
       </Card>
       <Card title="By student">
         <AggTable label="Student" groups={group(rows, (c) => c.studentId).map(([id, rs]) => [`${studentOf(id)!.name} (${id})`, rs] as [string, Charge[]])} extra={(_, rs) => {
           const s = studentOf(rs[0].studentId)!;
-          return <Button size="sm" variant="ghost" onClick={() => navigate(`/admin/students/${s.id}/fees`, { state: { student: s } })}>View fees</Button>;
+          return <RowAction onClick={() => navigate(`/admin/students/${s.id}/fees`, { state: { student: s } })}>View fees</RowAction>;
         }} />
       </Card>
       <FeeTypeModal fee={typeOpen} used={typeOpen ? new Set(all.filter((c) => c.ftId === typeOpen.id).map((c) => c.studentId)).size : 0} onClose={() => setTypeOpen(null)} />
