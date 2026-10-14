@@ -3,10 +3,9 @@ import { HeaderActions } from "../../../components/layout/HeaderActions";
 import { Plus, Wallet } from "@phosphor-icons/react";
 import { useNavigate, useSearchParams } from "react-router";
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
-import { ActionBar } from "../../../components/ui/ActionBar";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
-import { DataTable, type Column } from "../../../components/ui/DataTable";
+import { DataTable, RowAction, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { CLASSES, LEVELS, STATUSES, STUDENTS, UNASSIGNED_ACCOUNTS, type SbfasStatus, type Student } from "../../../data/students";
@@ -31,7 +30,6 @@ export default function Students() {
   const [adding, setAdding] = useState(false);
   const navigate = useNavigate();
   const [notice, setNotice] = useState("");
-  const [sel, setSel] = useState<string[]>([]);
 
   // Memoised: DataTable resets to page 1 whenever the rows reference changes.
   const rows = useMemo(() => {
@@ -49,8 +47,6 @@ export default function Students() {
     { key: "status", header: "Schooling status", sortable: true, render: (s) => <Badge tone={statusTone[s.status]}>{s.status}</Badge> },
     ...(role === "school" ? [{ key: "sbfas", header: "SBFAS", sortable: true, render: (s: Student) => <Badge tone={sbfasTone[s.sbfas]}>{s.sbfas}</Badge> } as Column<Student>] : []),
   ];
-  const picked = sel.length === 1 ? rows.find((s) => s.id === sel[0]) : undefined;
-  const toggleAll = () => setSel(sel.length === rows.length ? [] : rows.map((s) => s.id));
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
@@ -91,18 +87,13 @@ export default function Students() {
             </select>
           </Field>
           <Button variant="secondary" disabled={!q && !level && !cls && !status} onClick={reset}>Reset filters</Button>
-          <ActionBar count={sel.length} total={rows.length} onToggleAll={toggleAll}>
-            <Button variant="secondary" disabled={!picked} icon={<Wallet size={18} aria-hidden />} onClick={() => navigate(`/admin/students/${picked!.id}/account`, { state: { student: picked } })}>
-              View Education Account
-            </Button>
-          </ActionBar>
         </div>
         <div className="mt-2">
           <DataTable
             columns={columns}
             rows={rows}
             rowKey={(s) => s.id}
-            selection={{ selected: sel, onChange: setSel, label: (s) => `Select ${s.name}` }}
+            rowActions={(s) => <RowAction icon={<Wallet size={16} aria-hidden />} onClick={() => navigate(`/admin/students/${s.id}/account`, { state: { student: s } })}>View Education Account</RowAction>}
             pageSize={20}
             large
             empty={

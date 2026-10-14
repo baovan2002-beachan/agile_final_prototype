@@ -2,11 +2,10 @@ import { useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { HeaderActions } from "../../../components/layout/HeaderActions";
 import { PencilSimple, Plus, UsersThree } from "@phosphor-icons/react";
-import { ActionBar } from "../../../components/ui/ActionBar";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
-import { DataTable, type Column } from "../../../components/ui/DataTable";
+import { DataTable, RowAction, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { SCHOOLS } from "../../../data/schools";
@@ -32,7 +31,6 @@ export default function Classes() {
   const [level, setLevel] = useState("");
   const [form, setForm] = useState<{ editing: ClassRecord | null } | null>(null);
   const [notice, setNotice] = useState("");
-  const [sel, setSel] = useState<string[]>([]);
 
   const rows: Row[] = useMemo(
     () => classes.filter((c) => (!school || c.school === school) && (!level || c.level === level)).map((c) => ({ ...c, students: count(c.name) })),
@@ -59,8 +57,6 @@ export default function Classes() {
         c.students >= c.capacity ? <Badge tone="warning">{c.students} / {c.capacity} full</Badge> : <span className="tabular-nums">{c.students} / {c.capacity}</span>,
     },
   ];
-  const picked = sel.length === 1 ? rows.find((c) => c.name === sel[0]) : undefined;
-  const toggleAll = () => setSel(sel.length === rows.length ? [] : rows.map((c) => c.name));
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
@@ -89,13 +85,9 @@ export default function Classes() {
             </select>
           </Field>
           <Button className="justify-self-start" variant="secondary" disabled={!level && !(hq && school)} onClick={() => { setLevel(""); if (hq) setSchool(""); }}>Reset filters</Button>
-          <ActionBar count={sel.length} total={rows.length} onToggleAll={toggleAll}>
-            <Button variant="secondary" disabled={!picked} icon={<UsersThree size={18} aria-hidden />} onClick={() => navigate(`/admin/students?class=${encodeURIComponent(picked!.name)}`)}>View students</Button>
-            {!hq && <Button variant="secondary" disabled={!picked} icon={<PencilSimple size={18} aria-hidden />} onClick={() => setForm({ editing: picked! })}>Edit</Button>}
-          </ActionBar>
         </div>
         <div className="mt-2">
-          <DataTable columns={columns} rows={rows} rowKey={(c) => c.name} selection={{ selected: sel, onChange: setSel, label: (c) => `Select ${c.name}` }} pageSize={10} large empty={<EmptyState title="No classes found" hint={hq ? "Change the school or level." : "Add a class or change the school or level."} />} />
+          <DataTable columns={columns} rows={rows} rowKey={(c) => c.name} rowActions={(c) => (<><RowAction icon={<UsersThree size={16} aria-hidden />} onClick={() => navigate(`/admin/students?class=${encodeURIComponent(c.name)}`)}>View students</RowAction>{!hq && <RowAction icon={<PencilSimple size={16} aria-hidden />} onClick={() => setForm({ editing: c })}>Edit</RowAction>}</>)} pageSize={10} large empty={<EmptyState title="No classes found" hint={hq ? "Change the school or level." : "Add a class or change the school or level."} />} />
         </div>
       </Card>
       {form && !hq && (

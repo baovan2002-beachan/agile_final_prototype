@@ -2,10 +2,9 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { Eye, UsersThree } from "@phosphor-icons/react";
 import { AssumptionTag } from "../../../components/ui/AssumptionTag";
-import { ActionBar } from "../../../components/ui/ActionBar";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
-import { DataTable, type Column } from "../../../components/ui/DataTable";
+import { DataTable, RowAction, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { SCHOOLS, type School } from "../../../data/schools";
@@ -16,7 +15,6 @@ export default function SchoolRegistry() {
   const { startSimulation } = useSession();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
-  const [sel, setSel] = useState<string[]>([]);
   // Memoised: DataTable resets to page 1 whenever the rows reference changes.
   const rows = useMemo(() => filterSchools(SCHOOLS, q), [q]);
 
@@ -31,8 +29,6 @@ export default function SchoolRegistry() {
     { key: "level", header: "Level", sortable: true },
     { key: "students", header: "Students", sortable: true, align: "right", render: (s) => s.students.toLocaleString("en-SG") },
   ];
-  const picked = sel.length === 1 ? rows.find((s) => s.code === sel[0]) : undefined;
-  const toggleAll = () => setSel(sel.length === rows.length ? [] : rows.map((s) => s.code));
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
@@ -59,16 +55,13 @@ export default function SchoolRegistry() {
               onChange={(e) => setQ(e.target.value)}
             />
           </Field>
-          <ActionBar count={sel.length} total={rows.length} onToggleAll={toggleAll}>
-            <Button variant="secondary" disabled={!picked} icon={<Eye size={18} aria-hidden />} onClick={() => simulate("school", picked!.name)}>Simulate as School</Button>
-          </ActionBar>
         </div>
         <div className="mt-4">
           <DataTable
             columns={columns}
             rows={rows}
             rowKey={(s) => s.code}
-            selection={{ selected: sel, onChange: setSel, label: (s) => `Select ${s.name}` }}
+            rowActions={(s) => <RowAction icon={<Eye size={16} aria-hidden />} onClick={() => simulate("school", s.name)}>Simulate as School</RowAction>}
             empty={
               <EmptyState
                 title="No schools match this search"

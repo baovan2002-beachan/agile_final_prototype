@@ -183,7 +183,7 @@ export default function Execute({ rules, accounts, history, onDone, presetAccoun
           )}
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field required label="Amount per account (S$)" error={show.amount} hint={mode === "batch" ? "Filled from the rule; adjust for this run if needed." : undefined}>
+            <Field required label={mode === "batch" ? "Amount per account (S$)" : "Amount (S$)"} error={show.amount} hint={mode === "batch" ? "Filled from the rule; adjust for this run if needed." : undefined}>
               <input className={inputClass} inputMode="decimal" placeholder="e.g. 200" value={amount} onChange={(e) => setAmount(e.target.value)} />
             </Field>
           </div>
@@ -219,7 +219,7 @@ export default function Execute({ rules, accounts, history, onDone, presetAccoun
           <Row k="Recipient" v={mode === "single" ? "Single account" : "Batch (by rule)"} />
           <Row k="Target" v={mode === "single" ? account?.name ?? "Not selected" : rule?.name ?? "Not selected"} />
           <Row k="Eligible accounts" v={known ? ids.length : mode === "batch" ? "Preview required" : "-"} />
-          <Row k="Per account" v={formatSGD(per)} />
+          <Row k={mode === "batch" ? "Per account" : "Amount"} v={formatSGD(per)} />
           <Row k="Reason" v={<span className="break-words">{reason.trim() || "Not entered"}</span>} />
           <Row k="Execution" v={later ? `${SCHEDULE_LABEL[freq]}${date ? `, from ${date}` : ""}` : "Execute now"} />
           <Row k="Estimated total" v={<span className="text-lg text-primary">{known ? formatSGD(totalFunds(ids.length, per)) : "-"}</span>} />
@@ -234,9 +234,9 @@ export default function Execute({ rules, accounts, history, onDone, presetAccoun
       >
         <dl>
           <Row k="Recipient" v={mode === "batch" ? rule?.name : account?.name} />
-          <Row k="Accounts" v={ids.length} />
-          <Row k="Per account" v={formatSGD(per)} />
-          <Row k="Total funds" v={formatSGD(totalFunds(ids.length, per))} />
+          {mode === "batch" && <Row k="Accounts" v={ids.length} />}
+          <Row k={mode === "batch" ? "Per account" : "Amount"} v={formatSGD(per)} />
+          {mode === "batch" && <Row k="Total funds" v={formatSGD(totalFunds(ids.length, per))} />}
           <Row k="Reason" v={<span className="break-words">{reason.trim()}</span>} />
           <Row k="Execution" v={later ? `${SCHEDULE_LABEL[freq]}, from ${date}` : "Now"} />
         </dl>

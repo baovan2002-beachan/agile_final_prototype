@@ -1,10 +1,9 @@
 import { useState, type ReactNode } from "react";
 import { ArrowLeft, Plus, WarningCircle } from "@phosphor-icons/react";
-import { ActionBar } from "../../../components/ui/ActionBar";
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
-import { DataTable, type Column } from "../../../components/ui/DataTable";
+import { DataTable, RowAction, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
 import { SCHOOLS } from "../../../data/schools";
@@ -33,7 +32,6 @@ export default function Rules({ rules, onChange }: Props) {
 function RuleList({ rules, onView, onNew, onEdit, onToggle }: { rules: FundRule[]; onView: (r: FundRule) => void; onNew: () => void; onEdit: (r: FundRule) => void; onToggle: (id: string) => void }) {
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("All");
-  const [sel, setSel] = useState<string[]>([]);
   const rows = rules.filter((r) => `${r.name} ${r.id}`.toLowerCase().includes(q.trim().toLowerCase()) && (status === "All" || r.status === status));
   const columns: Column<FundRule>[] = [
     { key: "name", header: "Rule", sortable: true, render: (r) => (<><span className="font-semibold">{r.name}</span><span className="block text-[13px] text-on-surface-variant">{r.id}</span></>) },
@@ -44,8 +42,6 @@ function RuleList({ rules, onView, onNew, onEdit, onToggle }: { rules: FundRule[
     { key: "amount", header: "Top-up", sortable: true, align: "right", render: (r) => formatSGD(r.amount) },
     { key: "status", header: "Status", render: (r) => <Badge tone={TONE[r.status]}>{r.status}</Badge> },
   ];
-  const picked = sel.length === 1 ? rows.find((r) => r.id === sel[0]) : undefined;
-  const toggleAll = () => setSel(sel.length === rows.length ? [] : rows.map((r) => r.id));
   return (
     <div className="space-y-4">
       <Card title="Funding rules" action={<Button size="sm" icon={<Plus size={16} weight="bold" aria-hidden="true" />} onClick={onNew}>Add rule</Button>}>
@@ -54,13 +50,8 @@ function RuleList({ rules, onView, onNew, onEdit, onToggle }: { rules: FundRule[
           <select aria-label="Filter by status" className={inputClass.replace("w-full", "w-44")} value={status} onChange={(e) => setStatus(e.target.value)}>
             {["All", "Active", "Draft", "Paused"].map((s) => <option key={s} value={s}>{s === "All" ? "All statuses" : s}</option>)}
           </select>
-          <ActionBar count={sel.length} total={rows.length} onToggleAll={toggleAll}>
-            <Button variant="secondary" disabled={!picked} onClick={() => onView(picked!)}>View</Button>
-            <Button variant="secondary" disabled={!picked} onClick={() => onEdit(picked!)}>Edit</Button>
-            <Button variant="secondary" disabled={!picked} onClick={() => onToggle(picked!.id)}>{picked?.status === "Active" ? "Pause" : "Activate"}</Button>
-          </ActionBar>
         </div>
-        <DataTable columns={columns} rows={rows} rowKey={(r) => r.id} selection={{ selected: sel, onChange: setSel, label: (r) => `Select ${r.name}` }} pageSize={8} empty={<EmptyState title="No matching rules" hint="Change the search or status filter, or add a rule." />} />
+        <DataTable columns={columns} rows={rows} rowKey={(r) => r.id} rowActions={(r) => (<><RowAction onClick={() => onView(r)}>View</RowAction><RowAction onClick={() => onEdit(r)}>Edit</RowAction><RowAction onClick={() => onToggle(r.id)}>{r.status === "Active" ? "Pause" : "Activate"}</RowAction></>)} pageSize={8} empty={<EmptyState title="No matching rules" hint="Change the search or status filter, or add a rule." />} />
       </Card>
     </div>
   );

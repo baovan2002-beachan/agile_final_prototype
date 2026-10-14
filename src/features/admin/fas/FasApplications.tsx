@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CheckCircle } from "@phosphor-icons/react";
-import { ActionBar } from "../../../components/ui/ActionBar";
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
-import { DataTable, type Column } from "../../../components/ui/DataTable";
+import { DataTable, RowAction, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { FAS_APPLICATIONS, type FasApplication, type FasStatus } from "../../../data/fasApplications";
 import { useMockQuery } from "../../../lib/useMockQuery";
@@ -28,7 +27,6 @@ export default function FasApplications() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
   const [message, setMessage] = useState("");
-  const [sel, setSel] = useState<string[]>([]);
   const msgRef = useRef<HTMLDivElement>(null);
   // The decided row moves away, so the opener is gone: park focus on the confirmation instead of losing it to <body>.
   useEffect(() => { if (message) msgRef.current?.focus(); }, [message]);
@@ -57,8 +55,6 @@ export default function FasApplications() {
     { key: "slaDays", header: "SLA", sortable: true, render: (a) => (a.status === "Pending" ? <Sla days={a.slaDays} /> : <span className="text-on-surface-variant">Closed</span>) },
     { key: "status", header: "Status", render: (a) => <Badge tone={statusTone[a.status]}>{a.status}{a.finalTier ? ` - ${a.finalTier}` : ""}</Badge> },
   ];
-  const picked = sel.length === 1 ? rows.find((a) => a.id === sel[0]) : undefined;
-  const toggleAll = () => setSel(sel.length === rows.length ? [] : rows.map((a) => a.id));
 
   const tabs: [Filter, string][] = [["all", `All (${apps.length})`], ["pending", `Pending (${pendingCount})`], ["decided", `Decided (${apps.length - pendingCount})`]];
 
@@ -76,11 +72,6 @@ export default function FasApplications() {
                 </Button>
               ))}
             </div>
-            <ActionBar count={sel.length} total={rows.length} onToggleAll={toggleAll}>
-              <Button variant={picked?.status === "Pending" ? "primary" : "secondary"} disabled={!picked} onClick={() => setOpenId(picked!.id)}>
-                {picked && picked.status !== "Pending" ? "View decision" : "Open review"}
-              </Button>
-            </ActionBar>
           </div>
         }
       >
@@ -101,7 +92,7 @@ export default function FasApplications() {
             columns={columns}
             rows={rows}
             rowKey={(a) => a.id}
-            selection={{ selected: sel, onChange: setSel, label: (a) => `Select ${a.student}` }}
+            rowActions={(a) => <RowAction onClick={() => setOpenId(a.id)}>{a.status === "Pending" ? "Open review" : "View decision"}</RowAction>}
             empty={<EmptyState title="No applications in this view" hint={filter === "pending" ? "Every application has been decided." : "Nothing here yet."} action={<Button variant="secondary" onClick={() => setFilter("all")}>Show all</Button>} />}
           />
         )}

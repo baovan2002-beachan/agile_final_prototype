@@ -17,9 +17,18 @@ type Props<T> = {
   pageSize?: number;
   /** Roomier rows with larger text, for tables that show only a few rows. */
   large?: boolean | "md";
-  /** Row selection (tickboxes): renders a leading tickbox column. Row actions live in an <ActionBar>, not in a column. */
-  selection?: { selected: string[]; onChange: (keys: string[]) => void; label?: (row: T) => string };
+  /** Row actions (<RowAction>s): a red panel slides out from the right edge when the row is hovered or focused. */
+  rowActions?: (row: T) => ReactNode;
 };
+
+export function RowAction({ icon, children, onClick }: { icon?: ReactNode; children: ReactNode; onClick: () => void }) {
+  return (
+    <button type="button" onClick={onClick} className="inline-flex min-h-9 items-center gap-1.5 whitespace-nowrap rounded-control px-3 text-sm font-semibold text-on-primary hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white">
+      {icon}
+      {children}
+    </button>
+  );
+}
 
 const val = <T,>(row: T, key: string) => (row as Record<string, unknown>)[key];
 
@@ -31,7 +40,7 @@ const pageList = (cur: number, pages: number): (number | null)[] => {
 
 const focus = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
-export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10, large, selection }: Props<T>) {
+export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10, large, rowActions }: Props<T>) {
   const [sort, setSort] = useState<{ key: string; dir: "asc" | "desc" } | null>(null);
   const [page, setPage] = useState(0);
   const size = Math.max(1, Math.floor(pageSize) || 1);
@@ -73,7 +82,6 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10, larg
         <table className={`w-full text-left ${large ? "text-base" : "text-sm"}`}>
           <thead>
             <tr className="border-b border-line">
-              {selection && <th scope="col" className="w-10 px-3 py-2.5"><span className="sr-only">Select</span></th>}
               {columns.map((c) => {
                 const k = String(c.key);
                 const active = sort?.key === k;
@@ -105,27 +113,29 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10, larg
                   </th>
                 );
               })}
+              {rowActions && <th scope="col"><span className="sr-only">Actions</span></th>}
             </tr>
           </thead>
           <tbody>
             {visible.map((row) => (
-              <tr key={rowKey(row)} aria-selected={selection ? selection.selected.includes(rowKey(row)) : undefined} className={`border-b border-line last:border-0 ${selection?.selected.includes(rowKey(row)) ? "bg-primary-fixed/40" : ""}`}>
-                {selection && (
-                  <td className="w-10 px-3">
-                    <input
-                      type="checkbox"
-                      className="size-5 accent-primary"
-                      aria-label={selection.label?.(row) ?? `Select ${rowKey(row)}`}
-                      checked={selection.selected.includes(rowKey(row))}
-                      onChange={(e) => selection.onChange(e.target.checked ? [...selection.selected, rowKey(row)] : selection.selected.filter((k) => k !== rowKey(row)))}
-                    />
-                  </td>
-                )}
+              <tr key={rowKey(row)} className="group border-b border-line last:border-0 hover:bg-primary-fixed/30 focus-within:bg-primary-fixed/30">
                 {columns.map((c) => (
                   <td key={String(c.key)} className={`px-3 ${large === "md" ? "py-3.5" : large ? "py-5" : "py-3"} text-on-surface ${c.align === "right" ? "text-right tabular-nums" : ""}`}>
                     {c.render ? c.render(row) : String(val(row, String(c.key)) ?? "")}
                   </td>
                 ))}
+                {rowActions && (
+                  <td className="relative p-0">
+                    {/* Invisible copy reserves the panel's width so the red panel never covers or shifts the data. */}
+                    <div aria-hidden inert className="invisible flex items-center gap-1 pl-2 pr-1"><CaretRight size={16} />{rowActions(row)}</div>
+                    {/* Arrow hints that actions are available; the red panel slides out on hover / focus. */}
+                    <CaretLeft size={18} weight="bold" aria-hidden className="absolute inset-y-0 right-3 my-auto text-primary motion-safe:animate-pulse group-hover:invisible group-focus-within:invisible" />
+                    <div className="pointer-events-none absolute inset-y-1 right-0 z-10 flex translate-x-6 items-center gap-1 rounded-l-control bg-primary pl-2 pr-1 text-on-primary opacity-0 shadow-md motion-safe:transition group-hover:pointer-events-auto group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-x-0 group-focus-within:opacity-100">
+                      <CaretRight size={16} weight="bold" aria-hidden />
+                      {rowActions(row)}
+                    </div>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
