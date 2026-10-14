@@ -27,7 +27,6 @@ export default function SchoolMaintenance() {
     const needle = q.trim().toLowerCase();
     return schools.filter((s) => (!type || s.level === type) && (!needle || `${s.code} ${s.name} ${s.email}`.toLowerCase().includes(needle)));
   }, [schools, type, q]);
-  const reset = () => { setType(""); setQ(""); };
   const save = (s: SchoolRecord, u: { name: string; email: string; resetPassword: boolean }) => {
     const exists = schools.some((x) => x.code === s.code);
     setSchools((all) => (exists ? all.map((x) => (x.code === s.code ? s : x)) : [s, ...all]));
@@ -58,7 +57,7 @@ export default function SchoolMaintenance() {
         {notice && <p className="rounded-control border border-line bg-surface-container-lowest px-4 py-3 text-sm font-medium">{notice}</p>}
       </div>
       <Card>
-        <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-[1fr_1fr_auto_auto] sm:items-end">
+        <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-2 sm:items-end">
           <Field label="Search by ID or name">
             <input className={inputClass} value={q} onChange={(e) => setQ(e.target.value)} />
           </Field>
@@ -68,7 +67,6 @@ export default function SchoolMaintenance() {
               {SCHOOL_TYPES.map((t) => <option key={t}>{t}</option>)}
             </select>
           </Field>
-          <Button variant="secondary" disabled={!type && !q} onClick={reset}>Reset filters</Button>
         </div>
         <div className="mt-2">
           <DataTable
@@ -78,7 +76,7 @@ export default function SchoolMaintenance() {
             rowActions={(s) => (<><RowAction icon={<ChalkboardTeacher size={16} aria-hidden />} onClick={() => navigate(`/admin/classes?school=${s.code}`)}>Show detail</RowAction><RowAction icon={<PencilSimple size={16} aria-hidden />} onClick={() => setForm({ editing: s })}>Edit</RowAction></>)}
             pageSize={5}
             large
-            empty={<EmptyState title="No schools match" hint="Change the search or type filter." action={<Button variant="secondary" onClick={reset}>Reset filters</Button>} />}
+            empty={<EmptyState title="No schools match" hint="Change the search or type filter." />}
           />
         </div>
       </Card>

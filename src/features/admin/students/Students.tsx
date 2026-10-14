@@ -1,14 +1,14 @@
 import { useMemo, useState } from "react";
 import { HeaderActions } from "../../../components/layout/HeaderActions";
 import { Plus, Wallet } from "@phosphor-icons/react";
-import { useNavigate, useSearchParams } from "react-router";
+import { useNavigate } from "react-router";
 import { Badge, type BadgeTone } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
 import { DataTable, RowAction, type Column } from "../../../components/ui/DataTable";
 import { EmptyState } from "../../../components/ui/EmptyState";
 import { Field, inputClass } from "../../../components/ui/Field";
-import { CLASSES, LEVELS, STATUSES, STUDENTS, UNASSIGNED_ACCOUNTS, type SbfasStatus, type Student } from "../../../data/students";
+import { STATUSES, STUDENTS, UNASSIGNED_ACCOUNTS, type SbfasStatus, type Student } from "../../../data/students";
 import { schoolOfLevel } from "../../../data/schoolMgmt";
 import { schoolCodeFor } from "../../../data/users";
 import { useSession } from "../../../session";
@@ -20,11 +20,7 @@ const sbfasTone: Record<SbfasStatus, BadgeTone> = { Approved: "success", Pending
 export default function Students() {
   const [students, setStudents] = useState(STUDENTS);
   const [q, setQ] = useState("");
-  const [level, setLevel] = useState("");
   const [status, setStatus] = useState("");
-  // Preset from the Classes page: /admin/students?class=P1 Courage
-  const [params, setParams] = useSearchParams();
-  const cls = params.get("class") ?? "";
   const { role } = useSession();
   const mySchool = schoolCodeFor(role);
   const [adding, setAdding] = useState(false);
@@ -34,15 +30,12 @@ export default function Students() {
   // Memoised: DataTable resets to page 1 whenever the rows reference changes.
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return filterStudents(students, { level, class: cls, status }).filter((s) => (!mySchool || schoolOfLevel(s.level) === mySchool) && (!needle || `${s.id} ${s.name}`.toLowerCase().includes(needle)));
-  }, [students, q, mySchool, level, cls, status]);
-  const levels = LEVELS.filter((l) => !mySchool || schoolOfLevel(l) === mySchool);
-  const classOptions = (level ? [level] : levels).flatMap((l) => CLASSES[l as (typeof LEVELS)[number]]);
-  const setCls = (c: string) => setParams(c ? { class: c } : {}, { replace: true });
-  const reset = () => { setQ(""); setLevel(""); setStatus(""); setCls(""); };
+    return filterStudents(students, { level: "", class: "", status }).filter((s) => (!mySchool || schoolOfLevel(s.level) === mySchool) && (!needle || `${s.id} ${s.name}`.toLowerCase().includes(needle)));
+  }, [students, q, mySchool, status]);
+  const reset = () => { setQ(""); setStatus(""); };
 
   const columns: Column<Student>[] = [
-    { key: "id", header: "ID", sortable: true },
+    { key: "id", header: "Education Account ID", sortable: true },
     { key: "name", header: "Name", sortable: true, render: (s) => <span className="font-medium">{s.name}</span> },
     { key: "status", header: "Schooling status", sortable: true, render: (s) => <Badge tone={statusTone[s.status]}>{s.status}</Badge> },
     ...(role === "school" ? [{ key: "sbfas", header: "SBFAS", sortable: true, render: (s: Student) => <Badge tone={sbfasTone[s.sbfas]}>{s.sbfas}</Badge> } as Column<Student>] : []),
@@ -64,21 +57,9 @@ export default function Students() {
       </div>
 
       <Card>
-        <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_auto_auto] lg:items-end">
-          <Field label="Search by ID or name">
+        <div role="group" aria-label="Filters" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_auto] lg:items-end">
+          <Field label="Search by Education Account ID or name">
             <input type="search" className={inputClass} value={q} onChange={(e) => setQ(e.target.value)} />
-          </Field>
-          <Field label="Level">
-            <select className={inputClass} value={level} onChange={(e) => { setLevel(e.target.value); setCls(""); }}>
-              <option value="">All levels</option>
-              {levels.map((l) => <option key={l}>{l}</option>)}
-            </select>
-          </Field>
-          <Field label="Class">
-            <select className={inputClass} value={cls} onChange={(e) => setCls(e.target.value)}>
-              <option value="">All classes</option>
-              {classOptions.map((c) => <option key={c}>{c}</option>)}
-            </select>
           </Field>
           <Field label="Status">
             <select className={inputClass} value={status} onChange={(e) => setStatus(e.target.value)}>
@@ -86,7 +67,7 @@ export default function Students() {
               {STATUSES.map((x) => <option key={x}>{x}</option>)}
             </select>
           </Field>
-          <Button variant="secondary" disabled={!q && !level && !cls && !status} onClick={reset}>Reset filters</Button>
+          <Button variant="secondary" disabled={!q && !status} onClick={reset}>Reset filters</Button>
         </div>
         <div className="mt-2">
           <DataTable
