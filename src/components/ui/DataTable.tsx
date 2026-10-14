@@ -118,21 +118,21 @@ export function DataTable<T>({ columns, rows, rowKey, empty, pageSize = 10, larg
           </thead>
           <tbody>
             {visible.map((row) => (
-              <tr key={rowKey(row)} className="group border-b border-line last:border-0 hover:bg-primary-fixed/30 focus-within:bg-primary-fixed/30">
+              <tr key={rowKey(row)} className="border-b border-line last:border-0 has-[.group\/act:hover]:bg-primary-fixed/30 focus-within:bg-primary-fixed/30">
                 {columns.map((c) => (
                   <td key={String(c.key)} className={`px-3 ${large === "md" ? "py-3.5" : large ? "py-5" : "py-3"} text-on-surface ${c.align === "right" ? "text-right tabular-nums" : ""}`}>
                     {c.render ? c.render(row) : String(val(row, String(c.key)) ?? "")}
                   </td>
                 ))}
                 {rowActions && (
-                  <td className="relative p-0">
-                    {/* Invisible copy reserves the panel's width so the red panel never covers or shifts the data. */}
-                    <div aria-hidden inert className="invisible flex items-center gap-1 pl-2 pr-1"><CaretRight size={16} />{rowActions(row)}</div>
-                    {/* Arrow hints that actions are available; the red panel slides out on hover / focus. */}
-                    <CaretLeft size={18} weight="bold" aria-hidden className="absolute inset-y-0 right-3 my-auto text-primary motion-safe:animate-pulse group-hover:invisible group-focus-within:invisible" />
-                    <div className="pointer-events-none absolute inset-y-1 right-0 z-10 flex translate-x-6 items-center gap-1 rounded-l-control bg-primary pl-2 pr-1 text-on-primary opacity-0 shadow-md motion-safe:transition group-hover:pointer-events-auto group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-x-0 group-focus-within:opacity-100">
-                      <CaretRight size={16} weight="bold" aria-hidden />
-                      {rowActions(row)}
+                  <td className="group/act w-px p-0">
+                    {/* Only an arrow takes space at rest; on hover / focus the red panel grows in place and the columns shift left to make room. */}
+                    <div className="flex min-h-10 items-center justify-end">
+                      <CaretLeft size={18} weight="bold" aria-hidden className="mx-2 shrink-0 text-primary motion-safe:animate-pulse group-hover/act:hidden group-focus-within/act:hidden" />
+                      <div className="flex max-w-0 items-center gap-1 overflow-hidden whitespace-nowrap rounded-l-control bg-primary py-1 text-on-primary opacity-0 motion-safe:transition-all motion-safe:duration-300 group-hover/act:max-w-[28rem] group-hover/act:pl-2 group-hover/act:pr-1 group-hover/act:opacity-100 group-focus-within/act:max-w-[28rem] group-focus-within/act:pl-2 group-focus-within/act:pr-1 group-focus-within/act:opacity-100">
+                        <CaretRight size={16} weight="bold" aria-hidden className="shrink-0" />
+                        {rowActions(row)}
+                      </div>
                     </div>
                   </td>
                 )}
