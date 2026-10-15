@@ -50,7 +50,7 @@ export default function EducationAccountPage() {
   const feesPath = `/admin/students/${student.id}/fees`;
 
   const details: [string, ReactNode][] = [
-    ["Student ID", student.id],
+    ["Education Account ID", student.id],
     ["Level", student.level],
     ["Class", student.class],
     ["Schooling status", <Badge key="s" tone={statusTone[student.status]}>{student.status}</Badge>],

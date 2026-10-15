@@ -49,8 +49,8 @@ export default function Classes() {
     { key: "teacher", header: "Form teacher", sortable: true },
     { key: "room", header: "Room", sortable: true },
     {
-      key: "students",
-      header: "Students",
+      key: "capacity",
+      header: "Capacity",
       sortable: true,
       align: "right",
       render: (c) =>
